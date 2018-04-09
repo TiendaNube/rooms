@@ -1,0 +1,6 @@
+{
+  "timesConfig":{
+    "minutesToFree":10,
+    "minutesToBusy":15
+  }
+}

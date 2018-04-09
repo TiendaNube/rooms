@@ -1,0 +1,5 @@
+{
+  "room-0": {"name": "Sala 0", "id":"ROOM_0_ID"},
+  "room-1": {"name": "Sala 1", "id":"ROOM_1_ID"},
+  "room-2": {"name": "Sala 2", "id":"ROOM_2_ID"}
+}

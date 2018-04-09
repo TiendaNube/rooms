@@ -1,11 +1,6 @@
-![Meeting Room Display](http://i.imgur.com/jBEWBWr.jpg)
+# Meeting Room Display
 
-This is a side project we built at [Aerolab](https://aerolab.co) to show which meeting rooms are currently available (and for how long), as well as giving you the ability to anonymously book a room for 15' with a single tap. This is all based on Google Calendar in a typical Google Apps for Business package.
-
-The motivation behind this is that most meeting room software is needlessly complicated (and expensive!), so we built exactly what we needed as a Web App, which is then deployed to a bunch of cheap Fire HD 8 tablets (one per room) using a headless web browser. It's simple, it works well to let people know that they shouldn't use a specific meeting room, and it looks kind of cool.
-
-Proof of Concept built using React + Node.JS.
-
+This is a side project we built at Tienda Nube, based on [Aerolab](https://aerolab.co) project.
 
 ## Setup & Config
 
@@ -18,7 +13,7 @@ Go to the [Google Developer Console](https://console.developers.google.com/) and
 * From the Library menu, you need to **Enable the Google Calendar API** (use the search if it's not in the popular list)
 * From the Credentials menu, **Create a Service Account**, and select JSON as the key type. Save this file as you'll need it in a while.
 * Take note of the **Service Account ID** as well (it looks like accountname@(...).iam.gserviceaccount.com)
-* Rename the JSON key file to **rooms-client.json** and place it in the root of the project.
+* Rename the JSON key file to **rooms-client.json** and place it on the `config/` project folder.
 
 ### Configure the supported Meeting Rooms
 
@@ -27,27 +22,89 @@ Go to [Google Calendar](https://calendar.google.com) and click edit on each meet
 * On the Calendar Details tab, **Take note of the Calendar ID** (it looks like domain_123@resource.calendar.google.com).
 * Under the Share this Calendar, **Share it with the Service Account ID** (add accountname@(...).iam.gserviceaccount.com to the calendar and give it full access)
 
-After you've done that, you need to **Create a rooms.json file** in the root of the project detailing all the enabled rooms, their names and Calendar IDs, using a slug as the key. It should look like this:
+After you've done that, you need to **Create a rooms.json file** on the `config/` project folder detailing all the enabled rooms, theirs names and Calendar IDs, using a slug as the key. It should look like this:
 
 ```json
 {
-    "lounge": {"name": "Lounge", "id": "domain_123@resource.calendar.google.com"},
-    "super-room": {"name": "Super Room", "id": "domain_1234@resource.calendar.google.com"}
+    "room-1": {"name": "Room 01", "id": "domain_123@resource.calendar.google.com"},
+    "room-big": {"name": "Romm big", "id": "domain_1234@resource.calendar.google.com"}
+}
+```
+### Configure slack API
+
+
+### App configuration
+
+In the `config/` folder you need to write a json file(`app.json`) like that:
+
+```json
+{
+  "timesConfig":{
+    "minutesToFree":"TIME_TO_BE_FREE",
+    "minutesToBusy":"TIME_TO_BE_BUSY"
+  }
 }
 ```
 
+## Pre-requisites
 
-## Using the app
+### Install nodemon package globally
 
-Start the server with `npm run start`.
+Nodemon executes a file and keeps it updated. If you modified the file, it will automatically be updated by nodemon. To install it, run:
 
-Open a browser on **http://localhost:3000/room-slug** (*not literally*, you have to replace room-slug with the proper room key, like *lounge* or *super-room*). You should be able to see the current status of the room and book it.
+- `npm install -g nodemon` to install
+
+Inside our package.json we have some like this:
+
+```json
+"scripts": {
+  "build": "webpack -w",
+  "local-server": "sudo ./servers/local/server.js"
+}
+```
+
+## Install dependencies
+
+- `npm install -s` from the root of the project, this will be install your proyects dependencies in the hidden folder `.node_modules`
 
 
-## Deploying
+## Test on local environment
 
-We provide a Dockerfile, which you can easily use on [Now](https://zeit.co/now), or any other service you prefer. We are not using any sort of authentication or environment variables as this is a quick internal project, but you're free to add some sort of auth if you want.
+### First way: using local server
 
+Open 2 terminals, and run (on each one):
+
+- `sudo npm run dev` to build with webpack
+- `sudo npm run local-server` to start our app
+
+Open a browser on **http://localhost/sala-1** (for example). You can access to any room by replacing "sala-1" with the proper room key, like *sala-3* or *sala-creativa*). You should be able to see the current status of the room and book it.
+
+### Second way: using serverless offline
+
+Install serverless offline by running `npm install serverless-offline --save-dev`. Then run: `serverless offline start` and open a browser on **http://localhost:3000/sala?number=1** (for example). You can access to any room by replacing "1" with the proper room key, like *3* or *creativa*).
+
+## Access on prod environment
+
+Open a broswer on **https://91qk3xxuce.execute-api.us-west-1.amazonaws.com/dev/sala?number=1** (for example). You can access to any room by replacing "1" (of the *number=1*) with the proper room key, like *3* or *creativa*).
+
+## Debugging
+
+### Redux
+
+To evaluate the progress of the application's state, it's best to use the redux tools.
+
+We use [Redux Dev Tools](https://github.com/zalmoxisus/redux-devtools-extension#installation)
+
+### React
+
+For React we use [React Dev Tools](https://github.com/facebook/react-devtools)
+
+
+## Troubleshooting
+
+### Error: Cannot find module
+
+Make sure that you run `npm install -s`
 
 ## License
 
