@@ -1,9 +1,9 @@
 .Main {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  flex-grow: 1;
+  alignItems: center;
+  justifyContent: center;
+  flexDirection: row;
+  flexGrow: 1;
   position: relative;
 
   .label {

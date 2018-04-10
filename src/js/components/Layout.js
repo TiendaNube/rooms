@@ -5,12 +5,7 @@ import * as roomActions from "../actions/roomActions"
 import Main from "./Main/Main"
 import '../App.css'
 
-@connect((store) => {
-  return {
-    roomData: store.data,
-    roomFetched: store.fetched,
-  };
-})
+
 class LayoutContainer extends React.Component {
 
   componentWillMount() {
@@ -21,7 +16,7 @@ class LayoutContainer extends React.Component {
     const mainProps = {
         label: "Ocupada hasta",
         time: 30,
-        state: "busy"
+        state: "free"
     }
 
     return <div>

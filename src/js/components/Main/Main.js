@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Styles from "./styles.js"
+import Info from "../Info/Info"
 import cn from 'classnames'
+import './App.css'
+import './Main.css'
 
 export default class Main extends Component {
   constructor(props,context){
@@ -10,20 +13,23 @@ export default class Main extends Component {
   }
   render() {
     const { label, time, state } = this.props
-
+    const info={
+      label,
+      state,
+      time,
+      user:"Guillermo"
+    }
     return (
-      <div style={Styles.App }>
+      <div className={cn('App', state)}>
         <img  style={Styles.Background} src={`${state}-background.svg`}/>
-        <div style={Styles.Main}>
+        <div className="Main">
           <div style={Styles.Illustration}>
             <img src={`${state}.svg`}/>
           </div>
-          <div style={Styles.Info}>
-            <div style={Styles.Label}>{label}</div>
-            <div style={Styles.Time}>{time}</div>
-          </div>
+          <Info {...info}/>
         </div>
       </div>
     )
   }
 }
+

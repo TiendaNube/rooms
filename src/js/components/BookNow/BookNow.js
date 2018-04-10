@@ -8,7 +8,7 @@ export default class BookNow extends Component {
     const { minutes } = this.props
 
     return (
-      <button className="BookNow">{`Book now for ${Math.min(15, minutes)}'`}</button>
+      <button className="BookNow">aa</button>
     )
   }
 
