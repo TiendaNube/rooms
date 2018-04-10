@@ -4,9 +4,14 @@ const moment = require('moment')
 const calendar = require('./calendar')
 const express = require('express')
 const history = require('connect-history-api-fallback')
+const cors = require('cors');
 
+// use it before all route definitions
 const app = express()
 const port = process.env.PORT
+
+//TODO Esta linea se mata cuando damos de baja webpack server
+app.use(cors({origin: 'http://localhost:3165'}));
 
 app.get('/api/rooms/:room', function (req, res, next) {
   let roomSlug = req.params.room
@@ -15,7 +20,8 @@ app.get('/api/rooms/:room', function (req, res, next) {
   var now = moment()
 
   calendar.getSchedule(req.params.room, now, (err, schedule) => {
-    if (err) { res.status(500).json({ error: "API Not Available" }); next(); return; }
+    console.log(schedule)
+    if (err) { res.status(500).json({ error: err }); next(); return; }
 
     res.json({
       name: calendar.getRoomName(roomSlug),
@@ -33,7 +39,8 @@ app.post('/api/rooms/:room', function (req, res, next) {
   let now = moment()
 
   calendar.getSchedule(req.params.room, now, (err, schedule) => {
-    if (err) { res.status(500).json({ error: "API Not Available" }); next(); return; }
+    console.log(schedule)
+    if (err) { res.status(500).json({ error: err}); next(); return; }
 
     let freeSlot = schedule.find((s) => now.isBetween(s.start, s.end) && s.available )
     if( ! freeSlot ) { res.status(409).json({ error: "Room is busy right now" }); next(); return; }
@@ -45,7 +52,7 @@ app.post('/api/rooms/:room', function (req, res, next) {
     }
 
     calendar.bookEvent(req.params.room, event, (err, newEvent) => {
-      if (err) { res.status(500).json({ error: "API Not Available" }); next(); return; }
+      if (err) { res.status(500).json({ error: err }); next(); return; }
 
       schedule.push(newEvent)
       schedule = calendar.unifySchedule(schedule)
@@ -59,9 +66,7 @@ app.post('/api/rooms/:room', function (req, res, next) {
   })
 })
 
-
 app.use(history())
-app.use(require('nwb/express')(express))
 app.use(express.static('public'))
 
 app.listen(port, function(err) {
