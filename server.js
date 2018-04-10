@@ -11,7 +11,7 @@ const app = express()
 const port = process.env.PORT
 
 //TODO Esta linea se mata cuando damos de baja webpack server
-app.use(cors({origin: 'http://localhost:3165'}));
+app.use(cors({origin: 'http://localhost:3166'}));
 
 app.get('/api/rooms/:room', function (req, res, next) {
   let roomSlug = req.params.room

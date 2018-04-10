@@ -12,6 +12,7 @@ export default class Main extends Component {
 
     return (
       <div style={Styles.App}>
+      <span>hola</span>
         <div style={Styles.MainStyle}>
           <div style={Styles.Illustration}>
             <img src={`${state}.svg`}/>
