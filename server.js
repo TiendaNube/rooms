@@ -1,10 +1,12 @@
+require('dotenv').config()
+
 const moment = require('moment')
 const calendar = require('./calendar')
 const express = require('express')
 const history = require('connect-history-api-fallback')
 
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT
 
 app.get('/api/rooms/:room', function (req, res, next) {
   let roomSlug = req.params.room
