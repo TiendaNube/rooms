@@ -1,5 +1,5 @@
 import axios from "axios";
-export function fetchRoom() {
+export function fetchRoom(roomId) {
   return function(dispatch) {
     dispatch({type: "FETCH_ROOM"});
 
@@ -10,7 +10,7 @@ export function fetchRoom() {
       - post some tweets to http://rest.learncode.academy/api/yourusername/tweets
     */
     //TODO levantar port de .env
-    axios.get("http://localhost:3555/api/rooms/sala-1")
+    axios.get(`http://localhost:3555/api/rooms/${roomId}`)
       .then((response) => {
         dispatch({type: "FETCH_ROOM_FULFILLED", payload: response.data})
       })

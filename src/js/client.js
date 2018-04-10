@@ -9,5 +9,5 @@ import './App.css'
 const app = document.querySelector('#app')
 
 ReactDOM.render(<Provider store={store}>
-  <Layout />
-</Provider>, app);
+                  <Layout salaId={"sala-3"}/>
+                </Provider>, app);

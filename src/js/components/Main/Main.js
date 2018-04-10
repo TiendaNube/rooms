@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Styles from "./styles.js"
+import cn from 'classnames'
 
 export default class Main extends Component {
   constructor(props,context){

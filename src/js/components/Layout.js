@@ -12,8 +12,9 @@ import '../App.css'
   };
 })
 class LayoutContainer extends React.Component {
+
   componentWillMount() {
-    this.props.roomActions.fetchRoom()
+    this.props.roomActions.fetchRoom(`${this.props.salaId}`)
   }
 
   render() {
