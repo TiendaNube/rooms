@@ -32,7 +32,9 @@ const Styles ={
     "height": "100vh",
     "color": "white",
     "transition": "background-color .5s",
-    "background":"linear-gradient(to bottom right, #c0ffc3, #00c6a3)"
-  }
+  },
+  Background:{
+  "position": "absolute"
+  },
 }
 export default Styles

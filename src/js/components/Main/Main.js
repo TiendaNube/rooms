@@ -12,9 +12,9 @@ export default class Main extends Component {
     const { label, time, state } = this.props
 
     return (
-      <div style={Styles.App}>
-      <span>hola</span>
-        <div style={Styles.MainStyle}>
+      <div style={Styles.App }>
+        <img  style={Styles.Background} src={`${state}-background.svg`}/>
+        <div style={Styles.Main}>
           <div style={Styles.Illustration}>
             <img src={`${state}.svg`}/>
           </div>
