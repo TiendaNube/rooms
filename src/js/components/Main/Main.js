@@ -15,10 +15,10 @@ export default class Main extends Component {
     const info={ label, time, user}
     return (
       <div className={cn('app', state)}>
-        <img  className="background" src={`${state}-background.svg`}/>
+        <img  className="background" src={`img/${state}-background.svg`}/>
         <div className="main">
           <div className="illustration">
-            <img src={`${state}.svg`}/>
+            <img src={`img/${state}.svg`}/>
           </div>
           <Info {...info}/>
         </div>
