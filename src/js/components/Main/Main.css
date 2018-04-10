@@ -7,8 +7,16 @@
   position: relative;
   letter-spacing: 0;
 }
+.info-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
 .illustration{
   width: 55%;
+}
+.illustration img{
+  height: 100vh;
 }
 
 .background {

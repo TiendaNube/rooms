@@ -12,15 +12,17 @@ export default class Main extends Component {
   }
   render() {
     const { label, time, state, user } = this.props
-    const info={ label, time, user}
+    const info={ label, time, user, state}
     return (
       <div className={cn('app', state)}>
-        <img  className="background" src={`img/${state}-background.svg`}/>
+        <img className="background" src={`img/${state}-background.svg`}/>
         <div className="main">
           <div className="illustration">
             <img src={`img/${state}.svg`}/>
           </div>
-          <Info {...info}/>
+          <div className="info-container">
+            <Info {...info}/>
+          </div>
         </div>
       </div>
     )

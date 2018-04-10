@@ -15,9 +15,10 @@ class LayoutContainer extends React.Component {
   render() {
     const mainProps = {
         label: "Ocupada hasta",
-        time: 30,
+        time: "10:30",
         state: "free",
-        user: "vickym"
+        user: "vickym",
+        buttonLabel: "Reservar",
     }
 
     return <div>
