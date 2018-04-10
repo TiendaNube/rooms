@@ -55,6 +55,14 @@ Run `npm install -g moment` and then `npm install moment`
 
 Run `npm install`
 
+### Install dotenv
+
+Run `npm install dotenv`. For more information, see [this](https://github.com/motdotla/dotenv)
+
+### Install slack app
+
+Run `npm install @slack/client`. For more information, see [this](https://github.com/slackapi/node-slack-sdk)
+
 ## Deploying
 
 We provide a Dockerfile, which you can easily use on [Now](https://zeit.co/now), or any other service you prefer. We are not using any sort of authentication or environment variables as this is a quick internal project, but you're free to add some sort of auth if you want.
