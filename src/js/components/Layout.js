@@ -16,7 +16,8 @@ class LayoutContainer extends React.Component {
     const mainProps = {
         label: "Ocupada hasta",
         time: 30,
-        state: "free"
+        state: "free",
+        user: "vickym"
     }
 
     return <div>

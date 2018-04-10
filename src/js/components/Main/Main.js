@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Styles from "./styles.js"
 import Info from "../Info/Info"
 import cn from 'classnames'
 import './App.css'
@@ -12,18 +11,13 @@ export default class Main extends Component {
     console.log(props)
   }
   render() {
-    const { label, time, state } = this.props
-    const info={
-      label,
-      state,
-      time,
-      user:"Guillermo"
-    }
+    const { label, time, state, user } = this.props
+    const info={ label, time, user}
     return (
-      <div className={cn('App', state)}>
-        <img  style={Styles.Background} src={`${state}-background.svg`}/>
-        <div className="Main">
-          <div style={Styles.Illustration}>
+      <div className={cn('app', state)}>
+        <img  className="background" src={`${state}-background.svg`}/>
+        <div className="main">
+          <div className="illustration">
             <img src={`${state}.svg`}/>
           </div>
           <Info {...info}/>

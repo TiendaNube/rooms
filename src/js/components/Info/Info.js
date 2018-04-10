@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Styles from "./styles.js"
+import './info.css'
 
 
 export default class Info extends Component {
@@ -12,12 +12,10 @@ export default class Info extends Component {
 	    }
 
     	return (    
-			<div style={Styles.Info}>
-            	<div style={Styles.Label}>{label}</div>
-            	<div style={Styles.Time}>{time}</div>
-
-            	<div>por @{user}</div>
-
+			<div className="info">
+            	<div className="label">{label}</div>
+            	<div className="time">{time}</div>
+            	<div className="user">por <strong>@{user}</strong></div>
           	</div>
     	)
     }

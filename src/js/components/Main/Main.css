@@ -1,23 +1,16 @@
-.Main {
+.main {
   display: flex;
   alignItems: center;
   justifyContent: center;
   flexDirection: row;
   flexGrow: 1;
   position: relative;
+  letter-spacing: 0;
+}
+.illustration{
+  width: 55%;
+}
 
-  .label {
-    text-transform: uppercase;
-    font-size: 48px;
-    font-weight: 300;
-  }
-
-  .time {
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 164px;
-    letter-spacing: 0.1em;
-    white-space: pre;
-  }
-
+.background {
+  position: absolute;
 }
