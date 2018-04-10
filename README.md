@@ -34,7 +34,9 @@ After you've done that, you need to **Create a rooms.json file** in the root of 
 
 ## Using the app
 
-Start the server with `npm run start`.
+- `npm install` from the root of the project
+- `npm run start` starts the server with (in one terminal)
+- ``
 
 Open a browser on **http://localhost:3000/room-slug** (*not literally*, you have to replace room-slug with the proper room key, like *lounge* or *super-room*). You should be able to see the current status of the room and book it.
 
@@ -43,7 +45,11 @@ Open a browser on **http://localhost:3000/room-slug** (*not literally*, you have
 Nodemon executes a file and keeps it updated. If you modified the file, it will automatically be updated by nodemon. To use it, run:
 
 - `npm install -g nodemon` to install
-- `npm run serve`
+- `npm run dev` to start webpack
+- `npm run serve` to start our app
+
+To dev environment: go to localhost:3165
+To prod environment: go to localhost:3555
 
 ## Troubleshooting
 
