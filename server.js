@@ -5,13 +5,13 @@ const calendar = require('./calendar')
 const express = require('express')
 const history = require('connect-history-api-fallback')
 const cors = require('cors');
-
+const path = require('path')
 // use it before all route definitions
 const app = express()
 const port = process.env.PORT
 
 //TODO Esta linea se mata cuando damos de baja webpack server
-app.use(cors({origin: 'http://localhost:3166'}));
+app.use(cors({origin: 'http://localhost:3167'}));
 
 app.get('/api/rooms/:room', function (req, res, next) {
   let roomSlug = req.params.room

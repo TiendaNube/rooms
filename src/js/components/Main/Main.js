@@ -8,7 +8,6 @@ import './Main.css'
 export default class Main extends Component {
   constructor(props,context){
     super(props,context)
-    console.log(props)
   }
   render() {
     const { label, time, state, user } = this.props
@@ -28,4 +27,3 @@ export default class Main extends Component {
     )
   }
 }
-
