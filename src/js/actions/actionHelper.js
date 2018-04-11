@@ -8,13 +8,14 @@ export default class actionHelper {
   getCurrentState(){
     let state=null
     let currentEvent=this.currentEvent()
+    console.log(currentEvent.available)
     if(currentEvent.available){
       state = "free"
     }else{
       state = "busy"
     }
     if(state=="busy"){
-      return this.isToFinish(this.currentEvent())?{status:"toFree",time:this.timeToFinish(this.currentEvent())}:{status:state,time:30}
+      return this.isToFree(this.currentEvent(),this.nextEvent())?{status:"toFree",time:this.timeToFinish(this.currentEvent())}:{status:state,time:30}
     }
     if(state=="free"){
       return this.closeToStart(this.nextEvent())?{status:"toBusy",time:this.timeToStart(this.nextEvent())}:{status:state,time:30}
@@ -36,6 +37,7 @@ export default class actionHelper {
     return finishMoment.diff(now, 'minutes')
   }
   isToFree(currentEvent,nextEvent){
+    console.log(nextEvent.available)
     return (nextEvent.available&&this.timeToFinish(currentEvent)<15)?true:false
   }
 
