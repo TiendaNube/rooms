@@ -18,7 +18,6 @@ export function fetchRoom(roomId) {
         response.data.state=helper.getCurrentState()
         response.data.currentSlot=helper.currentEvent()
         dispatch({type: "FETCH_ROOM_FULFILLED", payload: response.data})
-
       })
       .catch((err) => {
         dispatch({type: "FETCH_ROOM_REJECTED", payload: err})

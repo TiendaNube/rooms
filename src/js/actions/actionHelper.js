@@ -35,8 +35,8 @@ export default class actionHelper {
     const finishMoment = moment(currentEvent.end)
     return finishMoment.diff(now, 'minutes')
   }
-  isToFinish(currentEvent){
-    return this.timeToFinish(currentEvent)<15?true:false
+  isToFree(currentEvent,nextEvent){
+    return (nextEvent.available&&this.timeToFinish(currentEvent)<15)?true:false
   }
 
   timeToStart(nextEvent){
