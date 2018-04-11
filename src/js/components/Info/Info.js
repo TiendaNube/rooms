@@ -9,13 +9,13 @@ export default class Info extends Component {
     buildTimeLabel(state, time){
 	    switch (state) {
 	      case "toBusy":
-	        return `${time}a`
+	        return `${time}'`
 	        break;
 	      case "busy":
 	        return `${time}`
 	        break;
 	      case "toFree":
-	        return `${time}a`
+	        return `${time}'`
 	        break;
 	      case "free":
 	        return "libre"
