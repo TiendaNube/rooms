@@ -46,6 +46,7 @@
   "scripts": {
     "dev": "webpack -w",
     "server": "nodemon server.js",
+    "server-api": "nodemon server-api.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
