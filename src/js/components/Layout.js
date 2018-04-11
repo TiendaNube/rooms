@@ -32,7 +32,7 @@ class LayoutContainer extends React.Component {
     const mainProps = {
         label: this.props.room.data.name?this.props.room.data.name:"Loading",
         time: 30,
-        state: "free"
+        state: "free",
         user: "vickym",
         buttonLabel: "Reservar",
     }
