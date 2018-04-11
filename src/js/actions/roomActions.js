@@ -12,7 +12,7 @@ export function fetchRoom(roomId) {
       - post some tweets to http://rest.learncode.academy/api/yourusername/tweets
     */
     //TODO levantar port de .env
-    axios.get(`http://localhost:3556/api/rooms/${roomId}`)
+    axios.get(`http://192.168.3.174:3556/api/rooms/${roomId}`)
       .then((response) => {
         const helper = new actionHelper(response.data)
         response.data.state=helper.getCurrentState()

@@ -32,17 +32,28 @@ app.get('/api/rooms/:room', function (req, res, next) {
     if(currentEvent != null){
       var owner = currentEvent.organizer
       if(owner != null){
-        slackUser = web.users.lookupByEmail({token: token, email: owner.email}).then((res) => {
-          return `@${res.user.name}`
+        web.users.lookupByEmail({token: token, email: owner.email}).then((resSlack) => {
+          res.json({
+            name: calendar.getRoomName(roomSlug),
+            slackUser: resSlack.user.name,
+            schedule: schedule
+          })
         }).catch(console.error)
+      }else{
+        res.json({
+          name: calendar.getRoomName(roomSlug),
+          slackUser: null,
+          schedule: schedule
+        })
       }
+    }else{
+      res.json({
+        name: calendar.getRoomName(roomSlug),
+        slackUser: null,
+        schedule: schedule
+      })
     }
 
-    res.json({
-      name: calendar.getRoomName(roomSlug),
-      slackUser: slackUser,
-      schedule: schedule
-    })
   })
 })
 
