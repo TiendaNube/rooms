@@ -14,7 +14,7 @@ class LayoutContainer extends React.Component {
     super(props)
   }
   componentWillMount() {
-    this.props.roomActions.fetchRoom(`sala-${this.props.match.params.room}`)
+    this.props.roomActions.fetchRoom(this.props.match.params.room)
   }
   componentDidMount() {
   }
