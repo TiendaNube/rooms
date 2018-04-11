@@ -10,6 +10,10 @@ const path = require('path')
 const app = express()
 const port = process.env.PORT
 
+const { WebClient } = require('@slack/client');
+const token = process.env.SLACK_TOKEN;
+const web = new WebClient(token);
+
 //TODO Esta linea se mata cuando damos de baja webpack server
 app.use(cors({origin: 'http://localhost:3167'}));
 
@@ -20,11 +24,24 @@ app.get('/api/rooms/:room', function (req, res, next) {
   var now = moment()
 
   calendar.getSchedule(req.params.room, now, (err, schedule) => {
-    console.log(schedule)
     if (err) { res.status(500).json({ error: err }); next(); return; }
+
+
+    var now = moment()
+    var currentEvent = schedule.find(slot => now.isBetween(slot.start, slot.end)) || null
+    var slackUser = null
+    if(currentEvent != null){
+      var owner = currentEvent.organizer
+      if(owner != null){
+        slackUser = web.users.lookupByEmail({token: token, email: owner.email}).then((res) => {
+          return `@${res.user.name}`
+        }).catch(console.error)
+      }
+    }
 
     res.json({
       name: calendar.getRoomName(roomSlug),
+      slackUser: slackUser,
       schedule: schedule
     })
   })
@@ -39,7 +56,6 @@ app.post('/api/rooms/:room', function (req, res, next) {
   let now = moment()
 
   calendar.getSchedule(req.params.room, now, (err, schedule) => {
-    console.log(schedule)
     if (err) { res.status(500).json({ error: err}); next(); return; }
 
     let freeSlot = schedule.find((s) => now.isBetween(s.start, s.end) && s.available )
