@@ -9,23 +9,30 @@ export default class Main extends Component {
   constructor(props,context){
     super(props,context)
   }
-  /*buildLabel(state){
+  buildLabel(state){
     switch (state) {
-      case "busy":
-        return `${}`
+      case "toBusy":
+        return "Se ocupa en:"
         break;
-      default:
-
+      case "busy":
+        return "Ocupada hasta:"
+        break;
+      case "toFree":
+        return "Se libera en:"
+        break;
+      default: 
+        return ""
     }
-  }*/
+  }
   render() {
     const { name, time, state, user } = this.props
-    //let label = this.buildLabel(state)
-    const info ={ label:name, time, user, state}
+    let label = this.buildLabel(state)
+    const info ={label, time, user, state}
     return (
       <div className={cn('app', state)}>
         <img className="background" src={`img/${state}-background.svg`}/>
         <div className="main">
+          <h1 className="room-name">{name}</h1>
           <div className="illustration">
             <img src={`img/${state}.svg`}/>
           </div>
