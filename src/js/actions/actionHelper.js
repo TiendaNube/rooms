@@ -8,7 +8,9 @@ export default class actionHelper {
   getCurrentState(){
     let state=null
     let currentEvent=this.currentEvent()
-    console.log(currentEvent.available)
+    console.log(currentEvent)
+    console.log(this.nextEvent())
+
     if(currentEvent.available){
       state = "free"
     }else{
@@ -25,11 +27,23 @@ export default class actionHelper {
   currentEvent(){
     const schedule = this.schedule
     const now = moment()
-    return schedule.find(slot => now.isBetween(slot.start, slot.end)) || null
+    return schedule.find(slot => {
+      return now.isBetween(slot.start, slot.end)
+    }) || null
   }
   nextEvent(){
     const schedule = this.schedule
-    return schedule[0]
+    const currentEvent = this.currentEvent()
+    const currentEventFinish = moment(currentEvent.end)
+    currentEventFinish.add(1,"minutes")
+    const nextSlot = schedule.find(slot => {
+      return currentEventFinish.isBetween(slot.start, slot.end)
+    })
+    if(nextSlot.summary!=currentEvent.summary){
+      return nextSlot
+    }else{
+      null
+    }
   }
   timeToFinish(currentEvent){
     const now = moment()
