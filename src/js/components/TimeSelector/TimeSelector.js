@@ -1,17 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
+import Main from "../Main/Main"
 
 export default class TimeSelector extends Component {
 
   construct(props)
   {
-
-    //this.handleTimer = this.handleTimer.bind(this);
-    console.log("prueba")
-    console.log(this.props)
     this.state={
-      value:this.props.times[0]
+      value:this.props.time
     }
 
   }
@@ -21,27 +18,30 @@ export default class TimeSelector extends Component {
     console.log(event.target.value)
   }
 
+ OptionValues(props) {
+
+    const numbers =  props;
+    let items = [];
+     for (let i = 0; i <props.length; i++) {
+
+          items.push(<option key={numbers[i]} value={numbers[i]}>{numbers[i]}</option>);
+          //here I will be creating my options dynamically based on
+          //what props are currently passed to the parent component
+     }
+     return items;
+  }
+
   render() {
      return (
       <div>
         <form>
-          <label>{this.props.times[0]}
+          <label>
             <select id="time" onChange={this.change}>
-
+              {this.OptionValues(this.props.time)}
             </select>
           </label>
         </form>
       </div>
     )
   }
-}
-
-function OptionValues(props) {
-  const numbers = props.options;
-  const listItems = numbers.map((number) =>
-    <option>{number}</option>
-  );
-  return (
-    {listItems}
-  );
 }
