@@ -33,11 +33,17 @@ export default class Info extends Component {
    	    const button={ state }
    	    let timeLabel = this.buildTimeLabel(state, time)
 
+   	    const infoUser = user ? (
+     		<div className="user">por <strong>@{user}</strong></div>
+      	) : (
+      		<div className="user"></div>
+    	);
+
     	return (
 			<div className="info">
             	<div className="label">{label}</div>
             	<div className="time">{timeLabel}</div>
-            	<div className="user">por <strong>@{user}</strong></div>
+            	{infoUser}
 
             	<Button {...button}/>
           	</div>

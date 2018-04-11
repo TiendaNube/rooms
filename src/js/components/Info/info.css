@@ -1,6 +1,6 @@
 .label {
   text-transform: uppercase;
-  font-size: 32px;
+  font-size: 30px;
   font-weight: 200;
   padding: 0px;
 }
@@ -13,11 +13,12 @@
 }
 
 .info {
-  width: 45%;
+  width: 100%;
   line-height: 90px;
 }
 
 .user {
-  font-size: 32px;
+  font-size: 30px;
   font-weight: 200;
+  margin-top: 5px;
 }
