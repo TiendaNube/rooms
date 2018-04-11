@@ -30,17 +30,11 @@ class LayoutContainer extends React.Component {
   render() {
 
     const mainProps = {
-<<<<<<< HEAD
-        label: "Ocupada hasta",
-        time: "10:30",
-        state: "free",
-        user: "vickym",
-        buttonLabel: "Reservar",
-=======
         label: this.props.room.data.name?this.props.room.data.name:"Loading",
         time: 30,
         state: "free"
->>>>>>> add-react-router
+        user: "vickym",
+        buttonLabel: "Reservar",
     }
     return <div>
       <Main {...mainProps}/>
