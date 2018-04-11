@@ -15,7 +15,10 @@ const token = process.env.SLACK_TOKEN;
 const web = new WebClient(token);
 
 //TODO Esta linea se mata cuando damos de baja webpack server
-app.use(cors({origin: 'http://localhost:3167'}));
+
+app.get('/sala-*', function (req, res, next) {
+  res.sendFile(path.join(__dirname + '/src/index.html'));
+})
 
 app.get('/api/rooms/:room', function (req, res, next) {
   let roomSlug = req.params.room
@@ -90,7 +93,7 @@ app.post('/api/rooms/:room', function (req, res, next) {
 })
 
 app.use(history())
-app.use(express.static('public'))
+app.use(express.static('src'))
 
 app.listen(port, function(err) {
   if (err) {

@@ -15,5 +15,6 @@ ReactDOM.render((<Provider store={store}>
       <Switch>
         <Route path="/:room" component={Layout}/>
       </Switch>
-    </BrowserRouter></Provider>
+    </BrowserRouter>
+    </Provider>
   ), app);

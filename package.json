@@ -44,7 +44,7 @@
     "redux-devtools-extension": "^2.13.2"
   },
   "scripts": {
-    "dev": "./node_modules/.bin/webpack-dev-server --history-api-fallback --content-base src --inline --hot --port 3167",
+    "dev": "webpack -w",
     "server": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
