@@ -13,10 +13,10 @@ export default class actionHelper {
       state = "free"
     }
     if(state=="busy"){
-      return this.isToFinish(this.currentEvent())?"toFree":state
+      return this.isToFinish(this.currentEvent())?{status:"toFree",time:this.timeToFinish(this.currentEvent())}:{status:state,time:30}
     }
     if(state=="free"){
-      return this.closeToStart(this.nextEvent())?"toBusy":state
+      return this.closeToStart(this.nextEvent())?{status:"toBusy",time:this.timeToStart(this.nextEvent())}:{status:state,time:30}
     }
   }
 
@@ -29,20 +29,22 @@ export default class actionHelper {
     const schedule = this.schedule
     return schedule[0]
   }
-
-  isToFinish(currentEvent){
+  timeToFinish(currentEvent){
     const now = moment()
     const finishMoment = moment(currentEvent.end)
-    const timeGap = finishMoment.diff(now, 'minutes')
-    console.log(`timeGap isToFinish ${timeGap}`)
-    return timeGap<15?true:false
+    return finishMoment.diff(now, 'minutes')
   }
-  closeToStart(nextEvent){
+  isToFinish(currentEvent){
+    return this.timeToFinish(currentEvent)<15?true:false
+  }
+
+  timeToStart(nextEvent){
     const now = moment()
     const startMoment = moment(nextEvent.start)
-    const timeGap = now.diff(startMoment, 'minutes')
-    console.log(`timeGap closeToStart ${timeGap}`)
-
-    return timeGap<15?true:false
+    return now.diff(startMoment, 'minutes')
   }
+  closeToStart(nextEvent){
+    return this.timeToStart(nextEvent)<15?true:false
+  }
+
 }

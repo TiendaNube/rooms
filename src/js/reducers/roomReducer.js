@@ -2,7 +2,10 @@ export default function reducer(state={
     data:{
       schedule: [],
       name: null,
-      state: null
+      state: {
+        status:null,
+        time:null
+      }
     },
     fetching: false,
     fetched: false,
