@@ -20,14 +20,23 @@ export default class Main extends Component {
       case "toFree":
         return "Se libera en:"
         break;
-      default: 
+      default:
         return ""
     }
   }
+
   render() {
     const { name, time, state, user } = this.props
     let label = this.buildLabel(state)
     const info ={label, time, user, state}
+
+    const infoComponent = state ? (
+     <Info {...info}/>
+   ) : (
+     <div></div>
+   );
+
+
     return (
       <div className={cn('app', state)}>
         <img className="background" src={`img/${state}-background.svg`}/>
@@ -36,9 +45,12 @@ export default class Main extends Component {
           <div className="illustration">
             <img src={`img/${state}.svg`}/>
           </div>
+
           <div className="info-container">
-            <Info {...info}/>
+            {infoComponent}
           </div>
+
+
         </div>
       </div>
     )
