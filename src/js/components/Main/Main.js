@@ -4,6 +4,7 @@ import Info from "../Info/Info"
 import cn from 'classnames'
 import './App.css'
 import './Main.css'
+import TimeSelector from "../TimeSelector/TimeSelector"
 
 export default class Main extends Component {
   constructor(props,context){
@@ -45,7 +46,7 @@ export default class Main extends Component {
           <div className="illustration">
             <img src={`img/${state}.svg`}/>
           </div>
-
+          <TimeSelector times={[15,30,60]}/>
           <div className="info-container">
             {infoComponent}
           </div>
