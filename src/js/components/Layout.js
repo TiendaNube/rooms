@@ -19,19 +19,12 @@ class LayoutContainer extends React.Component {
   componentDidMount() {
   }
 
-  computeRoomTimes(){
-    const { schedule } = this.props.room.data.schedule
-    const now = moment()
-    const currentEvent = schedule.find(slot => now.isBetween(slot.start, slot.end)) || null
-  }
-
   render() {
     const mainProps = {
-        label: this.props.room.data.name ? this.props.room.data.name : "Loading",
+        name: this.props.room.data.name,
         time: 30,
-        state: "free",
+        state: this.props.room.data.state,
         user: "vickym",
-        buttonLabel: "Reservar",
     }
     return <div>
       <Main {...mainProps}/>

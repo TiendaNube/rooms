@@ -1,4 +1,6 @@
 import axios from "axios";
+import actionHelper from "./actionHelper";
+
 export function fetchRoom(roomId) {
   return function(dispatch) {
     dispatch({type: "FETCH_ROOM"});
@@ -12,7 +14,10 @@ export function fetchRoom(roomId) {
     //TODO levantar port de .env
     axios.get(`http://localhost:3555/api/rooms/${roomId}`)
       .then((response) => {
+        const helper = new actionHelper(response.data)
+        response.data.state=helper.getCurrentState()
         dispatch({type: "FETCH_ROOM_FULFILLED", payload: response.data})
+
       })
       .catch((err) => {
         dispatch({type: "FETCH_ROOM_REJECTED", payload: err})

@@ -1,7 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { Provider } from "react-redux"
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import Layout from "./components/Layout"
 import store from "./store"
@@ -12,6 +12,8 @@ const app = document.querySelector('#app')
 
 ReactDOM.render((<Provider store={store}>
     <BrowserRouter>
-      <Route path="/:room?" component={Layout}/>
+      <Switch>
+        <Route path="/:room" component={Layout}/>
+      </Switch>
     </BrowserRouter></Provider>
   ), app);

@@ -1,7 +1,8 @@
 export default function reducer(state={
     data:{
-      schedule: {},
-      name:"Loading"
+      schedule: [],
+      name: null,
+      state: null
     },
     fetching: false,
     fetched: false,

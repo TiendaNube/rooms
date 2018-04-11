@@ -9,9 +9,19 @@ export default class Main extends Component {
   constructor(props,context){
     super(props,context)
   }
+  /*buildLabel(state){
+    switch (state) {
+      case "busy":
+        return `${}`
+        break;
+      default:
+
+    }
+  }*/
   render() {
-    const { label, time, state, user } = this.props
-    const info={ label, time, user, state}
+    const { name, time, state, user } = this.props
+    //let label = this.buildLabel(state)
+    const info ={ label:name, time, user, state}
     return (
       <div className={cn('app', state)}>
         <img className="background" src={`img/${state}-background.svg`}/>
