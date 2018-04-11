@@ -26,24 +26,31 @@ app.get('/api/rooms/:room', function (req, res, next) {
   calendar.getSchedule(req.params.room, now, (err, schedule) => {
     if (err) { res.status(500).json({ error: err }); next(); return; }
 
-
     var now = moment()
     var currentEvent = schedule.find(slot => now.isBetween(slot.start, slot.end)) || null
     var slackUser = null
     if(currentEvent != null){
       var owner = currentEvent.organizer
       if(owner != null){
-        slackUser = web.users.lookupByEmail({token: token, email: owner.email}).then((res) => {
-          return `@${res.user.name}`
+        web.users.lookupByEmail({token: token, email: owner.email}).then((slackRes) => {
+          res.json({
+            name: calendar.getRoomName(roomSlug),
+            slackUser: slackRes.user.name,
+            schedule: schedule
+          })
+          next();
+          return;
         }).catch(console.error)
+      }else{
+        res.json({
+          name: calendar.getRoomName(roomSlug),
+          slackUser: null,
+          schedule: schedule
+        })
+        next();
+        return;
       }
     }
-
-    res.json({
-      name: calendar.getRoomName(roomSlug),
-      slackUser: slackUser,
-      schedule: schedule
-    })
   })
 })
 
