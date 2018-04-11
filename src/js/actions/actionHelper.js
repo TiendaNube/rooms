@@ -7,10 +7,11 @@ export default class actionHelper {
 
   getCurrentState(){
     let state=null
-    if(this.currentEvent()){
-      state = "busy"
-    }else{
+    let currentEvent=this.currentEvent()
+    if(currentEvent.available){
       state = "free"
+    }else{
+      state = "busy"
     }
     if(state=="busy"){
       return this.isToFinish(this.currentEvent())?{status:"toFree",time:this.timeToFinish(this.currentEvent())}:{status:state,time:30}
