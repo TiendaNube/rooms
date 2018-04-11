@@ -2,17 +2,18 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import './info.css'
 import Button from "../Button/Button"
+import moment from 'moment'
 
 
 export default class Info extends Component {
-   
+
     buildTimeLabel(state, time){
 	    switch (state) {
 	      case "toBusy":
 	        return `${time}'`
 	        break;
 	      case "busy":
-	        return `${time}`
+	        return `${moment(this.props.slot.end).format("hh:ss")}`
 	        break;
 	      case "toFree":
 	        return `${time}'`
@@ -20,7 +21,7 @@ export default class Info extends Component {
 	      case "free":
 	        return "libre"
 	        break;
-	      default: 
+	      default:
 	        return ""
     	}
   	}
@@ -31,7 +32,7 @@ export default class Info extends Component {
    	    const button={ state }
    	    let timeLabel = this.buildTimeLabel(state, time)
 
-    	return (    
+    	return (
 			<div className="info">
             	<div className="label">{label}</div>
             	<div className="time">{timeLabel}</div>

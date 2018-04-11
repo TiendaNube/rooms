@@ -19,11 +19,13 @@ class LayoutContainer extends React.Component {
   componentDidMount() {
   }
 
+
   render() {
     const mainProps = {
         name: this.props.room.data.name,
         time: this.props.room.data.state.time,
         state: this.props.room.data.state.status,
+        slot: this.props.room.data.currentSlot,
         user: "vickym",
     }
     return <div>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import moment from 'moment'
 import Info from "../Info/Info"
 import cn from 'classnames'
 import './App.css'
@@ -10,13 +11,14 @@ export default class Main extends Component {
   constructor(props,context){
     super(props,context)
   }
+
   buildLabel(state){
     switch (state) {
       case "toBusy":
         return "Se ocupa en:"
         break;
       case "busy":
-        return "Ocupada hasta:"
+        return   `Ocupada hasta:`
         break;
       case "toFree":
         return "Se libera en:"
@@ -27,15 +29,15 @@ export default class Main extends Component {
   }
 
   render() {
-    const { name, time, state, user } = this.props
+    const { name, time, state, user, slot } = this.props
     let label = this.buildLabel(state)
-    const info ={label, time, user, state}
+    const info ={label, time, user, state ,slot}
 
     const infoComponent = state ? (
      <Info {...info}/>
-   ) : (
+      ) : (
      <div></div>
-   );
+    );
 
 
     return (

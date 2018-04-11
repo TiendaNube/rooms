@@ -16,6 +16,7 @@ export function fetchRoom(roomId) {
       .then((response) => {
         const helper = new actionHelper(response.data)
         response.data.state=helper.getCurrentState()
+        response.data.currentSlot=helper.currentEvent()
         dispatch({type: "FETCH_ROOM_FULFILLED", payload: response.data})
 
       })

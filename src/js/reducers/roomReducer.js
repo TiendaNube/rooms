@@ -4,7 +4,8 @@ export default function reducer(state={
       name: null,
       state: {
         status:null,
-        time:null
+        time:null,
+        currentSlot:null
       }
     },
     fetching: false,
