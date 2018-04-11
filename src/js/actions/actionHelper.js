@@ -56,9 +56,10 @@ export default class actionHelper {
   }
 
   timeToStart(nextEvent){
+    console.log(nextEvent)
     const now = moment()
     const startMoment = moment(nextEvent.start)
-    return now.diff(startMoment, 'minutes')
+    return startMoment.diff(now, 'minutes')
   }
   closeToStart(nextEvent){
     return this.timeToStart(nextEvent)<15?true:false
