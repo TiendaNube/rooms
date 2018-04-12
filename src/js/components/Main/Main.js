@@ -7,71 +7,39 @@ import './Main.css'
 import TimeSelector from "../TimeSelector/TimeSelector"
 
 import Lottie from 'react-lottie';
-import * as animationData from './animate.js'
+import * as animationData from './animate.json'
+import * as labelData from './label.json'
+
 
 export default class Main extends Component {
   constructor(props,context){
     super(props,context)
   }
 
-  buildLabel(state){
-    switch (state) {
-      case "toBusy":
-        return "Se ocupa en:"
-        break;
-      case "busy":
-        return   `Ocupada hasta:`
-        break;
-      case "toFree":
-        return "Se libera en:"
-        break;
-      default:
-        return ""
-    }
-  }
-
-  buildAnimation(state){
-    switch (state) {
-      case "toBusy":
-        return animationData.tofree
-        break;
-      case "busy":
-        return   animationData.tofree
-        break;
-      case "toFree":
-        return animationData.tofree
-        break;
-      default:
-        return animationData.tofree
-    }
-  }
-
   render() {
-    const { name, time, state, user, slot } = this.props
-    let label = this.buildLabel(state)
-    const info = {label, time, user, state ,slot}
+    const { name, time, status, user, slot } = this.props
+    let label = labelData[status]
+    const info = {label, time, user, status ,slot}
 
-    const infoComponent = state ? (
+    const infoComponent = status ? (
      <Info {...info}/>
       ) : (
      <div></div>
     );
 
-    const animationDataState = this.buildAnimation(state)
-
     const defaultOptions = {
       loop: true,
-      autoplay: true, 
-      animationData: animationDataState
+      autoplay: true,
+      animationData: animationData[status]
     };
 
     return (
-      <div className={cn('app', state)}>
-        <img className="background" src={`img/${state}-background.svg`}/>
+      <div className={cn('app', status)}>
+        <img className="background" src={`img/${status}-background.svg`}/>
         <div className="main">
           <h1 className="room-name">{name}</h1>
           <div className="illustration">
-            <img src={`img/${state}.svg`}/>
+            <img src={`img/${status}.svg`}/>
           </div>
 
           <div id="animation" className="animation">

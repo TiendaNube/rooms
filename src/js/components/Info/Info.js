@@ -7,8 +7,8 @@ import moment from 'moment'
 
 export default class Info extends Component {
 
-    buildTimeLabel(state, time){
-	    switch (state) {
+    buildTimeLabel(status, time){
+	    switch (status) {
 	      case "toBusy":
 	        return `${time}'`
 	        break;
@@ -28,9 +28,9 @@ export default class Info extends Component {
 
 
     render(){
-   	    const { label, state, user, time} = this.props
-   	    const button={ state }
-   	    let timeLabel = this.buildTimeLabel(state, time)
+   	    const { label, status, user, time} = this.props
+   	    const button={ status }
+   	    let timeLabel = this.buildTimeLabel(status, time)
 
    	    const infoUser = user ? (
      		<div className="user">por <strong>@{user}</strong></div>

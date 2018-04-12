@@ -24,7 +24,7 @@ class LayoutContainer extends React.Component {
     const mainProps = {
         name: this.props.room.data.name,
         time: this.props.room.data.state.time,
-        state: this.props.room.data.state.status,
+        status: this.props.room.data.state.status,
         slot: this.props.room.data.currentSlot,
         user: this.props.user.data.display_name,
     }
