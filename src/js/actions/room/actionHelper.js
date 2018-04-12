@@ -14,11 +14,12 @@ export default class actionHelper {
   }
 
   getCurrentState(){
-    let currentEvent=this.currentEvent()
-    let nextEvent=this.nextEvent()
-    let ocupationState=this.ocupationState(currentEvent)
+    const currentEvent=this.currentEvent()
+    const nextEvent=this.nextEvent()
+    const ocupationState=this.ocupationState(currentEvent)
+
     if(nextEvent==null){
-      let gapToEndCurrentEvent = moment(currentEvent.end).fromNow()
+      const gapToEndCurrentEvent = b.diff(now,"minutes")
       if(ocupationState=="busy"){
         return gapToEndCurrentEvent<15?{status:"toFree",time:gapToEndCurrentEvent}:{status:ocupationState,time:gapToEndCurrentEvent}
       }else{
@@ -27,8 +28,9 @@ export default class actionHelper {
     }else{
       const a = moment(currentEvent.end);
       const b = moment(nextEvent.start);
-      let gapToNextEvent = a.diff(b)
-      let gapToEndCurrentEvent = moment(currentEvent.end).fromNow()
+      const now = moment();
+      const gapToEndCurrentEvent = b.diff(now,"minutes")
+      const gapToNextEvent = ocupationState? gapToEndCurrentEvent:a.diff(b,"minutes")
       if(ocupationState=="busy"){
         return gapToNextEvent>15?{status:"toFree",time:gapToNextEvent}:{status:ocupationState,time:gapToEndCurrentEvent}
       }else{
@@ -51,7 +53,7 @@ export default class actionHelper {
     const schedule = this.schedule
     const currentEvent = this.currentEvent()
     const nextSlot = schedule.find(slot => {
-      return moment(slot.start).isAfter(currentEvent.end)&&(slot.available==false)
+      return moment(slot.start).isSame(currentEvent.end)&&(slot.available==false)
     })
       return nextSlot?nextSlot:null
   }
