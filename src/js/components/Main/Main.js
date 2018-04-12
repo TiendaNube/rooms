@@ -8,7 +8,7 @@ import './Main.css'
 import Lottie from 'react-lottie';
 import * as animationData from './animate.json'
 import * as labelData from './label.json'
-
+import MainConfig from './config.js'
 
 export default class Main extends Component {
   constructor(props,context){
@@ -16,12 +16,11 @@ export default class Main extends Component {
   }
 
   render() {
-    const { name, time, status, user, slot } = this.props
+    const { name, status } = this.props
     let label = labelData[status]
-    const info = {label, time, user, status ,slot}
-
+    let infoProps={label,status}
     const infoComponent = status ? (
-     <Info {...info}/>
+     <Info {...infoProps}/>
       ) : (
      <div></div>
     );

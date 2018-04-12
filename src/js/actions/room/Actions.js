@@ -8,9 +8,10 @@ export function fetchRoom(roomId) {
       .then((response) => {
         const helper = new actionHelper(response.data)
         response.data.state=helper.getCurrentState()
-        response.data.currentSlot=helper.currentEvent()
+        response.data.state.currentSlot=helper.currentEvent()
+        console.log(response.data.currentSlot)
         dispatch({type: "FETCH_ROOM_FULFILLED", payload: response.data})
-        const organizer=response.data.currentSlot.organizer
+        const organizer=response.data.state.currentSlot.organizer
         //TODO fix it harcoded value
         if(true){
           dispatch({type: "FETCH_USER"});
@@ -34,5 +35,13 @@ export function fetchRoom(roomId) {
       .catch((err) => {
         dispatch({type: "FETCH_ROOM_REJECTED", payload: err})
       })
+  }
+}
+
+export function bookRoom(time) {
+  return function(dispatch) {
+    console.log(`Room booking action dispatched`)
+
+    dispatch({type: "BOOK_ACTION",payload:time});
   }
 }

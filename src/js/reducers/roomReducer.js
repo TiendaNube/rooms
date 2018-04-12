@@ -15,6 +15,10 @@ export default function reducer(state=initialState, action) {
           data: action.payload,
         }
       }
+      case "BOOK_ACTION": {
+        console.log(`Fired BOOK_ACTION over state - time:${action.payload}`)
+        return {...state, booking:true}
+      }
     }
 
     return state

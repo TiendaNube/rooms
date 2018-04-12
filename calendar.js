@@ -107,9 +107,9 @@ const getFreeSlots = function(events, now) {
       if (containingEvent) { current = containingEvent }
 
       if (next.start - current.end > 0) {
-        slots.push({ 
-          start: current.end.clone(), 
-          end: next.start.clone(), 
+        slots.push({
+          start: current.end.clone(),
+          end: next.start.clone(),
           summary: 'Free',
           organizer: null,
           available: true,

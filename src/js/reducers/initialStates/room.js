@@ -17,6 +17,8 @@ const initialState={
       },
       fetching: false,
       fetched: false,
+      booking:false,
+      booked:false,
       error: null
 }
 
