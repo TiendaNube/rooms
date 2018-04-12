@@ -45,31 +45,43 @@ Open a browser on **http://localhost:3000/room-slug** (*not literally*, you have
 Nodemon executes a file and keeps it updated. If you modified the file, it will automatically be updated by nodemon. To use it, run:
 
 - `npm install -g nodemon` to install
+
+Insise our package.json we have some like this:
+
+```json
+"scripts": {
+  "dev": "webpack -w",
+  "server": "nodemon server.js",
+  "server-api": "nodemon server-api.js"
+}
+```
+Then, you've:
+
 - `npm run dev` to start webpack
-- `npm run serve` to start our app
+- `npm run server` to start our app
+- `npm run server-api` to start our app
 
 To dev environment: go to localhost:3165
 To prod environment: go to localhost:3555
+## Debugging
+
+### Redux
+
+To evaluate the progress of the application's state, it's best to use the redux tools.
+
+We use [Redux Dev Tools](https://github.com/zalmoxisus/redux-devtools-extension#installation)
+
+### React
+
+For React we use [React Dev Tools][https://github.com/facebook/react-devtools]
+
 
 ## Troubleshooting
 
-### Error: Cannot find module 'moment'
+### Error: Cannot find module
 
-Run `npm install -g moment` and then `npm install moment`
+Make sure that you run `npm install -s`
 
-### Error: Cannot find module 'googleapis'
-
-Run `npm install`
-
-### Install dotenv
-
-Run `npm install dotenv`. For more information, see [this](https://github.com/motdotla/dotenv)
-
-### Install slack app
-
-Run `npm install @slack/client`. For more information, see [this](https://github.com/slackapi/node-slack-sdk)
-
-## Deploying
 
 We provide a Dockerfile, which you can easily use on [Now](https://zeit.co/now), or any other service you prefer. We are not using any sort of authentication or environment variables as this is a quick internal project, but you're free to add some sort of auth if you want.
 
