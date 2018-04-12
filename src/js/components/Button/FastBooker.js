@@ -5,10 +5,10 @@ import './button.css'
 
 export default class Button extends Component {
     render(){
-      const {status} = this.props
+      const {time} = this.props
 
     	return (
-        <button className="btn">{`Reservar por`}</button>
+        	<button className="btn">{`Usar por ${time}'`}</button>
     	)
     }
 }

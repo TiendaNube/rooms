@@ -8,7 +8,7 @@ export default class Button extends Component {
       const {status} = this.props
 
     	return (
-        <button className="btn">{`Liberar`}</button>
+        	<button className="btn">{`Liberar ${status}`}</button>
     	)
     }
 }

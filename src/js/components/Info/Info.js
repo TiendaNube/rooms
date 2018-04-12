@@ -8,6 +8,7 @@ import TimeSelector from "../TimeSelector/TimeSelector"
 import { connect } from "react-redux"
 import InfoConfig from './config.js'
 
+
 class Info extends Component {
 
     buildTimeLabel(status, time){
@@ -30,15 +31,18 @@ class Info extends Component {
   	}
 
   	buildRoomAction(status, time){
+  		const buttonStatus={status}
+  		const buttonTime={time}
+
 	    switch (status) {
 	      case "toBusy":
-	        return <FastBooker {...time}/>
+	        return <FastBooker {...buttonTime}/>
 	        break;
 	      case "busy":
-	        return <FreeRoom {...status}/>
+	        return <FreeRoom {...buttonStatus}/>
 	        break;
 	      case "toFree":
-	        return <FreeRoom {...status}/>
+	        return <FreeRoom {...buttonStatus}/>
 	        break;
 	      case "free":
 	        return <TimeSelector time = {InfoConfig.times}/>
@@ -51,9 +55,11 @@ class Info extends Component {
 
     render(){
    	    const { label, status, user, time} = this.props
+   	    const buttonStatus={status}
 
    	    let timeLabel = this.buildTimeLabel(status, time)
-   	    let roomAction = this.buildRoomAction(status)
+
+   	    let roomAction = this.buildRoomAction(status, time)
 
    	    const infoUser = user ? (
      		<div className="user">por <strong>@{user.data.display_name}</strong></div>
@@ -66,11 +72,7 @@ class Info extends Component {
             	<div className="label">{label}</div>
             	<div className="time">{timeLabel}</div>
             	{infoUser}
-
             	{roomAction}
-
-            	
-            	
           	</div>
     	)
     }
