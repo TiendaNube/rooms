@@ -4,6 +4,8 @@ import './info.css'
 import Button from "../Button/Button"
 import moment from 'moment'
 import TimeSelector from "../TimeSelector/TimeSelector"
+import { connect } from "react-redux"
+import InfoConfig from './config.js'
 
 class Info extends Component {
 
@@ -45,7 +47,7 @@ class Info extends Component {
             	<div className="time">{time}</div>
             	{infoUser}
 
-            	<TimeSelector time = {[15,30,60]}/>
+            	<TimeSelector time = {InfoConfig.times}/>
             	<Button {...button}/>
           	</div>
     	)

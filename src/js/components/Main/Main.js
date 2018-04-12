@@ -8,7 +8,6 @@ import './Main.css'
 import Lottie from 'react-lottie';
 import * as animationData from './animate.json'
 import * as labelData from './label.json'
-import MainConfig from './config.js'
 
 export default class Main extends Component {
   constructor(props,context){
