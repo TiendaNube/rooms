@@ -50,21 +50,18 @@ app.get('/api/rooms/:room', function (req, res, next) {
         web.users.lookupByEmail({token: token, email: owner.email}).then((resSlack) => {
           res.json({
             name: calendar.getRoomName(roomSlug),
-            slackUser: resSlack.user.name,
             schedule: schedule
           })
         }).catch(console.error)
       }else{
         res.json({
           name: calendar.getRoomName(roomSlug),
-          slackUser: null,
           schedule: schedule
         })
       }
     }else{
       res.json({
         name: calendar.getRoomName(roomSlug),
-        slackUser: null,
         schedule: schedule
       })
     }
@@ -79,7 +76,6 @@ app.post('/api/rooms/:room/:time', function (req, res, next) {
   if (!calendar.roomExists(roomSlug)) { res.status(404).json({ error: "Room not found" }); next(); return; }
 
   let now = moment()
-
   calendar.getSchedule(req.params.room, now, (err, schedule) => {
     if (err) { res.status(500).json({ error: err}); next(); return; }
 
@@ -93,10 +89,12 @@ app.post('/api/rooms/:room/:time', function (req, res, next) {
     }
 
     calendar.bookEvent(req.params.room, event, (err, newEvent) => {
+      console.log(err)
       if (err) { res.status(500).json({ error: err }); next(); return; }
 
       schedule.push(newEvent)
       schedule = calendar.unifySchedule(schedule)
+      console.log("llego reserva nueva")
 
       res.json({
         name: calendar.getRoomName(roomSlug),

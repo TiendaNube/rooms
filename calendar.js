@@ -175,7 +175,10 @@ const bookEvent = function(roomSlug,booking, cb) {
       end: { dateTime: moment(booking.end).format() }
     }
   }, function (err, response) {
-    if( err ) { return cb('Couldn\'t create the event', null) }
+    if( err ) {
+      console.log(err)
+      return cb('Couldn\'t create the event', null)
+    }
     let event = normalizeEvent(response, now)
     cb(null, event)
   })
