@@ -4,9 +4,6 @@
 npm-debug.log*
 rooms.json
 rooms-client.json
-<<<<<<< HEAD
 src/client.min.js
-=======
 *min.js
 .serverless
->>>>>>> Update gitignore + custom handler.js
