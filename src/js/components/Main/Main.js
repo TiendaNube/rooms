@@ -6,6 +6,9 @@ import './App.css'
 import './Main.css'
 import TimeSelector from "../TimeSelector/TimeSelector"
 
+import Lottie from 'react-lottie';
+import * as animationData from './animate.js'
+
 export default class Main extends Component {
   constructor(props,context){
     super(props,context)
@@ -27,6 +30,22 @@ export default class Main extends Component {
     }
   }
 
+  buildAnimation(state){
+    switch (state) {
+      case "toBusy":
+        return animationData.tofree
+        break;
+      case "busy":
+        return   animationData.tofree
+        break;
+      case "toFree":
+        return animationData.tofree
+        break;
+      default:
+        return animationData.tofree
+    }
+  }
+
   render() {
     const { name, time, state, user, slot } = this.props
     let label = this.buildLabel(state)
@@ -38,6 +57,13 @@ export default class Main extends Component {
      <div></div>
     );
 
+    const animationDataState = this.buildAnimation(state)
+
+    const defaultOptions = {
+      loop: true,
+      autoplay: true, 
+      animationData: animationDataState
+    };
 
     return (
       <div className={cn('app', state)}>
@@ -47,12 +73,16 @@ export default class Main extends Component {
           <div className="illustration">
             <img src={`img/${state}.svg`}/>
           </div>
+
+          <div id="animation" className="animation">
+            <Lottie options={defaultOptions}/>
+          </div>
+
+
           <TimeSelector time = {[15,30,60]}/>
           <div className="info-container">
             {infoComponent}
           </div>
-
-
         </div>
       </div>
     )

@@ -33,3 +33,7 @@ h1 {
   z-index: 1;
   margin-left: 30px;
 }
+
+.animation {
+  position: absolute;
+}
