@@ -4,15 +4,8 @@ import actionHelper from "./actionHelper";
 export function fetchRoom(roomId) {
   return function(dispatch) {
     dispatch({type: "FETCH_ROOM"});
-
-    /*
-      http://rest.learncode.academy is a public test server, so another user's experimentation can break your tests
-      If you get console errors due to bad data:
-      - change "reacttest" below to any other username
-      - post some tweets to http://rest.learncode.academy/api/yourusername/tweets
-    */
-    //TODO levantar port de .env
-    axios.get(`http://${window.location.hostname}:3556/api/rooms/${roomId}`)
+    console.log(`http://${window.location.hostname}/api/rooms/${roomId}`)
+    axios.get(`http://${window.location.hostname}:3456/api/rooms/${roomId}`)
       .then((response) => {
         const helper = new actionHelper(response.data)
         response.data.state=helper.getCurrentState()

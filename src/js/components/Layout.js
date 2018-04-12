@@ -4,7 +4,7 @@ import { bindActionCreators } from "redux"
 
 import moment from "moment"
 
-import * as roomActions from "../actions/roomActions"
+import * as roomActions from "../actions/room/Actions"
 import Main from "./Main/Main"
 import '../App.css'
 
