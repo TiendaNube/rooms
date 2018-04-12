@@ -43,6 +43,7 @@ class TimeSelector extends Component {
               {this.OptionValues(this.props.time)}
             </select>
           </label>
+          <button className="btn">{`Reservar`}</button>
         </form>
       </div>
     )
