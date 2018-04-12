@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import Main from "../Main/Main"
+import './timeSelector.css'
 
 export default class TimeSelector extends Component {
 
@@ -36,6 +37,7 @@ export default class TimeSelector extends Component {
       <div>
         <form>
           <label>
+            <span className="reservation">Reservar por:</span>
             <select id="time" onChange={this.change}>
               {this.OptionValues(this.props.time)}
             </select>

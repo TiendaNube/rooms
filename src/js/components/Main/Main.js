@@ -4,7 +4,6 @@ import Info from "../Info/Info"
 import cn from 'classnames'
 import './App.css'
 import './Main.css'
-import TimeSelector from "../TimeSelector/TimeSelector"
 
 import Lottie from 'react-lottie';
 import * as animationData from './animate.json'
@@ -46,8 +45,6 @@ export default class Main extends Component {
             <Lottie options={defaultOptions}/>
           </div>
 
-
-          <TimeSelector time = {[15,30,60]}/>
           <div className="info-container">
             {infoComponent}
           </div>

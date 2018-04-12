@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import './info.css'
 import Button from "../Button/Button"
 import moment from 'moment'
+import TimeSelector from "../TimeSelector/TimeSelector"
 
 
 export default class Info extends Component {
@@ -44,6 +45,7 @@ export default class Info extends Component {
             	<div className="time">{timeLabel}</div>
             	{infoUser}
 
+            	<TimeSelector time = {[15,30,60]}/>
             	<Button {...button}/>
           	</div>
     	)
