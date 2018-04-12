@@ -4,7 +4,7 @@ import actionHelper from "./actionHelper";
 export function fetchRoom(roomId) {
   return function(dispatch) {
     dispatch({type: "FETCH_ROOM"});
-    axios.get(`http://${window.location.hostname}:3556/api/rooms/${roomId}`)
+    axios.get(`http://${window.location.hostname}/api/rooms/${roomId}`)
       .then((response) => {
         const helper = new actionHelper(response.data)
         response.data.state=helper.getCurrentState()
@@ -14,7 +14,7 @@ export function fetchRoom(roomId) {
         //TODO fix it harcoded value
         if(true){
           dispatch({type: "FETCH_USER"});
-          axios.get(`http://${window.location.hostname}:3556/api/user/${"guillermo@tiendanube.com"}`)
+          axios.get(`http://${window.location.hostname}/api/user/${"guillermo@tiendanube.com"}`)
             .then((response) => {
               const payload={
                 name:response.data.slackUser.name,

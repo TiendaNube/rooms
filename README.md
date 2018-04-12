@@ -52,14 +52,12 @@ Insise our package.json we have some like this:
 "scripts": {
   "dev": "webpack -w",
   "server": "nodemon server.js",
-  "server-api": "nodemon server-api.js"
 }
 ```
 Then, you've:
 
 - `npm run dev` to start webpack
 - `npm run server` to start our app
-- `npm run server-api` to start our app
 
 To dev environment: go to localhost:3165
 To prod environment: go to localhost:3555
