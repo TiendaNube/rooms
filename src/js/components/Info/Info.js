@@ -61,7 +61,7 @@ class Info extends Component {
 
    	    let roomAction = this.buildRoomAction(status, time)
 
-   	    const infoUser = user ? (
+   	    const infoUser = user.data.display_name ? (
      		  <div className="user">por <strong>@{user.data.display_name}</strong></div>
       	) : (
       		<div className="user"></div>
