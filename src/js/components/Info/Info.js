@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import './info.css'
-import Button from "../Button/Button"
+import FastBooker from "../Button/FastBooker"
+import FreeRoom from "../Button/FreeRoom"
 import moment from 'moment'
 import TimeSelector from "../TimeSelector/TimeSelector"
 import { connect } from "react-redux"
@@ -28,12 +29,31 @@ class Info extends Component {
     	}
   	}
 
+  	buildRoomAction(status, time){
+	    switch (status) {
+	      case "toBusy":
+	        return <FastBooker {...time}/>
+	        break;
+	      case "busy":
+	        return <FreeRoom {...status}/>
+	        break;
+	      case "toFree":
+	        return <FreeRoom {...status}/>
+	        break;
+	      case "free":
+	        return <TimeSelector time = {InfoConfig.times}/>
+	        break;
+	      default:
+	        return ""
+    	}
+  	}
+
 
     render(){
    	    const { label, status, user, time} = this.props
-   	    const button={ status }
 
    	    let timeLabel = this.buildTimeLabel(status, time)
+   	    let roomAction = this.buildRoomAction(status)
 
    	    const infoUser = user ? (
      		<div className="user">por <strong>@{user.data.display_name}</strong></div>
@@ -44,11 +64,13 @@ class Info extends Component {
     	return (
 			<div className="info">
             	<div className="label">{label}</div>
-            	<div className="time">{time}</div>
+            	<div className="time">{timeLabel}</div>
             	{infoUser}
 
-            	<TimeSelector time = {InfoConfig.times}/>
-            	<Button {...button}/>
+            	{roomAction}
+
+            	
+            	
           	</div>
     	)
     }
