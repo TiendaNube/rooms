@@ -11,12 +11,14 @@
   width: 100%;
   display: flex;
   align-items: center;
+  margin-left: 5%;
 }
 .illustration{
   width: 55%;
 }
 .illustration img{
   height: 100vh;
+  max-height: 600px;
 }
 
 .background {
