@@ -4,4 +4,4 @@
 npm-debug.log*
 rooms.json
 rooms-client.json
-/src/client.min.js
+src/client.min.js

@@ -1,18 +1,5 @@
-export default function reducer(state={
-    data:{
-      schedule: [],
-      name: null,
-      state: {
-        status:null,
-        time:null,
-        currentSlot:null
-      }
-    },
-    fetching: false,
-    fetched: false,
-    error: null,
-  }, action) {
-
+import initialState from "./initialStates/room"
+export default function reducer(state=initialState, action) {
     switch (action.type) {
       case "FETCH_ROOM": {
         return {...state, fetching: true}

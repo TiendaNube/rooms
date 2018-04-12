@@ -1,13 +1,6 @@
-export default function reducer(state={
-    data:{
-      name:false,
-      email:false
-    },
-    fetching:false,
-    fetched:false,
-    error:null
-  }, action) {
+import initialState from "./initialStates/user"
 
+export default function reducer(state=initialState, action) {
     switch (action.type) {
       case "FETCH_USER": {
         return {...state, fetching: true}

@@ -26,7 +26,7 @@ class LayoutContainer extends React.Component {
         time: this.props.room.data.state.time,
         state: this.props.room.data.state.status,
         slot: this.props.room.data.currentSlot,
-        user: this.props.room.data.slackUser,
+        user: this.props.user.data.display_name,
     }
     return <div>
       <Main {...mainProps}/>
@@ -36,7 +36,8 @@ class LayoutContainer extends React.Component {
 
 function mapStateToProps(state){
   return{
-    room:state.room
+    room:state.room,
+    user:state.user
   }
 }
 

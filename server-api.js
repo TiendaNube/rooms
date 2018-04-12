@@ -16,6 +16,15 @@ const web = new WebClient(token);
 
 //TODO Esta linea se mata cuando damos de baja webpack server
 app.use(cors());
+
+app.get('/api/user/:email', function (req, res, next) {
+  let email = req.params.email
+  web.users.lookupByEmail({token, email}).then((resSlack) => {
+    res.json({
+      slackUser: resSlack.user,
+    })
+  }).catch(console.error)
+})
 app.get('/api/rooms/:room', function (req, res, next) {
   let roomSlug = req.params.room
   if (!calendar.roomExists(roomSlug)) { res.status(404).json({ error: "Room not found" }); next(); return; }
