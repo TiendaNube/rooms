@@ -94,7 +94,6 @@ app.post('/api/rooms/:room/:time', function (req, res, next) {
 
       schedule.push(newEvent)
       schedule = calendar.unifySchedule(schedule)
-      console.log("llego reserva nueva")
 
       res.json({
         name: calendar.getRoomName(roomSlug),
