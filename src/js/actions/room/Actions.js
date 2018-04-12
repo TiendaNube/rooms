@@ -9,13 +9,11 @@ function fetchRoom(roomId) {
         const helper = new actionHelper(response.data)
         response.data.state=helper.getCurrentState()
         response.data.state.currentSlot=helper.currentEvent()
-        console.log(response.data.currentSlot)
         dispatch({type: "FETCH_ROOM_FULFILLED", payload: response.data})
         const organizer=response.data.state.currentSlot.organizer
-        //TODO fix it harcoded value
-        if(true){
+        if(organizer){
           dispatch({type: "FETCH_USER"});
-          axios.get(`http://${window.location.hostname}/api/user/${"guillermo@tiendanube.com"}`)
+          axios.get(`http://${window.location.hostname}/api/user/${organizer.email}`)
             .then((response) => {
               const payload={
                 name:response.data.slackUser.name,
