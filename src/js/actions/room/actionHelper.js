@@ -8,9 +8,6 @@ export default class actionHelper {
   getCurrentState(){
     let state=null
     let currentEvent=this.currentEvent()
-    console.log(currentEvent)
-    console.log(this.nextEvent())
-
     if(currentEvent.available){
       state = "free"
     }else{
@@ -51,7 +48,6 @@ export default class actionHelper {
     return finishMoment.diff(now, 'minutes')
   }
   isToFree(currentEvent,nextEvent){
-    console.log(nextEvent.available)
     return (nextEvent.available&&this.timeToFinish(currentEvent)<15)?true:false
   }
 

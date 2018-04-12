@@ -1,13 +1,14 @@
-import initialState from "./initialStates/room"
+import initialState from "./initialStates/user"
+
 export default function reducer(state=initialState, action) {
     switch (action.type) {
-      case "FETCH_ROOM": {
+      case "FETCH_USER": {
         return {...state, fetching: true}
       }
-      case "FETCH_ROOM_REJECTED": {
+      case "FETCH_USER_REJECTED": {
         return {...state, fetching: false, error: action.payload}
       }
-      case "FETCH_ROOM_FULFILLED": {
+      case "FETCH_USER_FULFILLED": {
         return {
           ...state,
           fetching: false,
