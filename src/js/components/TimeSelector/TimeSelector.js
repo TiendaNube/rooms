@@ -1,22 +1,25 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
+import { connect } from "react-redux"
+import { bindActionCreators } from "redux"
+
+import * as roomActions from "../../actions/room/Actions"
 import Main from "../Main/Main"
 import './timeSelector.css'
 
-export default class TimeSelector extends Component {
+class TimeSelector extends Component {
 
-  construct(props)
+  constructor(props)
   {
-    this.state={
-      value:this.props.time
-    }
-
+    super(props)
+    this.change = this.change.bind(this)
   }
 
   change(event){
     console.log("event change fired") //to ensure that event was fired
     console.log(event.target.value)
+    this.props.roomActions.bookRoom(event.target.value)
   }
 
  OptionValues(props) {
@@ -24,20 +27,18 @@ export default class TimeSelector extends Component {
     const numbers =  props;
     let items = [];
      for (let i = 0; i <props.length; i++) {
-
           items.push(<option key={numbers[i]} value={numbers[i]}>{numbers[i]}</option>);
-          //here I will be creating my options dynamically based on
-          //what props are currently passed to the parent component
      }
      return items;
   }
 
   render() {
+    const booking = this.props.booking ? (<span className="reservation">Reservando..</span>):(<span className="reservation">Reservar por:</span>)
      return (
       <div>
         <form>
           <label>
-            <span className="reservation">Reservar por:</span>
+            {booking}
             <select id="time" onChange={this.change}>
               {this.OptionValues(this.props.time)}
             </select>
@@ -47,3 +48,19 @@ export default class TimeSelector extends Component {
     )
   }
 }
+
+
+//to map state in object props
+function mapStateToProps(state){
+  return{
+    booking:state.room.booking
+  }
+}
+//to map actions in object props
+function mapDispatchToProps(dispatch){
+  return{
+    roomActions:bindActionCreators(roomActions,dispatch)
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(TimeSelector)

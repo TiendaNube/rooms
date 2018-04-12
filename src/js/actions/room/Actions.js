@@ -1,7 +1,7 @@
 import axios from "axios";
 import actionHelper from "./actionHelper";
 
-export function fetchRoom(roomId) {
+function fetchRoom(roomId) {
   return function(dispatch) {
     dispatch({type: "FETCH_ROOM"});
     axios.get(`http://${window.location.hostname}/api/rooms/${roomId}`)
@@ -38,10 +38,14 @@ export function fetchRoom(roomId) {
   }
 }
 
-export function bookRoom(time) {
+function bookRoom(time) {
   return function(dispatch) {
-    console.log(`Room booking action dispatched`)
-
+    console.log(`Room booking action dispatched - with time ${time}`)
     dispatch({type: "BOOK_ACTION",payload:time});
   }
+}
+
+module.exports={
+  bookRoom,
+  fetchRoom
 }

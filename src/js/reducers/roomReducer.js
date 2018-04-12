@@ -16,8 +16,13 @@ export default function reducer(state=initialState, action) {
         }
       }
       case "BOOK_ACTION": {
-        console.log(`Fired BOOK_ACTION over state - time:${action.payload}`)
         return {...state, booking:true}
+      }
+      case "BOOK_ACTION_REJECTED": {
+        return {...state, booking:false, error:action.payload}
+      }
+      case "BOOK_ACTION_CANCEL": {
+        return {...state, booking:false}
       }
     }
 
