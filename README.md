@@ -26,21 +26,18 @@ After you've done that, you need to **Create a rooms.json file** in the root of 
 
 ```json
 {
-    "lounge": {"name": "Lounge", "id": "domain_123@resource.calendar.google.com"},
-    "super-room": {"name": "Super Room", "id": "domain_1234@resource.calendar.google.com"}
+    "sala-1": {"name": "Sala 01", "id": "domain_123@resource.calendar.google.com"},
+    "sala-creativa": {"name": "Sala creativa", "id": "domain_1234@resource.calendar.google.com"}
 }
 ```
 
 
-## Using the app
+## Install the app
 
 - `npm install` from the root of the project
 - `npm run start` starts the server with (in one terminal)
-- ``
 
-Open a browser on **http://localhost:3000/room-slug** (*not literally*, you have to replace room-slug with the proper room key, like *lounge* or *super-room*). You should be able to see the current status of the room and book it.
-
-### Using nodemon
+### Install nodemon
 
 Nodemon executes a file and keeps it updated. If you modified the file, it will automatically be updated by nodemon. To use it, run:
 
@@ -54,13 +51,20 @@ Insise our package.json we have some like this:
   "server": "nodemon server.js",
 }
 ```
+
+## Deploy on local environment
+
 Then, you've:
 
-- `npm run dev` to start webpack
-- `npm run server` to start our app
+- `sudo npm run dev` to start webpack
+- `sudo npm run server` to start our app
 
-To dev environment: go to localhost:3165
-To prod environment: go to localhost:3555
+Open a browser on **http://localhost/sala-1** (for example) (You can access to any room by replacing "sala-1" with the proper room key, like *sala-3* or *sala-creativa*). You should be able to see the current status of the room and book it.
+
+
+## Access on prod environment
+
+
 ## Debugging
 
 ### Redux
@@ -79,9 +83,6 @@ For React we use [React Dev Tools][https://github.com/facebook/react-devtools]
 ### Error: Cannot find module
 
 Make sure that you run `npm install -s`
-
-
-We provide a Dockerfile, which you can easily use on [Now](https://zeit.co/now), or any other service you prefer. We are not using any sort of authentication or environment variables as this is a quick internal project, but you're free to add some sort of auth if you want.
 
 
 ## License
