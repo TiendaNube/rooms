@@ -74,7 +74,7 @@ app.get('/api/rooms/:room', function (req, res, next) {
 
 
 // Quickly book a room for 15'. No args needed (for the time being)
-app.post('/api/rooms/:room', function (req, res, next) {
+app.post('/api/rooms/:room/:time', function (req, res, next) {
   let roomSlug = req.params.room
   if (!calendar.roomExists(roomSlug)) { res.status(404).json({ error: "Room not found" }); next(); return; }
 
@@ -88,8 +88,8 @@ app.post('/api/rooms/:room', function (req, res, next) {
 
     let event = {
       start: now.startOf('minute'),
-      end: moment.min(now.clone().add(15, 'minute'), freeSlot.end), // Make sure we don't overbook the room
-      summary: 'Flash meeting'
+      end: moment.min(now.clone().add(req.params.time, 'minute'), freeSlot.end), // Make sure we don't overbook the room
+      summary: "Reservada desde IONube"
     }
 
     calendar.bookEvent(req.params.room, event, (err, newEvent) => {

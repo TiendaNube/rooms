@@ -161,7 +161,7 @@ const unifySchedule = function(events) {
 }
 
 
-const bookEvent = function(roomSlug, booking, cb) {
+const bookEvent = function(roomSlug,booking, cb) {
   let room = rooms[roomSlug]
   if( ! room ) { cb('Room does not exist', null); return; }
 

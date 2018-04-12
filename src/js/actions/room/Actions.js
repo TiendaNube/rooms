@@ -40,8 +40,14 @@ function fetchRoom(roomId) {
 
 function bookRoom(time) {
   return function(dispatch) {
-    console.log(`Room booking action dispatched - with time ${time}`)
-    dispatch({type: "BOOK_ACTION",payload:time});
+    dispatch({type: "BOOK_ACTION");
+    axios.post(`http://${window.location.hostname}/api/room/book/`)
+      .then((response) => {
+        dispatch({type: "BOOK_ACTION_FULFILLED", payload})
+      })
+      .catch((err) => {
+        dispatch({type: "BOOK_ACTION_REJECTED", payload: err})
+      })
   }
 }
 
