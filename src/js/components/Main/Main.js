@@ -38,9 +38,6 @@ export default class Main extends Component {
           <div className="illustration">
             <Lottie options={defaultOptions}/>
           </div>
-
-        
-
           <div className="info-container">
             {infoComponent}
           </div>
