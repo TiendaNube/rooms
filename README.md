@@ -69,7 +69,7 @@ Install serverless offline by running `npm install serverless-offline --save-dev
 
 ## Access on prod environment
 
-Open a broswer on **https://91qk3xxuce.execute-api.us-west-1.amazonaws.com/dev/sala?number=1** (for example). You can access to any room by replacing "1" with the proper room key, like *3* or *creativa*).
+Open a broswer on **https://91qk3xxuce.execute-api.us-west-1.amazonaws.com/dev/sala?number=1** (for example). You can access to any room by replacing "1" (of the *number=1*) with the proper room key, like *3* or *creativa*).
 
 ## Debugging
 

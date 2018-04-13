@@ -39,7 +39,7 @@ provider:
 
 functions:
   sala:
-    handler: handler.getSalaInfo
+    handler: handler.getRoomInfo
     events:
       - http:
           path: /sala
