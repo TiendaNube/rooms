@@ -1,15 +1,50 @@
 'use strict';
+const moment = require('moment')
+const calendar = require('./calendar')
 
-module.exports.sala-1 = (event, context, callback) => {
-  const response = {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: 'Vamooooo!',
-    }),
-  };
+module.exports.getSalaInfo = (event, context, callback) => {
+  const now = moment()
+  const room=event.queryStringParameters.number
+  const roomSlug = `sala-${room}`
+  if (!calendar.roomExists(roomSlug)) {
+    console.log("entro")
+    const response = {
+      statusCode: 500,
+      body: JSON.stringify({
+        error: "Room not found"
+      }),
+      headers: {
+        "Access-Control-Allow-Origin" : "*" // Required for CORS support to work
+      }
+    }
+    callback(null, response)
+  }
 
-  callback(null, response);
+  calendar.getSchedule(roomSlug, now, (err, schedule) => {
+    if (err) {
+      const responseError = {
+        statusCode: 500,
+        body: JSON.stringify({
+          err
+        }),
+        headers: {
+          "Access-Control-Allow-Origin" : "*" // Required for CORS support to work
+        }
+      }
+      callback(null, responseError)
+    }
 
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // callback(null, { message: 'Go Serverless v1.0! Your function executed successfully!', event });
-};
+    const response = {
+      statusCode: 200,
+      body: JSON.stringify({
+        name: calendar.getRoomName(roomSlug),
+        schedule: schedule
+      }),
+      headers: {
+        "Access-Control-Allow-Origin" : "*" // Required for CORS support to work
+      }
+    }
+    callback(null, response)
+
+    })
+}
