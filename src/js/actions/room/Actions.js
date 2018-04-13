@@ -70,10 +70,8 @@ function bookRoom(roomId,time) {
     console.log(`http://${window.location.hostname}/api/rooms/${roomId}/${time}`)
     axios.post(`http://${window.location.hostname}/api/rooms/${roomId}/${time}`)
       .then((response) => {
-        console.log(response.data)
         const helper = new actionHelper(response.data)
         response.data.currentSlot=helper.currentSlot()
-        console.log(response.data.currentSlot)
         response.data.state=helper.currentState()
         response.data.currentSlot=helper.currentSlot()
         response.data.nextFreeSlot=helper.nextFreeSlot()
