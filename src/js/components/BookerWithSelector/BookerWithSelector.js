@@ -6,9 +6,9 @@ import { bindActionCreators } from "redux"
 
 import * as roomActions from "../../actions/room/Actions"
 import Main from "../Main/Main"
-import './timeSelector.css'
+import './bookerWithSelector.css'
 
-class TimeSelector extends Component {
+class BookerWithSelector extends Component {
 
   constructor(props)
   {
@@ -36,10 +36,10 @@ class TimeSelector extends Component {
     const booking = this.props.booking ? (<span className="reservation">Reservando..</span>):(<span className="reservation">Reservar por:</span>)
      return (
       <div>
-        <form>
+        <form onSubmitf={this.change}>
           <label>
             {booking}
-            <select id="time" onChange={this.change}>
+            <select id="time">
               {this.OptionValues(this.props.time)}
             </select>
           </label>
@@ -64,4 +64,4 @@ function mapDispatchToProps(dispatch){
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(TimeSelector)
+export default connect(mapStateToProps,mapDispatchToProps)(BookerWithSelector)

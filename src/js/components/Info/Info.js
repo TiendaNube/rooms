@@ -4,7 +4,7 @@ import './info.css'
 import FastBooker from "../Button/FastBooker"
 import FreeRoom from "../Button/FreeRoom"
 import moment from 'moment'
-import TimeSelector from "../TimeSelector/TimeSelector"
+import TimeSelector from "../BookerWithSelector/BookerWithSelector"
 import { connect } from "react-redux"
 import InfoConfig from './config.js'
 moment.updateLocale('en', {
