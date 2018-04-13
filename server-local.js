@@ -30,79 +30,50 @@ app.get('/api/user/:email', function (req, res, next) {
   }).catch(console.error)
 })
 
-
-app.get('/api/rooms/:room', function (req, res, next) {
-  let roomSlug = req.params.room
-  if (!calendar.roomExists(roomSlug)) { res.status(404).json({ error: "Room not found" }); next(); return; }
-
-  var now = moment()
-
-  calendar.getSchedule(req.params.room, now, (err, schedule) => {
-    if (err) { res.status(500).json({ error: err }); next(); return; }
-
-
-    var now = moment()
-    var currentEvent = schedule.find(slot => now.isBetween(slot.start, slot.end)) || null
-    var slackUser = null
-    if(currentEvent != null){
-      var owner = currentEvent.organizer
-      if(owner != null){
-        web.users.lookupByEmail({token: token, email: owner.email}).then((resSlack) => {
-          res.json({
-            name: calendar.getRoomName(roomSlug),
-            schedule: schedule
-          })
-        }).catch(console.error)
-      }else{
-        res.json({
-          name: calendar.getRoomName(roomSlug),
-          schedule: schedule
-        })
-      }
-    }else{
-      res.json({
-        name: calendar.getRoomName(roomSlug),
-        schedule: schedule
-      })
-    }
-
-  })
-})
-
-
-// Quickly book a room for 15'. No args needed (for the time being)
 app.post('/api/rooms/:room/:time', function (req, res, next) {
   let roomSlug = req.params.room
+  let minutesToBook = req.params.time
   if (!calendar.roomExists(roomSlug)) { res.status(404).json({ error: "Room not found" }); next(); return; }
 
   let now = moment()
   calendar.getSchedule(req.params.room, now, (err, schedule) => {
     if (err) { res.status(500).json({ error: err}); next(); return; }
 
-    let freeSlot = schedule.find((s) => now.isBetween(s.start, s.end) && s.available )
+    let freeSlot = schedule.find((slot) => canBookRoomFromNow(slot, minutesToBook))
     if( ! freeSlot ) { res.status(409).json({ error: "Room is busy right now" }); next(); return; }
 
-    let event = {
-      start: now.startOf('minute'),
-      end: moment.min(now.clone().add(req.params.time, 'minute'), freeSlot.end), // Make sure we don't overbook the room
-      summary: "Reservada desde IONube"
+    freeSlot = {
+      start: moment().subtract(3, 'hours'),
+      end: moment().add(minutesToBook, 'minutes').subtract(3, 'hours'),
+      summary: 'Reservado por IoNube',
+      organizer: JSON.stringify({
+          email: '@IoNube'
+        }),
+      available: false,
+      private: false
     }
 
-    calendar.bookEvent(req.params.room, event, (err, newEvent) => {
-      console.log(err)
-      if (err) { res.status(500).json({ error: err }); next(); return; }
+    schedule.forEach(function(part, index, newSchedule) {
+      if(moment().isBetween(part.start, part.end)){
+        newSchedule[index].start = freeSlot.start;
+        newSchedule[index].end = freeSlot.end;
+        newSchedule[index].summary = freeSlot.summary;
+        newSchedule[index].organizer = freeSlot.organizer;
+        newSchedule[index].available = freeSlot.available;
+        newSchedule[index].private = freeSlot.private;
+      }
+    });
 
-      schedule.push(newEvent)
-      schedule = calendar.unifySchedule(schedule)
-
-      res.json({
-        name: calendar.getRoomName(roomSlug),
-        schedule: schedule
-      })
+    res.json({
+      name: calendar.getRoomName(roomSlug),
+      schedule: schedule
     })
-
   })
 })
+
+function canBookRoomFromNow(slot, minutesToBook){
+  return moment().isBetween(slot.start, slot.end) && slot.available && slot.start.unix() + minutesToBook * 60 <= slot.end.unix()
+}
 
 app.use(history())
 app.use(express.static('src'))

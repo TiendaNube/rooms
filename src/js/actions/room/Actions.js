@@ -65,7 +65,14 @@ function bookRoom(roomId,time) {
   return function(dispatch) {
     dispatch({type: "BOOK_ACTION"})
     const params=roomId.replace("sala-", "?number=")
+<<<<<<< HEAD
     axios.post(`http://${window.location.hostname}/api/rooms/sala-8/${time}`)
+=======
+    console.log(params)
+    //'/api/rooms/:room/:time'
+    //TODO pegarle al end en produ de los user de slack
+    axios.post(`http://${window.location.hostname}/api/rooms/${roomId}/${time}`)
+>>>>>>> Fix event to book rooms
       .then((response) => {
         const helper = new actionHelper(response.data)
         response.data.state=helper.currentState()
@@ -96,7 +103,7 @@ function bookRoom(roomId,time) {
         const nextMeetingOwner=response.data.nextMeeting!=null?response.data.nextMeeting.organizer:null
         if(nextMeetingOwner){
           dispatch({type: "FETCH_NEXT_METTING_OWNER"});
-          axios.get(`http://${window.location.hostname}/api/user/${nextMeetingOwner.email}`)
+          axios.get(`https://91qk3xxuce.execute-api.us-west-1.amazonaws.com/dev/slack-user?email=${nextMeetingOwner.email}`)
             .then((response) => {
               const payload={
                 name:response.data.slackUser.name,
