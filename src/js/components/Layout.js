@@ -16,11 +16,15 @@ class LayoutContainer extends React.Component {
   componentWillMount() {
     this.props.roomActions.fetchRoom(this.props.match.params.room)
   }
-  componentDidMount() {
+  updateTime(){
+    if(this.props.room.data.state.status&&this.props.room.fetching==false){
+      this.props.roomActions.tickTime(this.props.match.params.room,this.props.room)
+      clearInterval(this.updateInterval)
+    }
   }
 
-
   render() {
+    this.updateInterval = setInterval(() => this.updateTime(), 1 * 1000)
     const mainProps = {
         name: this.props.room.data.name,
         time: this.props.room.data.state.time,

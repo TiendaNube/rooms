@@ -4,10 +4,21 @@ export default function reducer(state=initialState, action) {
       case "FETCH_ROOM": {
         return {...state, fetching: true}
       }
+      case "CHANGE_CURRENT_EVENT": {
+        return {...state, fetching: true}
+      }
       case "FETCH_ROOM_REJECTED": {
         return {...state, fetching: false, error: action.payload}
       }
       case "FETCH_ROOM_FULFILLED": {
+        return {
+          ...state,
+          fetching: false,
+          fetched: true,
+          data: action.payload,
+        }
+      }
+      case "CHANGE_CURRENT_EVENT_FULFILLED": {
         return {
           ...state,
           fetching: false,
@@ -29,22 +40,29 @@ export default function reducer(state=initialState, action) {
       }
       case "CANCEL_MEETING": {
         return {
-              ...state.data,
-              currentSlot : {
-                  ...state.currentSlot,
-                  cancelling:true
+              ...state,
+              data : {
+                  ...state.data,
+                  currentSlot : {
+                      ...state.currentSlot,
+                      cancelling:true
+                  }
               }
         }
       }
       case "CANCEL_MEETING_UNDO": {
         return {
-              ...state.data,
-              currentSlot : {
-                  ...state.currentSlot,
-                  cancelling:false
+              ...state,
+              data : {
+                  ...state.data,
+                  currentSlot : {
+                      ...state.currentSlot,
+                      cancelling:false
+                  }
               }
         }
       }
+
       case "FAST_BOOKING": {
         return {
         ...state,
@@ -69,6 +87,15 @@ export default function reducer(state=initialState, action) {
           }
         }
       }
+
+      case "TICK_TIME": {
+        return {
+          ...state,
+          data: action.payload,
+        }
+      }
+
+
     }
     return state
 }

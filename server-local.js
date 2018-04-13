@@ -21,7 +21,6 @@ app.get('/sala-*', function (req, res, next) {
   res.sendFile(path.join(__dirname + '/src/index.html'));
 })
 
-//TODO llevar a serverless
 app.get('/api/user/:email', function (req, res, next) {
   let email = req.params.email
   web.users.lookupByEmail({token, email}).then((resSlack) => {
@@ -32,8 +31,46 @@ app.get('/api/user/:email', function (req, res, next) {
 })
 
 
+app.get('/api/rooms/:room', function (req, res, next) {
+  let roomSlug = req.params.room
+  if (!calendar.roomExists(roomSlug)) { res.status(404).json({ error: "Room not found" }); next(); return; }
 
-// TODO matar
+  var now = moment()
+
+  calendar.getSchedule(req.params.room, now, (err, schedule) => {
+    if (err) { res.status(500).json({ error: err }); next(); return; }
+
+
+    var now = moment()
+    var currentEvent = schedule.find(slot => now.isBetween(slot.start, slot.end)) || null
+    var slackUser = null
+    if(currentEvent != null){
+      var owner = currentEvent.organizer
+      if(owner != null){
+        web.users.lookupByEmail({token: token, email: owner.email}).then((resSlack) => {
+          res.json({
+            name: calendar.getRoomName(roomSlug),
+            schedule: schedule
+          })
+        }).catch(console.error)
+      }else{
+        res.json({
+          name: calendar.getRoomName(roomSlug),
+          schedule: schedule
+        })
+      }
+    }else{
+      res.json({
+        name: calendar.getRoomName(roomSlug),
+        schedule: schedule
+      })
+    }
+
+  })
+})
+
+
+// Quickly book a room for 15'. No args needed (for the time being)
 app.post('/api/rooms/:room/:time', function (req, res, next) {
   let roomSlug = req.params.room
   if (!calendar.roomExists(roomSlug)) { res.status(404).json({ error: "Room not found" }); next(); return; }

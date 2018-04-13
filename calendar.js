@@ -61,7 +61,12 @@ const normalizeEvent = function(apiEvent, now) {
     summary: (apiEvent.visibility === 'private') ? 'Private event' : apiEvent.summary,
     organizer: apiEvent.organizer,
     private: (apiEvent.visibility === 'private'),
-    available: false
+    available: false,
+    recurrence:apiEvent.recurrence,
+    status:apiEvent.status,
+    visibility:apiEvent.visibility,
+    transparency:apiEvent.transparency,
+    locked:apiEvent.locked
   }
 
   // Here's a fun fact: The start and end dates for repeating events
