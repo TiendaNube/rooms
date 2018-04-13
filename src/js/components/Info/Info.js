@@ -22,7 +22,7 @@ class Info extends Component {
 	        return `${time}'`
 	        break;
 	      case "busy":
-	        return `${moment(this.props.slot.end).format("hh:mm")}`
+	        return `${moment(this.props.currentSlot.end).format("hh:mm")}`
 	        break;
 	      case "toFree":
           const now = moment()
