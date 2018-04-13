@@ -36,12 +36,10 @@ export default class Main extends Component {
         <div className="main">
           <h1 className="room-name">{name}</h1>
           <div className="illustration">
-            <img src={`img/${status}.svg`}/>
-          </div>
-
-          <div id="animation" className="animation">
             <Lottie options={defaultOptions}/>
           </div>
+
+        
 
           <div className="info-container">
             {infoComponent}
