@@ -23,7 +23,6 @@ class BookerWithSelector extends Component {
     this.props.roomActions.bookRoom(this.props.roomId,timeBook)
   }
   change(event){
-    console.log(event.target.value)
     const value=event.target.value
     this.setState((prevState,value) => {
       return {timeSelected: value};
@@ -46,7 +45,7 @@ class BookerWithSelector extends Component {
       <div>
           <label>
             {booking}
-            <select id="time" onChange={()=>{this.change()}}>
+            <select id="time" onChange={(event)=>{this.change(event)}}>
               {this.OptionValues(this.props.times)}
             </select>
           </label>
