@@ -42,13 +42,16 @@ app.post('/api/rooms/:room/:time', function (req, res, next) {
     let freeSlot = schedule.find((slot) => canBookRoomFromNow(slot, minutesToBook))
     if( ! freeSlot ) { res.status(409).json({ error: "Room is busy right now" }); next(); return; }
 
+    organizer = {
+      email: '@IoNube',
+      displayName: 'IoNube'
+    }
+
     freeSlot = {
       start: moment().subtract(3, 'hours'),
       end: moment().add(minutesToBook, 'minutes').subtract(3, 'hours'),
       summary: 'Reservado por IoNube',
-      organizer: JSON.stringify({
-          email: '@IoNube'
-        }),
+      organizer: organizer,
       available: false,
       private: false
     }
