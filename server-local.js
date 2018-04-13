@@ -48,8 +48,8 @@ app.post('/api/rooms/:room/:time', function (req, res, next) {
     }
 
     freeSlot = {
-      start: moment().subtract(3, 'hours'),
-      end: moment().add(minutesToBook, 'minutes').subtract(3, 'hours'),
+      start: moment(),
+      end: moment().add(minutesToBook, 'minutes'),
       summary: 'Reservado por IoNube',
       organizer: organizer,
       available: false,

@@ -9,8 +9,6 @@ function fetchRoom(roomId) {
       //  axios.get(`http://${window.location.hostname}/api/rooms/${roomId}`)
     axios.get(`https://91qk3xxuce.execute-api.us-west-1.amazonaws.com/dev/sala${params}&allSchedule=true`)
       .then((response) => {
-        console.log(response.data)
-
         const helper = new actionHelper(response.data)
         response.data.state=helper.currentState()
         response.data.currentSlot=helper.currentSlot()
@@ -74,6 +72,8 @@ function bookRoom(roomId,time) {
       .then((response) => {
         console.log(response.data)
         const helper = new actionHelper(response.data)
+        response.data.currentSlot=helper.currentSlot()
+        console.log(response.data.currentSlot)
         response.data.state=helper.currentState()
         response.data.currentSlot=helper.currentSlot()
         response.data.nextFreeSlot=helper.nextFreeSlot()
