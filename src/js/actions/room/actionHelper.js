@@ -15,30 +15,45 @@ export default class actionHelper {
 
   getCurrentState(){
     const currentEvent=this.currentEvent()
-    const nextEvent=this.nextEvent()
     const ocupationState=this.ocupationState(currentEvent)
-
-    if(nextEvent==null){
-      const gapToEndCurrentEvent = b.diff(now,"minutes")
-      if(ocupationState=="busy"){
-        return gapToEndCurrentEvent<15?{status:"toFree",time:gapToEndCurrentEvent}:{status:ocupationState,time:gapToEndCurrentEvent}
-      }else{
-        return {status:ocupationState,time:gapToEndCurrentEvent}
-      }
-    }else{
-      const a = moment(currentEvent.end);
-      const b = moment(nextEvent.start);
-      const now = moment();
-      const gapToEndCurrentEvent = b.diff(now,"minutes")
-      const gapToNextEvent = ocupationState? gapToEndCurrentEvent:a.diff(b,"minutes")
-      if(ocupationState=="busy"){
-        return gapToNextEvent>15?{status:"toFree",time:gapToNextEvent}:{status:ocupationState,time:gapToEndCurrentEvent}
-      }else{
-        return gapToNextEvent<15?{status:"toBusy",time:gapToNextEvent}:{status:ocupationState,time:gapToEndCurrentEvent}
-      }
-    }
-
+    return ocupationState=="busy"?this.getBusyState():this.getFreeState()
   }
+  getBusyState(){
+    const currentEvent=this.currentEvent()
+    const nextEvent=this.nextEvent()
+    const now = moment()
+    const finishCurrentEvent = moment(currentEvent.end)
+    const gapToFinishCurrentEvent=finishCurrentEvent.diff(now,"minutes")
+      if(nextEvent==null){
+        return finishCurrentEvent<15?{status:"toFree",time:gapToFinishCurrentEvent}:{status:"busy",time:gapToFinishCurrentEvent}
+      }else{
+        const startNextEvent = moment(nextEvent.start)
+        const finishNextEvent = moment(nextEvent.end)
+        const gapBeteenwEvent=startNextEvent.diff(finishCurrentEvent,"minutes")
+        const gapToFinishNextEvent=finishNextEvent.diff(now,"minutes")
+        if(gapToFinishCurrentEvent>15){
+          return {status:"busy",time:gapToFinishCurrentEvent}
+        }else{
+          return gapBeteenwEvent>15?{status:"toFree",time:gapToFinishCurrentEvent}:{status:"busy",time:gapToFinishNextEvent}
+        }
+      }
+  }
+
+  getFreeState(){
+    const currentEvent=this.currentEvent()
+    const nextEvent=this.nextEvent()
+    const now = moment()
+    const finishCurrentEvent = moment(currentEvent.end)
+    const gapToFinishCurrentEvent=finishCurrentEvent.diff(now,"minutes")
+      if(nextEvent==null){
+        return {status:"free",time:gapToFinishCurrentEvent}
+      }else{
+        return gapToFinishCurrentEvent<15?{status:"toBusy",time:gapToFinishCurrentEvent}:{status:"free",time:gapToFinishCurrentEvent}
+      }
+  }
+
+
+
   ocupationState(currentEvent){
     return currentEvent.available?"free":"busy"
   }
@@ -57,5 +72,14 @@ export default class actionHelper {
     })
       return nextSlot?nextSlot:null
   }
+  nextFreeSlot(){
+    const schedule = this.schedule
+    const currentEvent = this.currentEvent()
+    const nextSlot = schedule.find(slot => {
+      return moment(slot.start).isAfter(currentEvent.end)&&(slot.available==true)
+    })
+      return nextSlot?nextSlot:null
+  }
+
 
 }

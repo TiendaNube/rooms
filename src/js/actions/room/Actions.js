@@ -4,7 +4,8 @@ import actionHelper from "./actionHelper";
 function fetchRoom(roomId) {
   return function(dispatch) {
     dispatch({type: "FETCH_ROOM"});
-    axios.get(`http://${window.location.hostname}/api/rooms/${roomId}`)
+    const params=roomId.replace("sala-", "?number=")
+    axios.get(`https://ywp3a1bhla.execute-api.us-west-1.amazonaws.com/dev/sala${params}`)
       .then((response) => {
         const helper = new actionHelper(response.data)
         response.data.state=helper.getCurrentState()
