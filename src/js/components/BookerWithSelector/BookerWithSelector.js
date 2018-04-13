@@ -13,7 +13,6 @@ class BookerWithSelector extends Component {
   constructor(props)
   {
     super(props)
-    this.change = this.change.bind(this)
   }
   book(){
     this.props.roomActions.bookRoom(this.props.roomId,15)
