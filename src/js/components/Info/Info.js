@@ -10,9 +10,8 @@ import InfoConfig from './config.js'
 moment.updateLocale('en', {
     relativeTime : {
         future: "%s",
-        mm: "%d",
-        ss:"%d"
-    }
+        mm: "%d"
+      }
 });
 
 class Info extends Component {
@@ -28,8 +27,8 @@ class Info extends Component {
 	      case "toFree":
           const now = moment()
           const finishCurrentMeeting = moment(this.props.currentSlot.end)
-          const diff=now.to(finishCurrentMeeting)
-          return `${diff}'`
+          const diffMinutes=finishCurrentMeeting.diff(now,"minutes")
+          return `${diffMinutes}'`
 	        break;
 	      case "free":
 	        return "libre"
