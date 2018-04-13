@@ -7,7 +7,13 @@ import moment from 'moment'
 import TimeSelector from "../TimeSelector/TimeSelector"
 import { connect } from "react-redux"
 import InfoConfig from './config.js'
-
+moment.updateLocale('en', {
+    relativeTime : {
+        future: "%s",
+        mm: "%d",
+        ss:"%d"
+    }
+});
 
 class Info extends Component {
 
@@ -17,10 +23,13 @@ class Info extends Component {
 	        return `${time}'`
 	        break;
 	      case "busy":
-	        return `${moment(this.props.slot.end).format("HH:SS")}`
+	        return `${moment(this.props.slot.end).format("hh:mm")}`
 	        break;
 	      case "toFree":
-	        return `${time}'`
+          const now = moment()
+          const finishCurrentMeeting = moment(this.props.currentSlot.end)
+          const diff=now.to(finishCurrentMeeting)
+          return `${diff}'`
 	        break;
 	      case "free":
 	        return "libre"
@@ -82,7 +91,7 @@ class Info extends Component {
 function mapStateToProps(state){
   return{
     time:state.room.data.state.time,
-    slot:state.room.data.state.currentSlot,
+    currentSlot:state.room.data.currentSlot,
     user:state.user
   }
 }

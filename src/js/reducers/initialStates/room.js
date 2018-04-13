@@ -4,15 +4,27 @@ const initialState={
         name: null,
         state: {
           status:null,
-          time:null,
-          currentSlot:{
-            available:null,
-            end:null,
-            organizer:null,
-            private:null,
-            start:null,
-            summary:null
-          }
+          ocupationState:null,
+          time:null
+        },
+        currentSlot:{
+          available:null,
+          end:null,
+          organizer:null,
+          private:null,
+          start:null,
+          summary:null
+        },
+        nextFreeSlot:{
+          end:null,
+          start:null,
+        },
+        nextMeeting:{
+          end:null,
+          organizer:null,
+          private:null,
+          start:null,
+          summary:null
         }
       },
       fetching: false,
