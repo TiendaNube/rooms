@@ -65,14 +65,9 @@ function bookRoom(roomId,time) {
   return function(dispatch) {
     dispatch({type: "BOOK_ACTION"})
     const params=roomId.replace("sala-", "?number=")
-<<<<<<< HEAD
-    axios.post(`http://${window.location.hostname}/api/rooms/sala-8/${time}`)
-=======
-    console.log(params)
     //'/api/rooms/:room/:time'
     //TODO pegarle al end en produ de los user de slack
     axios.post(`http://${window.location.hostname}/api/rooms/${roomId}/${time}`)
->>>>>>> Fix event to book rooms
       .then((response) => {
         const helper = new actionHelper(response.data)
         response.data.state=helper.currentState()
