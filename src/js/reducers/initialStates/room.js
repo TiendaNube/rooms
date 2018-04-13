@@ -17,7 +17,10 @@ const initialState={
         },
         nextFreeSlot:{
           end:null,
+          organizer:null,
+          private:null,
           start:null,
+          summary:null
         },
         nextMeeting:{
           end:null,
