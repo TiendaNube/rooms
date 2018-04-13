@@ -45,7 +45,30 @@ export default function reducer(state=initialState, action) {
               }
         }
       }
-
+      case "FAST_BOOKING": {
+        return {
+        ...state,
+          room : {
+              ...state.room,
+              currentSlot : {
+                  ...state.currentSlot,
+                  cancelling:true
+              }
+          }
+        }
+      }
+      case "FAST_BOOKING_UNDO": {
+        return {
+        ...state,
+          room : {
+              ...state.room,
+              currentSlot : {
+                  ...state.currentSlot,
+                  cancelling:false
+              }
+          }
+        }
+      }
     }
     return state
 }

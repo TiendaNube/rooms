@@ -36,7 +36,7 @@ class BookerWithSelector extends Component {
     const booking = this.props.booking ? (<span className="reservation">Reservando..</span>):(<span className="reservation">Reservar por:</span>)
      return (
       <div>
-        <form onSubmit={this.change}>
+        <form onSubmit={() => {this.change}}>
           <label>
             {booking}
             <select id="time">

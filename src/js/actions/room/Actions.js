@@ -132,12 +132,17 @@ function cancelMeeting(roomId) {
   }
 }
 
-
-
+function fastBooking(roomId) {
+  return function(dispatch) {
+    console.log("fastBooking");
+    dispatch({type: "FAST_BOOKING",payload:roomId});
+  }
+}
 
 
 module.exports={
   bookRoom,
   fetchRoom,
-  cancelMeeting
+  cancelMeeting,
+  fastBooking
 }

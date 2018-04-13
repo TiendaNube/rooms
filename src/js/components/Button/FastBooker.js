@@ -15,16 +15,18 @@ class FastBooker extends Component {
       this.book = this.book.bind(this)
     }
     book(){
-      //this.props.roomActions.fastBooking()
+      this.props.roomActions.fastBooking(1)
     }
 
     render(){
       const {time} = this.props
-      const content = this.props.booking? (<div></div>):
-      (<button className="btn" onclick={this.book()}>{`Ocupar por`}</button>);
-
+      const contentComponent = this.props.cancelling ? (
+       <div></div>
+        ) : (
+       <button className="btn" onClick={() => {this.book()}}>{`cupar por`}</button>
+      );
     	return (
-        	  <div>{content}</div>
+        	  <div>{contentComponent}</div>
     	)
     }
 }
@@ -32,7 +34,7 @@ class FastBooker extends Component {
 //to map state in object props
 function mapStateToProps(state){
   return{
-    booking:state.room.booking
+    booking:state.room.data.currentSlot.booking
   }
 }
 //to map actions in object props
