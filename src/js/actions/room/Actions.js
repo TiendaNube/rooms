@@ -19,8 +19,7 @@ function fetchRoom(roomId) {
         const user=response.data.currentSlot.organizer
         if(user){
           dispatch({type: "FETCH_USER"});
-          //TODO pegarle al end en produ de los user de slack
-          axios.get(`http://${window.location.hostname}/api/user/${user.email}`)
+          axios.get(`https://91qk3xxuce.execute-api.us-west-1.amazonaws.com/dev/slack-user?email=${user.email}`)
             .then((response) => {
               const payload={
                 name:response.data.slackUser.name,
@@ -38,9 +37,8 @@ function fetchRoom(roomId) {
         }
         const nextMeetingOwner=response.data.nextMeeting.organizer
         if(nextMeetingOwner){
-          //TODO pegarle al end en produ de los user de slack
           dispatch({type: "FETCH_NEXT_METTING_OWNER"});
-          axios.get(`http://${window.location.hostname}/api/user/${nextMeetingOwner.email}`)
+          axios.get(`https://91qk3xxuce.execute-api.us-west-1.amazonaws.com/dev/slack-user?email=${nextMeetingOwner.email}`)
             .then((response) => {
               const payload={
                 name:response.data.slackUser.name,
@@ -82,7 +80,7 @@ function bookRoom(roomId,time) {
         const user=response.data.currentSlot.organizer
         if(user){
           dispatch({type: "FETCH_USER"});
-          axios.get(`http://${window.location.hostname}/api/user/${user.email}`)
+          axios.get(`https://91qk3xxuce.execute-api.us-west-1.amazonaws.com/dev/slack-user?email=${user.email}`)
             .then((response) => {
               const payload={
                 name:response.data.slackUser.name,

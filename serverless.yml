@@ -52,6 +52,19 @@ functions:
                   "number" : "$input.params('number')",
                   "allSchedule" : "$input.params('allSchedule')",
                 }
+  slackUser:
+      handler: handler.getSlackUser
+      events:
+        - http:
+            path: /slack-user
+            method: get
+            cors: true
+            request:
+              template:
+                application/json: >
+                  {
+                    "email" : "$input.params('email')"
+                  }
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
