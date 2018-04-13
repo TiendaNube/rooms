@@ -27,6 +27,7 @@
     "moment": "^2.22.0",
     "moment-timezone": "^0.5.14",
     "nodemon": "^1.17.3",
+    "offline": "0.0.1",
     "precss": "^3.1.2",
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
@@ -38,6 +39,7 @@
     "redux-logger": "^2.6.1",
     "redux-promise-middleware": "^3.2.0",
     "redux-thunk": "^2.1.0",
+    "serverless": "^1.26.1",
     "style-loader": "^0.20.3",
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.14.1"

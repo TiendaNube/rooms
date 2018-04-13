@@ -5,7 +5,9 @@ function fetchRoom(roomId) {
   return function(dispatch) {
     dispatch({type: "FETCH_ROOM"});
     const params=roomId.replace("sala-", "?number=")
-    axios.get(`https://91qk3xxuce.execute-api.us-west-1.amazonaws.com/dev/sala${params}`)
+    //TODO set in server in prod!!
+    //axios.get(`https://91qk3xxuce.execute-api.us-west-1.amazonaws.com/dev/sala${params}&allSchedule=true`)
+    axios.get(`http://${window.location.hostname}/api/rooms/${roomId}`)
       .then((response) => {
         const helper = new actionHelper(response.data)
         response.data.state=helper.currentState()

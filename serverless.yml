@@ -50,6 +50,7 @@ functions:
               application/json: >
                 {
                   "number" : "$input.params('number')",
+                  "allSchedule" : "$input.params('allSchedule')",
                 }
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
@@ -98,3 +99,7 @@ functions:
 
 plugins:
   - serverless-offline
+
+custom:
+  serverless-offline:
+    port: 3004

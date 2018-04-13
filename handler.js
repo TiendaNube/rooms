@@ -5,9 +5,9 @@ const calendar = require('./calendar')
 module.exports.getRoomInfo = (event, context, callback) => {
   const now = moment()
   const room = event.queryStringParameters.number
+  const allSchedule = event.queryStringParameters.allSchedule
   const roomSlug = `sala-${room}`
   if (!calendar.roomExists(roomSlug)) {
-    console.log("entro")
     const response = {
       statusCode: 500,
       body: JSON.stringify({
@@ -34,14 +34,16 @@ module.exports.getRoomInfo = (event, context, callback) => {
       callback(null, responseError)
     }
 
-    var now = moment()
-    var currentEvent = schedule.find(slot => now.isBetween(slot.start, slot.end)) || null
+    const now = moment()
+
+    const currentEvent = schedule.find(slot => now.isBetween(slot.start, slot.end)) || null
+    const scheduleResponse=allSchedule=="true"?schedule:currentEvent
 
     const response = {
       statusCode: 200,
       body: JSON.stringify({
         name: calendar.getRoomName(roomSlug),
-        schedule: currentEvent
+        schedule: scheduleResponse
       }),
       headers: {
         "Access-Control-Allow-Origin" : "*" // Required for CORS support to work
