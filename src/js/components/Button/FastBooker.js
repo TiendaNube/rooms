@@ -14,19 +14,17 @@ class FastBooker extends Component {
       super(props)
       this.book = this.book.bind(this)
     }
-    book(event){
-
-      this.props.roomActions.fastBooking(event.target.value)
+    book(){
+      //this.props.roomActions.fastBooking()
     }
 
     render(){
       const {time} = this.props
       const content = this.props.booking? (<div></div>):
-      (<button className="btn" onclick={this.book}>{`Liberar`}</button>);
-
+      (<button className="btn" onclick={this.book()}>{`Ocupar por`}</button>);
 
     	return (
-        	  {content}
+        	  <div>{content}</div>
     	)
     }
 }

@@ -23,7 +23,7 @@ class FreeRoom extends Component {
       const contentComponent = this.props.cancelling ? (
        <div></div>
         ) : (
-       <button className="btn" onClick={this.cancel()}>{`Liberar`}</button>
+       <button className="btn" onClick={() => {this.cancel()}}>{`Liberar`}</button>
       );
     	return (
         <div>{contentComponent}</div>
@@ -33,7 +33,7 @@ class FreeRoom extends Component {
 //to map state in object props
 function mapStateToProps(state){
   return{
-    cancelling:state.room.cancelling
+    cancelling:state.room.data.currentSlot.cancelling
   }
 }
 //to map actions in object props

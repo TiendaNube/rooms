@@ -8,12 +8,17 @@ const initialState={
           time:null
         },
         currentSlot:{
+          booking:false,
+          booked:false,
+          cancelling:false,
+          cancelled:false,
           available:null,
           end:null,
           organizer:null,
           private:null,
           start:null,
-          summary:null
+          summary:null,
+          error:null
         },
         nextFreeSlot:{
           end:null,
@@ -32,10 +37,6 @@ const initialState={
       },
       fetching: false,
       fetched: false,
-      booking:false,
-      cancelling:false,
-      canceled:false,
-      booked:false,
       error: null
 }
 

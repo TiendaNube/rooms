@@ -28,10 +28,28 @@ export default function reducer(state=initialState, action) {
         return {...state, booking:false, error:action.payload}
       }
       case "CANCEL_MEETING": {
-        return {...state, cancelling:true}
+        return {
+        ...state,
+          room : {
+              ...state.room,
+              currentSlot : {
+                  ...state.currentSlot,
+                  cancelling:true
+              }
+          }
+        }
       }
       case "CANCEL_MEETING_UNDO": {
-        return {...state, cancelling:false}
+        return {
+        ...state,
+          room : {
+              ...state.room,
+              currentSlot : {
+                  ...state.currentSlot,
+                  cancelling:false
+              }
+          }
+        }
       }
 
     }

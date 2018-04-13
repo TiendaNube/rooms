@@ -46,9 +46,17 @@ export default class actionHelper {
   currentSlot(){
     const schedule = this.schedule
     const now = moment()
-    return schedule.find(slot => {
+    const currentSlot=schedule.find(slot => {
       return now.isBetween(slot.start, slot.end)
     }) || null
+    if(currentSlot){
+      currentSlot.cancelling=false
+      currentSlot.cancelled=false,
+      currentSlot.error=null,
+      currentSlot.booking=false,
+      currentSlot.booked=false
+    }
+    return currentSlot
   }
   nextMeeting(){
     const schedule = this.schedule
