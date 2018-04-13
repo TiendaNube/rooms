@@ -7,3 +7,4 @@ rooms-client.json
 src/client.min.js
 *min.js
 .serverless
+/build

@@ -207,6 +207,7 @@ function tickTime(roomId,room) {
 }
 
 module.exports={
+  tickTime,
   bookRoom,
   fetchRoom,
   cancelMeeting,
