@@ -14,18 +14,19 @@ class FreeRoom extends Component {
     this.cancel = this.cancel.bind(this)
   }
 
-  cancel(event){
-
-    this.props.roomActions.cancelBooking(event.target.value)
+  cancel(){
+    this.props.roomActions.cancelMeeting(15)
   }
 
     render(){
-      const {status} = this.props
-      const content = this.props.cancelling ? (<div></div>):
-      (<button className="btn" onclick={this.cancel}>{`Liberar`}</button>);
-
+      console.log(this.props.cancelling)
+      const contentComponent = this.props.cancelling ? (
+       <div></div>
+        ) : (
+       <button className="btn" onClick={this.cancel()}>{`Liberar`}</button>
+      );
     	return (
-        {content}
+        <div>{contentComponent}</div>
     	)
     }
 }

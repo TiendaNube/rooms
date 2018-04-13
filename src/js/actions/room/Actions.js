@@ -120,7 +120,20 @@ function bookRoom(roomId,time) {
   }
 }
 
+
+function cancelMeeting(roomId) {
+  return function(dispatch) {
+    console.log("oi");
+    dispatch({type: "CANCEL_MEETING",payload:roomId});
+  }
+}
+
+
+
+
+
 module.exports={
   bookRoom,
-  fetchRoom
+  fetchRoom,
+  cancelMeeting
 }

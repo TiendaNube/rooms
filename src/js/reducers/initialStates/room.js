@@ -33,6 +33,8 @@ const initialState={
       fetching: false,
       fetched: false,
       booking:false,
+      cancelling:false,
+      canceled:false,
       booked:false,
       error: null
 }

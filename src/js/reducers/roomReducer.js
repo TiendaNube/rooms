@@ -27,6 +27,13 @@ export default function reducer(state=initialState, action) {
       case "BOOK_ACTION_REJECTED": {
         return {...state, booking:false, error:action.payload}
       }
+      case "CANCEL_MEETING": {
+        return {...state, cancelling:true}
+      }
+      case "CANCEL_MEETING_UNDO": {
+        return {...state, cancelling:false}
+      }
+
     }
     return state
 }
