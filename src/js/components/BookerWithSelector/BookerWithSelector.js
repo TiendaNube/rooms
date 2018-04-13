@@ -14,12 +14,20 @@ class BookerWithSelector extends Component {
   {
     super(props)
     this.change = this.change.bind(this)
+    this.state={
+       timeSelected:props.times[0]
+    }
   }
-
+  book(){
+    const timeBook=this.state.timeSelected
+    this.props.roomActions.bookRoom(this.props.roomId,timeBook)
+  }
   change(event){
-    console.log("event change fired") //to ensure that event was fired
     console.log(event.target.value)
-    this.props.roomActions.bookRoom(event.target.value)
+    const value=event.target.value
+    this.setState((prevState,value) => {
+      return {timeSelected: value};
+    })
   }
 
  OptionValues(props) {
@@ -36,15 +44,13 @@ class BookerWithSelector extends Component {
     const booking = this.props.booking ? (<span className="reservation">Reservando..</span>):(<span className="reservation">Reservar por:</span>)
      return (
       <div>
-        <form onSubmit={() => {this.change}}>
           <label>
             {booking}
-            <select id="time">
-              {this.OptionValues(this.props.time)}
+            <select id="time" onChange={()=>{this.change()}}>
+              {this.OptionValues(this.props.times)}
             </select>
           </label>
-          <button className="btn">{`Reservar`}</button>
-        </form>
+          <button onClick={()=>{this.book()}} className="btn">{`Reservar`}</button>
       </div>
     )
   }

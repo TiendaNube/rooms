@@ -127,12 +127,6 @@ function cancelMeeting(roomId) {
     dispatch({type: "CANCEL_MEETING",payload:roomId});
   }
 }
-function fastBooking(roomId) {
-  return function(dispatch) {
-    console.log("fastBooking");
-    dispatch({type: "FAST_BOOKING",payload:roomId});
-  }
-}
 
 function tickTime(roomId,room) {
   return function(dispatch) {
@@ -210,6 +204,5 @@ module.exports={
   tickTime,
   bookRoom,
   fetchRoom,
-  cancelMeeting,
-  fastBooking
+  cancelMeeting
 }

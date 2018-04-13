@@ -39,7 +39,7 @@ module.exports.getRoomInfo = (event, context, callback) => {
     const now = moment()
 
     const currentEvent = schedule.find(slot => now.isBetween(slot.start, slot.end)) || null
-  
+
     console.log(allSchedule)
     console.log(`${allSchedule=="true"}`)
 

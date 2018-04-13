@@ -38,9 +38,12 @@ class Info extends Component {
     	}
   	}
 
-  	buildRoomAction(status, time){
+  	buildRoomAction(status, time, roomId){
   		const buttonStatus={status}
   		const buttonTime={time}
+      const times=InfoConfig.times
+      const timeSelectorPros={times,roomId}
+
 
 	    switch (status) {
 	      case "toBusy":
@@ -53,7 +56,7 @@ class Info extends Component {
 	        return <FreeRoom {...buttonStatus}/>
 	        break;
 	      case "free":
-	        return <TimeSelector time = {InfoConfig.times}/>
+	        return <TimeSelector {...timeSelectorPros}/>
 	        break;
 	      default:
 	        return ""
@@ -62,12 +65,12 @@ class Info extends Component {
 
 
     render(){
-   	    const { label, status, user, time} = this.props
+   	    const { label, status, user, time, roomId} = this.props
    	    const buttonStatus={status}
 
    	    let timeLabel = this.buildTimeLabel(status, time)
 
-   	    let roomAction = this.buildRoomAction(status, time)
+   	    let roomAction = this.buildRoomAction(status, time, roomId)
 
    	    const infoUser = user.data.display_name ? (
      		  <div className="user">por <strong>@{user.data.display_name}</strong></div>
@@ -81,7 +84,7 @@ class Info extends Component {
           <div className="time">{timeLabel}</div>
           {infoUser}
           {roomAction}
-        
+
           <div class="windows8">
             <div class="wBall" id="wBall_1">
               <div class="wInnerBall"></div>

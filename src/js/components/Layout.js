@@ -31,6 +31,7 @@ class LayoutContainer extends React.Component {
         status: this.props.room.data.state.status,
         slot: this.props.room.data.currentSlot,
         user: this.props.user.data.display_name,
+        roomId:this.props.match.params.room
     }
     return <div>
       <Main {...mainProps}/>

@@ -14,16 +14,16 @@ class FastBooker extends Component {
       super(props)
       this.book = this.book.bind(this)
     }
-    book(){
-      this.props.roomActions.fastBooking(1)
+    book(time,roomId){
+      this.props.roomActions.bookNow(roomId,time)
     }
 
     render(){
-      const {time} = this.props
+      const {time,roomId} = this.props
       const contentComponent = this.props.cancelling ? (
        <div></div>
         ) : (
-       <button className="btn" onClick={() => {this.book()}}>{`Ocupar por ${time}'`}</button>
+       <button className="btn" onClick={() => {this.book(time,roomId)}}>{`Ocupar por ${time}`}</button>
       );
     	return (
         	  <div>{contentComponent}</div>

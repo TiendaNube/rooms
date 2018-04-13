@@ -15,9 +15,9 @@ export default class Main extends Component {
   }
 
   render() {
-    const { name, status } = this.props
+    const { name, status, roomId } = this.props
     let label = labelData[status]
-    let infoProps={label,status}
+    let infoProps={label,status, roomId}
     const infoComponent = status ? (
      <Info {...infoProps}/>
       ) : (
