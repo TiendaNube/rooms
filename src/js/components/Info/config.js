@@ -1,5 +1,5 @@
 const config={
-  times:[15,30,45]
+  times:[15]
 }
 
 export default config
