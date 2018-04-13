@@ -6,8 +6,8 @@ function fetchRoom(roomId) {
     dispatch({type: "FETCH_ROOM"});
     const params=roomId.replace("sala-", "?number=")
     //TODO set in server in prod!!
-    //axios.get(`https://91qk3xxuce.execute-api.us-west-1.amazonaws.com/dev/sala${params}&allSchedule=true`)
-    axios.get(`http://${window.location.hostname}/api/rooms/${roomId}`)
+    //    axios.get(`http://${window.location.hostname}/api/rooms/${roomId}`)
+    axios.get(`https://91qk3xxuce.execute-api.us-west-1.amazonaws.com/dev/sala${params}&allSchedule=true`)
       .then((response) => {
         const helper = new actionHelper(response.data)
         response.data.state=helper.currentState()
@@ -19,6 +19,7 @@ function fetchRoom(roomId) {
         const user=response.data.currentSlot.organizer
         if(user){
           dispatch({type: "FETCH_USER"});
+          //TODO pegarle al end en produ de los user de slack
           axios.get(`http://${window.location.hostname}/api/user/${user.email}`)
             .then((response) => {
               const payload={
@@ -37,6 +38,7 @@ function fetchRoom(roomId) {
         }
         const nextMeetingOwner=response.data.nextMeeting.organizer
         if(nextMeetingOwner){
+          //TODO pegarle al end en produ de los user de slack
           dispatch({type: "FETCH_NEXT_METTING_OWNER"});
           axios.get(`http://${window.location.hostname}/api/user/${nextMeetingOwner.email}`)
             .then((response) => {
@@ -66,6 +68,8 @@ function bookRoom(roomId,time) {
     dispatch({type: "BOOK_ACTION"})
     const params=roomId.replace("sala-", "?number=")
     //'/api/rooms/:room/:time'
+    //TODO pegarle al end en produ de los user de slack
+
     axios.post(`http://${window.location.hostname}/api/rooms/sala-8/${time}`)
       .then((response) => {
         const helper = new actionHelper(response.data)

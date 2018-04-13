@@ -50,7 +50,7 @@
   },
   "scripts": {
     "dev": "webpack -w",
-    "server": "nodemon server.js",
+    "server": "nodemon server-local.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

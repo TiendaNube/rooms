@@ -29,26 +29,20 @@ export default function reducer(state=initialState, action) {
       }
       case "CANCEL_MEETING": {
         return {
-        ...state,
-          room : {
-              ...state.room,
+              ...state.data,
               currentSlot : {
                   ...state.currentSlot,
                   cancelling:true
               }
-          }
         }
       }
       case "CANCEL_MEETING_UNDO": {
         return {
-        ...state,
-          room : {
-              ...state.room,
+              ...state.data,
               currentSlot : {
                   ...state.currentSlot,
                   cancelling:false
               }
-          }
         }
       }
 
