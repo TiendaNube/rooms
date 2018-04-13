@@ -52,18 +52,24 @@ Insise our package.json we have some like this:
 }
 ```
 
-## Deploy on local environment
+## Test on local environment
 
-Then, you've:
+### First way: using local server
+
+Open 2 terminals, and run (on each one):
 
 - `sudo npm run dev` to start webpack
 - `sudo npm run server` to start our app
 
-Open a browser on **http://localhost/sala-1** (for example) (You can access to any room by replacing "sala-1" with the proper room key, like *sala-3* or *sala-creativa*). You should be able to see the current status of the room and book it.
+Open a browser on **http://localhost/sala-1** (for example). You can access to any room by replacing "sala-1" with the proper room key, like *sala-3* or *sala-creativa*). You should be able to see the current status of the room and book it.
 
+### Second way: using serverless offline
+
+Install serverless offline by running `npm install serverless-offline --save-dev`. Then run: `serverless offline start` and open a browser on **http://localhost:3000/sala?number=1** (for example). You can access to any room by replacing "1" with the proper room key, like *3* or *creativa*).
 
 ## Access on prod environment
 
+Open a broswer on **https://91qk3xxuce.execute-api.us-west-1.amazonaws.com/dev/sala?number=1** (for example). You can access to any room by replacing "1" with the proper room key, like *3* or *creativa*).
 
 ## Debugging
 

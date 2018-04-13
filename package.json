@@ -43,7 +43,8 @@
     "webpack-dev-server": "^1.14.1"
   },
   "devDependencies": {
-    "redux-devtools-extension": "^2.13.2"
+    "redux-devtools-extension": "^2.13.2",
+    "serverless-offline": "^3.20.2"
   },
   "scripts": {
     "dev": "webpack -w",
