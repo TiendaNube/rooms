@@ -24,7 +24,7 @@ class LayoutContainer extends React.Component {
   }
 
   render() {
-    this.updateInterval = setInterval(() => this.updateTime(), 1 * 1000)
+    this.updateInterval = setInterval(() => this.updateTime(), 1 * 60000)
     const mainProps = {
         name: this.props.room.data.name,
         time: this.props.room.data.state.time,
