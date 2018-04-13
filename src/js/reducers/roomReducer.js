@@ -32,8 +32,13 @@ export default function reducer(state=initialState, action) {
       case "BOOK_ACTION_CANCEL": {
         return {...state, booking:false}
       }
-      case "BOOK_ACTION_FULFILLED": {
-        return {...state, booking:false, room:action.payload}
+      case "BOOK_ACTION_FULFILLED":  {
+        return {
+          ...state,
+          booking: false,
+          booked: true,
+          data: action.payload,
+        }
       }
       case "BOOK_ACTION_REJECTED": {
         return {...state, booking:false, error:action.payload}

@@ -19,7 +19,7 @@ function fetchRoom(roomId) {
         const user=response.data.currentSlot!=null?response.data.currentSlot.organizer:null
         if(user){
           dispatch({type: "FETCH_USER"});
-          axios.get(`https://91qk3xxuce.execute-api.us-west-1.amazonaws.com/dev/slack-user?email=${user.email}`)
+          axios.get(`http://${window.location.hostname}/api/user/${user.email}`)
             .then((response) => {
               const payload={
                 name:response.data.slackUser.name,
@@ -38,7 +38,7 @@ function fetchRoom(roomId) {
         const nextMeetingOwner=response.data.nextMeeting!=null?response.data.nextMeeting.organizer:null
         if(nextMeetingOwner){
           dispatch({type: "FETCH_NEXT_METTING_OWNER"});
-          axios.get(`https://91qk3xxuce.execute-api.us-west-1.amazonaws.com/dev/slack-user?email=${nextMeetingOwner.email}`)
+          axios.get(`http://${window.location.hostname}/api/user/${nextMeetingOwner.email}`)
             .then((response) => {
               const payload={
                 name:response.data.slackUser.name,
@@ -80,7 +80,7 @@ function bookRoom(roomId,time) {
         const user=response.data.currentSlot!=null?response.data.currentSlot.organizer:null
         if(user){
           dispatch({type: "FETCH_USER"});
-          axios.get(`https://91qk3xxuce.execute-api.us-west-1.amazonaws.com/dev/slack-user?email=${user.email}`)
+          axios.get(`http://${window.location.hostname}/api/user/${user.email}`)
             .then((response) => {
               const payload={
                 name:response.data.slackUser.name,
@@ -99,7 +99,7 @@ function bookRoom(roomId,time) {
         const nextMeetingOwner=response.data.nextMeeting!=null?response.data.nextMeeting.organizer:null
         if(nextMeetingOwner){
           dispatch({type: "FETCH_NEXT_METTING_OWNER"});
-          axios.get(`https://91qk3xxuce.execute-api.us-west-1.amazonaws.com/dev/slack-user?email=${nextMeetingOwner.email}`)
+          axios.get(`http://${window.location.hostname}/api/user/${nextMeetingOwner.email}`)
             .then((response) => {
               const payload={
                 name:response.data.slackUser.name,
