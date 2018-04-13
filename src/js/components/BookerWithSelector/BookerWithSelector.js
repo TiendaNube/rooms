@@ -19,7 +19,7 @@ class BookerWithSelector extends Component {
   }
 
   render() {
-    const booking = this.props.booking ? (<span className="reservation">Reservando..</span>):(<span className="reservation">Reservar por:</span>)
+    const booking = this.props.booking ? (<span className="reservation">Reservando..</span>):(<span className="reservation">Reservar por: 15" </span>)
      return (
       <div>
           <label>

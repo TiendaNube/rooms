@@ -67,7 +67,6 @@ function bookRoom(roomId,time) {
     const params=roomId.replace("sala-", "?number=")
     //'/api/rooms/:room/:time'
     //TODO pegarle al end en produ de los user de slack
-    console.log(`http://${window.location.hostname}/api/rooms/${roomId}/${time}`)
     axios.post(`http://${window.location.hostname}/api/rooms/${roomId}/${time}`)
       .then((response) => {
         const helper = new actionHelper(response.data)
@@ -77,7 +76,7 @@ function bookRoom(roomId,time) {
         response.data.nextFreeSlot=helper.nextFreeSlot()
         response.data.nextMeeting=helper.nextMeeting()
         response.data.state.ocupationState=helper.ocupationState(response.data.currentSlot)
-        dispatch({type: "FETCH_ROOM_FULFILLED", payload: response.data})
+        dispatch({type: "BOOK_ACTION_FULFILLED", payload: response.data})
         const user=response.data.currentSlot!=null?response.data.currentSlot.organizer:null
         if(user){
           dispatch({type: "FETCH_USER"});
