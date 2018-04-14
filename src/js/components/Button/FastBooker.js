@@ -19,11 +19,11 @@ class FastBooker extends Component {
     }
 
     render(){
-      const {time,roomId} = this.props
+      const {minutesToFinish,roomId} = this.props
       const contentComponent = this.props.cancelling ? (
        <div></div>
         ) : (
-       <button className="btn" onClick={() => {this.book(time,roomId)}}>{`Ocupar por ${time}`}</button>
+       <button className="btn" onClick={() => {this.book(time,roomId)}}>{`Ocupar por ${minutesToFinish}`}</button>
       );
     	return (
         	  <div>{contentComponent}</div>
