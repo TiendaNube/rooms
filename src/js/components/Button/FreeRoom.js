@@ -19,7 +19,6 @@ class FreeRoom extends Component {
   }
 
     render(){
-      console.log(this.props.cancelling)
       const contentComponent = this.props.cancelling ? (
        <div></div>
         ) : (
@@ -33,7 +32,7 @@ class FreeRoom extends Component {
 //to map state in object props
 function mapStateToProps(state){
   return{
-    cancelling:state.room.data.currentSlot.cancelling
+    cancelling:state.room.stateRoom.currentSlot.cancelling
   }
 }
 //to map actions in object props

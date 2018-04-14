@@ -34,7 +34,7 @@ class FastBooker extends Component {
 //to map state in object props
 function mapStateToProps(state){
   return{
-    booking:state.room.data.currentSlot.booking
+    booking:state.room.stateRoom.currentSlot.booking
   }
 }
 //to map actions in object props
