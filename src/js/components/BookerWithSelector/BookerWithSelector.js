@@ -4,8 +4,7 @@ import moment from 'moment'
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
 
-import * as roomActions from "../../actions/room/Actions"
-import Main from "../Main/Main"
+import * as roomActions from "../../actions/room"
 import './bookerWithSelector.css'
 
 class BookerWithSelector extends Component {
@@ -19,7 +18,7 @@ class BookerWithSelector extends Component {
   }
 
   render() {
-    const booking = this.props.booking ? (<span className="reservation">Reservando..</span>):(<span className="reservation">Reservar por: 15" </span>)
+    const booking = this.props.booking ? (<span className="reservation">Reservando..</span>):(<span className="reservation">Reservar por: 15 </span>)
      return (
       <div>
           <label>

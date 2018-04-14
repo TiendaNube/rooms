@@ -6,3 +6,4 @@ npm-debug.log*
 .serverless
 /build
 /config
+.env

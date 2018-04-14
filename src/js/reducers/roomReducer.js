@@ -1,4 +1,4 @@
-import initialState from "./initialStates/room"
+import initialState from "../store/initialStates/room"
 export default function reducer(state=initialState, action) {
     switch (action.type) {
       case "FETCH_ROOM": {

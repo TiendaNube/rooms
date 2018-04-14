@@ -4,7 +4,7 @@ import './button.css'
 import moment from 'moment'
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
-import * as roomActions from "../../actions/room/Actions"
+import * as roomActions from "../../actions/room"
 
 
 class FastBooker extends Component {

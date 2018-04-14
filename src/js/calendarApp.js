@@ -3,18 +3,17 @@ import ReactDOM from "react-dom"
 import { Provider } from "react-redux"
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
-import Layout from "./components/Layout"
+import LayoutCalendar from "./components/LayoutCalendar"
 import store from "./store"
-import './index.css'
-import './App.css'
-const app = document.querySelector('#calendar-app')
+import './calendarApp.css'
+const calendarApp = document.querySelector('#calendar-app')
 
 
 ReactDOM.render((<Provider store={store}>
     <BrowserRouter>
       <Switch>
-        <Route path="/:room" component={Layout}/>
+        <Route path="/:room" component={LayoutCalendar}/>
       </Switch>
     </BrowserRouter>
     </Provider>
-  ), app);
+), calendarApp);

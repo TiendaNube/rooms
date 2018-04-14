@@ -7,6 +7,7 @@ import moment from 'moment'
 import TimeSelector from "../BookerWithSelector/BookerWithSelector"
 import { connect } from "react-redux"
 import InfoConfig from './config.js'
+
 moment.updateLocale('en', {
     relativeTime : {
         future: "%s",
@@ -65,24 +66,24 @@ class Info extends Component {
 
 
     render(){
-   	    const { label, status, user, time, roomId} = this.props
+   	    const { label, status, meetingOwner, time, roomId} = this.props
    	    const buttonStatus={status}
 
    	    let timeLabel = this.buildTimeLabel(status, time)
 
    	    let roomAction = this.buildRoomAction(status, time, roomId)
 
-   	    const infoUser = user.data.display_name ? (
-     		  <div className="user">por <strong>@{user.data.display_name}</strong></div>
+   	    const infoMeetingOwner = meetingOwner.data.display_name ? (
+     		  <div className="meeting-owner">por <strong>@{meetingOwner.data.display_name}</strong></div>
       	) : (
-      		<div className="user"></div>
+      		<div className="meeting-owner"></div>
     	);
 
     	return (
 			  <div className="info">
           <div className="label">{label}</div>
           <div className="time">{timeLabel}</div>
-          {infoUser}
+          {infoMeetingOwner}
           {roomAction}
 
           <div class="windows8">
@@ -112,7 +113,7 @@ function mapStateToProps(state){
   return{
     time:state.room.data.state.time,
     currentSlot:state.room.data.currentSlot,
-    user:state.user
+    meetingOwner:state.meetingOwner
   }
 }
 

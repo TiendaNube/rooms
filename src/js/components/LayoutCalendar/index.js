@@ -4,9 +4,8 @@ import { bindActionCreators } from "redux"
 
 import moment from "moment"
 
-import * as roomActions from "../actions/room/Actions"
-import Main from "./Main/Main"
-import '../App.css'
+import * as roomActions from "../../actions/room"
+import Main from "../Main"
 
 
 class LayoutContainer extends React.Component {
@@ -30,7 +29,7 @@ class LayoutContainer extends React.Component {
         time: this.props.room.data.state.time,
         status: this.props.room.data.state.status,
         slot: this.props.room.data.currentSlot,
-        user: this.props.user.data.display_name,
+        meetingOwner: this.props.meetingOwner.data.display_name,
         roomId:this.props.match.params.room
     }
     return <div>
@@ -42,7 +41,7 @@ class LayoutContainer extends React.Component {
 function mapStateToProps(state){
   return{
     room:state.room,
-    user:state.user
+    meetingOwner:state.meetingOwner
   }
 }
 

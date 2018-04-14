@@ -1,4 +1,4 @@
-import initialState from "./initialStates/user"
+import initialState from "../store/initialStates/meetingOwner"
 
 export default function reducer(state=initialState, action) {
     switch (action.type) {
