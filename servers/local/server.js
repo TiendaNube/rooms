@@ -7,6 +7,8 @@ const cors = require('cors');
 const path = require('path')
 
 const calendar = require('../../libs/services/calendarService')
+const reduxRoomStateHelper = require('../../libs/helpers/reduxRoomState')
+
 const slackConfig = require('../../config/slack.json')
 const slackToken = slackConfig.token;
 const app = express()
@@ -36,6 +38,35 @@ app.get('/api/user/:email', function (req, res, next) {
     })
   })
 })
+
+
+
+app.get('/api/rooms/:roomSlug', function (req, res, next) {
+  const now = moment()
+  const roomSlug = req.params.roomSlug
+  if (!calendar.roomExists(roomSlug)) {
+    res.status(404).json({
+      error: "Room not found"
+    })
+    next()
+    return
+  }
+  calendar.getSchedule(roomSlug, now, (err, schedule) => {
+    if(err){
+      res.status(500).json({
+          error: err
+      })
+      next()
+      return
+    }
+    const stateHelper = new reduxRoomStateHelper(calendar.getRoomName(roomSlug),schedule)
+    res.status(200).json({
+      state: stateHelper.getCurrentState()
+    })
+  })
+})
+
+
 
 app.post('/api/rooms/:room/:time', function (req, res, next) {
   let roomSlug = req.params.room
@@ -94,4 +125,4 @@ app.listen(port, function(err) {
     process.exit(1)
   }
   console.log('API available at port '+ port);
-});
+})
