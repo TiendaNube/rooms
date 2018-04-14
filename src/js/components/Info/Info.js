@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
+import { bindActionCreators } from "redux"
+import { connect } from "react-redux"
 import PropTypes from 'prop-types'
+import moment from 'moment'
+
 import './info.css'
 import FastBooker from "../Button/FastBooker"
 import FreeRoom from "../Button/FreeRoom"
-import moment from 'moment'
 import TimeSelector from "../BookerWithSelector/BookerWithSelector"
-import { connect } from "react-redux"
 import InfoConfig from './config.js'
+import * as userActions from "../../actions/user"
 
 moment.updateLocale('en', {
     relativeTime : {
@@ -16,6 +19,18 @@ moment.updateLocale('en', {
 });
 
 class Info extends Component {
+
+    componentWillMount(){
+      const organizerEmail=this.props.currentSlot.organizer.email
+      const nextMeetingOwnerEmail=this.props.nextMeeting.organizer.email
+      if(organizerEmail){
+        this.props.userActions.getUser(organizerEmail,"USER")
+      }
+
+      if(nextMeetingOwnerEmail){
+        this.props.userActions.getUser(nextMeetingOwnerEmail,"NEXT_METTING_OWNER")
+      }
+    }
     buildTimeLabel(status, time){
 	    switch (status) {
 	      case "toBusy":
@@ -63,6 +78,7 @@ class Info extends Component {
 
 
     render(){
+
    	    const { label, statusName, meetingOwner, minutesToFinish, roomId} = this.props
    	    const timeLabel = this.buildTimeLabel(statusName, minutesToFinish)
    	    const roomAction = this.buildRoomAction(statusName, minutesToFinish, roomId)
@@ -106,12 +122,15 @@ function mapStateToProps(state){
   return{
     minutesToFinish:state.room.stateRoom.status.minutesToFinish,
     currentSlot:state.room.stateRoom.currentSlot,
+    nextMeeting:state.room.stateRoom.nextMeeting,
     meetingOwner:state.meetingOwner
   }
 }
 
 function mapDispatchToProps(dispatch){
-  return{}
+  return{
+    userActions:bindActionCreators(userActions,dispatch)
+  }
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(Info)
