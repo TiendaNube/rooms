@@ -1,53 +1,16 @@
 import axios from "axios";
+import * as userActions from "../user/index"
 
-function getRoomState(roomId) {
+function getRoomState(roomId,dispatch) {
   return function(dispatch) {
     dispatch({type: "GET_ROOM_STATE"});
     const params=roomId.replace("sala-", "?number=")
     //TODO set in server in prod!!
-    axios.get(`http://${window.location.hostname}/api/rooms/${roomId}`)
     //axios.get(`https://91qk3xxuce.execute-api.us-west-1.amazonaws.com/dev/sala${params}&allSchedule=true`)
+    axios.get(`http://${window.location.hostname}/api/rooms/${roomId}`)
       .then((response) => {
-        dispatch({type: "GET_ROOM_STATE_FULFILLED", payload: response.data.state})
-
-        const user=response.data.currentSlot!=null?response.data.currentSlot.organizer:null
-        if(user){
-          dispatch({type: "FETCH_USER"});
-          axios.get(`http://${window.location.hostname}/api/user/${user.email}`)
-            .then((response) => {
-              const payload={
-                name:response.data.slackUser.name,
-                display_name:response.data.slackUser.profile.display_name,
-                images:{
-                  original:response.data.slackUser.profile.image_original,
-                  size_72:response.data.slackUser.profile.image_72
-                }
-              }
-              dispatch({type: "FETCH_USER_FULFILLED", payload})
-            })
-            .catch((err) => {
-              dispatch({type: "FETCH_USER_REJECTED", payload: err})
-            })
-        }
-        const nextMeetingOwner=response.data.nextMeeting!=null?response.data.nextMeeting.organizer:null
-        if(nextMeetingOwner){
-          dispatch({type: "FETCH_NEXT_METTING_OWNER"});
-          axios.get(`http://${window.location.hostname}/api/user/${nextMeetingOwner.email}`)
-            .then((response) => {
-              const payload={
-                name:response.data.slackUser.name,
-                display_name:response.data.slackUser.profile.display_name,
-                images:{
-                  original:response.data.slackUser.profile.image_original,
-                  size_72:response.data.slackUser.profile.image_72
-                }
-              }
-              dispatch({type: "FETCH_NEXT_METTING_OWNER_FULFILLED", payload})
-            })
-            .catch((err) => {
-              dispatch({type: "FETCH_NEXT_METTING_OWNER_REJECTED", payload: err})
-            })
-        }
+        const state=response.data.state
+        dispatch({type: "GET_ROOM_STATE_FULFILLED", payload: state})
       })
       .catch((err) => {
         dispatch({type: "GET_ROOM_STATE_REJECTED", payload: err})
