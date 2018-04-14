@@ -1,5 +1,5 @@
-import initialState from "../store/initialStates/room"
-export default function reducer(state=initialState, action) {
+import {initialStateToFrontEnd} from "../store/initialStates/room"
+export default function reducer(state=initialStateToFrontEnd, action) {
     switch (action.type) {
       case "FETCH_ROOM": {
         return {...state, fetching: true}

@@ -1,8 +1,8 @@
 import { combineReducers } from "redux"
 
-import room from "./roomReducer"
-import meetingOwner from "./meetingOwnerReducer"
-import nextMeetingOwner from "./nextMeetingOwnerReducer"
+import room from "./room"
+import meetingOwner from "./meetingOwner"
+import nextMeetingOwner from "./nextMeetingOwner"
 
 export default combineReducers({
   room,
