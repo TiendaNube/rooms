@@ -10,5 +10,4 @@ const middleware = applyMiddleware(promise(), thunk, logger())
 
 export default createStore(reducer, composeWithDevTools(
   middleware,
-  // other store enhancers if any
 ));
