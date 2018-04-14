@@ -28,7 +28,7 @@ module.exports = {
   },
   output: {
     path: __dirname + "/public/js/",
-    filename: "client.min.js"
+    filename: "calendarApp.min.js"
   },
   plugins: debug ? [] : [
     new webpack.optimize.DedupePlugin(),
