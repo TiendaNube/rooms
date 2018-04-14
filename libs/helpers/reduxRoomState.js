@@ -1,5 +1,6 @@
 const moment = require("moment")
-
+const {initialState} = require("../../src/js/store/initialStates/room")
+const {timesConfig} = require("../../config/app.json")
 class reduxRoomStateHelper {
   constructor(name,schedule){
     this.schedule=schedule
@@ -27,15 +28,15 @@ class reduxRoomStateHelper {
     const now = moment()
     const finishCurrentMeeting = moment(currentMeeting.end)
     const timeToFinishCurrentMeeting=finishCurrentMeeting.diff(now,"minutes")
-      if(nextMeeting==null){
-        return timeToFinishCurrentMeeting<15?{name:"toFree",minutesToFinish:timeToFinishCurrentMeeting}:{name:"busy",minutesToFinish:timeToFinishCurrentMeeting}
+      if(nextMeeting.available){
+        return timeToFinishCurrentMeeting<timesConfig.minutesToFree?{name:"toFree",minutesToFinish:timeToFinishCurrentMeeting}:{name:"busy",minutesToFinish:timeToFinishCurrentMeeting}
       }else{
         const startNextMeeting = moment(nextMeeting.start)
         const timeBeteenwMeeting = startNextMeeting.diff(finishCurrentMeeting,"minutes")
-        if(timeToFinishCurrentMeeting>15){
+        if(timeToFinishCurrentMeeting>timesConfig.minutesToFree){
           return {name:"busy",minutesToFinish:timeToFinishCurrentMeeting}
         }else{
-          return timeBeteenwMeeting>15?{name:"toFree",minutesToFinish:timeToFinishCurrentMeeting}:{name:"busy",minutesToFinish:timeToFinishCurrentMeeting}
+          return timeBeteenwMeeting>timesConfig.minutesToFree?{name:"toFree",minutesToFinish:timeToFinishCurrentMeeting}:{name:"busy",minutesToFinish:timeToFinishCurrentMeeting}
         }
       }
   }
@@ -46,10 +47,10 @@ class reduxRoomStateHelper {
     const now = moment()
     const finishCurrentSlot = moment(currentSlot.end)
     const timeToFinishCurrentSlot=finishCurrentSlot.diff(now,"minutes")
-      if(nextMeeting==null){
+      if(nextMeeting.available){
         return {name:"free",minutesToFinish:timeToFinishCurrentSlot}
       }else{
-        return timeToFinishCurrentSlot<15?{name:"toBusy",minutesToFinish:timeToFinishCurrentSlot}:{name:"free",minutesToFinish:timeToFinishCurrentSlot}
+        return timeToFinishCurrentSlot<timesConfig.minutesToBusy?{name:"toBusy",minutesToFinish:timeToFinishCurrentSlot}:{name:"free",minutesToFinish:timeToFinishCurrentSlot}
       }
   }
   ocupationState(){
@@ -68,8 +69,10 @@ class reduxRoomStateHelper {
       currentSlot.booking=false,
       currentSlot.booked=false,
       currentSlot.error=null
+      currentSlot.organizer=currentSlot.organizer?currentSlot.organizer:{email:null}//to prevent state errors
     }
-    return currentSlot
+
+    return currentSlot?currentSlot:initialState.stateRoom.currentSlot
   }
   nextMeeting(){
     const schedule = this.schedule
@@ -77,7 +80,7 @@ class reduxRoomStateHelper {
     const nextMeeting = schedule.find(slot => {
       return (moment(slot.start).isAfter(currentSlot.end)||moment(slot.start).isSame(currentSlot.end))&&(slot.available==false)
     })
-      return nextMeeting?nextMeeting:null
+      return nextMeeting?nextMeeting:initialState.stateRoom.nextMeeting
   }
   nextFreeSlot(){
     const schedule = this.schedule
@@ -85,7 +88,7 @@ class reduxRoomStateHelper {
     const nextFreeSlot = schedule.find(slot => {
       return (moment(slot.start).isAfter(currentSlot.end)||moment(slot.start).isSame(currentSlot.end))&&(slot.available==true)
     })
-      return nextFreeSlot?{start:nextFreeSlot.start,end:nextFreeSlot.end}:null
+      return nextFreeSlot?{start:nextFreeSlot.start,end:nextFreeSlot.end}:initialState.stateRoom.nextFreeSlot
   }
 }
 
