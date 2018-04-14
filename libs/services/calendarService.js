@@ -20,12 +20,12 @@ const calendar = google.calendar({
 
 
 const roomExists = function(roomSlug, date) {
-  let room = rooms[roomSlug]
+  const room = rooms[roomSlug]
   return room ? true : false
 }
 
 const getRoomName = function(roomSlug, date) {
-  let room = rooms[roomSlug]
+  const room = rooms[roomSlug]
   return room ? room.name : null
 }
 
