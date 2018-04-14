@@ -33,6 +33,18 @@ After you've done that, you need to **Create a rooms.json file** on the `config/
 ### Configure slack API
 
 
+### App configuration
+
+In the `config/` folder you need to write a json file(`app.json`) like that:
+
+```json
+{
+  "timesConfig":{
+    "minutesToFree":"TIME_TO_BE_FREE",
+    "minutesToBusy":"TIME_TO_BE_BUSY"
+  }
+}
+```
 
 ## Pre-requisites
 
