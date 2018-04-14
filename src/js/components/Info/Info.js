@@ -10,6 +10,7 @@ import FreeRoom from "../Button/FreeRoom"
 import TimeSelector from "../BookerWithSelector/BookerWithSelector"
 import InfoConfig from './config.js'
 import * as userActions from "../../actions/user"
+import Countdown from 'react-countdown-now'
 
 moment.updateLocale('en', {
     relativeTime : {
@@ -31,10 +32,10 @@ class Info extends Component {
         this.props.userActions.getUser(nextMeetingOwnerEmail,"NEXT_METTING_OWNER")
       }
     }
-    buildTimeLabel(status, time){
+    buildTimeLabel(status, minutesToFinish){
 	    switch (status) {
 	      case "toBusy":
-	        return `${time}'`
+	        return `${minutesToFinish}'`
 	        break;
 	      case "busy":
 	        return `${moment(this.props.currentSlot.end).format("hh:mm")}`
@@ -53,15 +54,19 @@ class Info extends Component {
     	}
   	}
 
-  	buildRoomAction(statusName, minutesToFinish, roomId){
+  	buildRoomAction(statusName, minutesToFinish, secondsToFinish, roomId){
       const times=InfoConfig.times
       const timeSelectorProps={times,roomId}
       const freeRoomPropsProps={statusName}
 	    switch (statusName) {
 	      case "toBusy":
-          const fastBookerProps={minutesToFinish}
-	        return <FastBooker {...fastBookerProps}/>
-	        break;
+        const renderedFastBooker = ({minutes, seconds, completed }) => {
+            return <FastBooker minutesToFinish={minutesToFinish} secondsToFinish={seconds}/>
+          }
+        return <Countdown
+              date={Date.now() + secondsToFinish *1000}
+              renderer={renderedFastBooker}/>
+        break;
 	      case "busy":
 	        return <FreeRoom {...freeRoomPropsProps}/>
 	        break;
@@ -79,9 +84,10 @@ class Info extends Component {
 
     render(){
 
-   	    const { label, statusName, meetingOwner, minutesToFinish, roomId} = this.props
+   	    const { label, statusName, meetingOwner, secondsToFinish, roomId} = this.props
+        const minutesToFinish=Math.trunc(secondsToFinish/60)
    	    const timeLabel = this.buildTimeLabel(statusName, minutesToFinish)
-   	    const roomAction = this.buildRoomAction(statusName, minutesToFinish, roomId)
+   	    const roomAction = this.buildRoomAction(statusName, minutesToFinish,secondsToFinish, roomId)
    	    const infoMeetingOwner = meetingOwner.data.display_name ? (
      		  <div className="meeting-owner">por <strong>@{meetingOwner.data.display_name}</strong></div>
       	) : (
@@ -120,7 +126,7 @@ class Info extends Component {
 
 function mapStateToProps(state){
   return{
-    minutesToFinish:state.room.stateRoom.status.minutesToFinish,
+    secondsToFinish:state.room.stateRoom.status.secondsToFinish,
     currentSlot:state.room.stateRoom.currentSlot,
     nextMeeting:state.room.stateRoom.nextMeeting,
     meetingOwner:state.meetingOwner

@@ -27,16 +27,16 @@ class reduxRoomStateHelper {
     const nextMeeting=this.nextMeeting
     const now = moment()
     const finishCurrentMeeting = moment(currentMeeting.end)
-    const timeToFinishCurrentMeeting=finishCurrentMeeting.diff(now,"minutes")
+    const timeToFinishCurrentMeeting=finishCurrentMeeting.diff(now,"seconds")
       if(nextMeeting.available){
-        return timeToFinishCurrentMeeting<timesConfig.minutesToFree?{name:"toFree",minutesToFinish:timeToFinishCurrentMeeting}:{name:"busy",minutesToFinish:timeToFinishCurrentMeeting}
+        return timeToFinishCurrentMeeting<timesConfig.minutesToFree*60?{name:"toFree",secondsToFinish:timeToFinishCurrentMeeting}:{name:"busy",secondsToFinish:timeToFinishCurrentMeeting}
       }else{
         const startNextMeeting = moment(nextMeeting.start)
-        const timeBeteenwMeeting = startNextMeeting.diff(finishCurrentMeeting,"minutes")
-        if(timeToFinishCurrentMeeting>timesConfig.minutesToFree){
-          return {name:"busy",minutesToFinish:timeToFinishCurrentMeeting}
+        const timeBeteenwMeeting = startNextMeeting.diff(finishCurrentMeeting,"seconds")
+        if(timeToFinishCurrentMeeting>timesConfig.minutesToFree*60){
+          return {name:"busy",secondsToFinish:timeToFinishCurrentMeeting}
         }else{
-          return timeBeteenwMeeting>timesConfig.minutesToFree?{name:"toFree",minutesToFinish:timeToFinishCurrentMeeting}:{name:"busy",minutesToFinish:timeToFinishCurrentMeeting}
+          return timeBeteenwMeeting>timesConfig.minutesToFree*60?{name:"toFree",secondsToFinish:timeToFinishCurrentMeeting}:{name:"busy",secondsToFinish:timeToFinishCurrentMeeting}
         }
       }
   }
@@ -46,11 +46,11 @@ class reduxRoomStateHelper {
     const nextMeeting=this.nextMeeting
     const now = moment()
     const finishCurrentSlot = moment(currentSlot.end)
-    const timeToFinishCurrentSlot=finishCurrentSlot.diff(now,"minutes")
+    const timeToFinishCurrentSlot=finishCurrentSlot.diff(now,"seconds")
       if(nextMeeting.available){
-        return {name:"free",minutesToFinish:timeToFinishCurrentSlot}
+        return {name:"free",secondsToFinish:timeToFinishCurrentSlot}
       }else{
-        return timeToFinishCurrentSlot<timesConfig.minutesToBusy?{name:"toBusy",minutesToFinish:timeToFinishCurrentSlot}:{name:"free",minutesToFinish:timeToFinishCurrentSlot}
+        return timeToFinishCurrentSlot<timesConfig.minutesToBusy*60?{name:"toBusy",secondsToFinish:timeToFinishCurrentSlot}:{name:"free",secondsToFinish:timeToFinishCurrentSlot}
       }
   }
   ocupationState(){

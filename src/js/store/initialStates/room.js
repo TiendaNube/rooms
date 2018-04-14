@@ -8,7 +8,7 @@ const initialState={
         name:null,
         status:{
           name:null,
-          minutesToFinish:null
+          secondsToFinish:null
         },
        ocupationState:null,
        currentSlot: {
