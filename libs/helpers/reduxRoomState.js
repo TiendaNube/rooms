@@ -72,7 +72,6 @@ class reduxRoomStateHelper {
     return currentSlot
   }
   nextMeeting(){
-    console.log("heloooooo")
     const schedule = this.schedule
     const currentSlot = this.currentSlot
     const nextMeeting = schedule.find(slot => {

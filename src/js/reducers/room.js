@@ -1,22 +1,22 @@
 import {initialStateToFrontEnd} from "../store/initialStates/room"
 export default function reducer(state=initialStateToFrontEnd, action) {
     switch (action.type) {
-      case "FETCH_ROOM": {
+      case "GET_ROOM_STATE": {
         return {...state, fetching: true}
       }
-      case "CHANGE_CURRENT_EVENT": {
-        return {...state, fetching: true}
-      }
-      case "FETCH_ROOM_REJECTED": {
+      case "GET_ROOM_STATE_REJECTED": {
         return {...state, fetching: false, error: action.payload}
       }
-      case "FETCH_ROOM_FULFILLED": {
+      case "GET_ROOM_STATE_FULFILLED": {
         return {
           ...state,
           fetching: false,
           fetched: true,
-          data: action.payload,
+          stateRoom: action.payload,
         }
+      }
+      case "CHANGE_CURRENT_EVENT": {
+        return {...state, fetching: true}
       }
       case "CHANGE_CURRENT_EVENT_FULFILLED": {
         return {

@@ -1,38 +1,38 @@
 import React from "react"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
-
+import cn from 'classnames'
 import moment from "moment"
 
 import * as roomActions from "../../actions/room"
 import Main from "../Main"
 
+import './layout.css'
 
 class LayoutContainer extends React.Component {
   constructor(props){
     super(props)
   }
   componentWillMount() {
-    this.props.roomActions.fetchRoom(this.props.match.params.room)
+    this.props.roomActions.getRoomState(this.props.match.params.room)
   }
-  updateTime(){
+/*TODO   updateTime(){
     if(this.props.room.data.state.status&&this.props.room.fetching==false){
       this.props.roomActions.tickTime(this.props.match.params.room,this.props.room)
       clearInterval(this.updateInterval)
     }
-  }
+  }*/
 
   render() {
-    this.updateInterval = setInterval(() => this.updateTime(), 1 * 60000)
+    //TODO this.updateInterval = setInterval(() => this.updateTime(), 1 * 60000)
+    const statusName=this.props.room.stateRoom.status.name
     const mainProps = {
-        name: this.props.room.data.name,
-        time: this.props.room.data.state.time,
-        status: this.props.room.data.state.status,
-        slot: this.props.room.data.currentSlot,
-        meetingOwner: this.props.meetingOwner.data.display_name,
+        name: this.props.room.stateRoom?this.props.room.stateRoom.name:null,
+        status: this.props.room.stateRoom?this.props.room.stateRoom.status:null,
         roomId:this.props.match.params.room
     }
-    return <div>
+    return <div className={cn('layout', statusName)}>
+      <img className="background" src={`img/${statusName}-background.svg`}/>
       <Main {...mainProps}/>
     </div>
   }
@@ -40,8 +40,7 @@ class LayoutContainer extends React.Component {
 
 function mapStateToProps(state){
   return{
-    room:state.room,
-    meetingOwner:state.meetingOwner
+    room:state.room
   }
 }
 

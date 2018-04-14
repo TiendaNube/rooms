@@ -16,7 +16,6 @@ moment.updateLocale('en', {
 });
 
 class Info extends Component {
-
     buildTimeLabel(status, time){
 	    switch (status) {
 	      case "toBusy":
@@ -39,25 +38,23 @@ class Info extends Component {
     	}
   	}
 
-  	buildRoomAction(status, time, roomId){
-  		const buttonStatus={status}
-  		const buttonTime={time}
+  	buildRoomAction(statusName, minutesToFinish, roomId){
       const times=InfoConfig.times
-      const timeSelectorPros={times,roomId}
-
-
-	    switch (status) {
+      const timeSelectorProps={times,roomId}
+      const freeRoomPropsProps={statusName}
+	    switch (statusName) {
 	      case "toBusy":
-	        return <FastBooker {...buttonTime}/>
+          const fastBookerProps={minutesToFinish}
+	        return <FastBooker {...fastBookerProps}/>
 	        break;
 	      case "busy":
-	        return <FreeRoom {...buttonStatus}/>
+	        return <FreeRoom {...freeRoomPropsProps}/>
 	        break;
 	      case "toFree":
-	        return <FreeRoom {...buttonStatus}/>
+	        return <FreeRoom {...freeRoomPropsProps}/>
 	        break;
 	      case "free":
-	        return <TimeSelector {...timeSelectorPros}/>
+	        return <TimeSelector {...freeRoomPropsProps}/>
 	        break;
 	      default:
 	        return ""
@@ -66,13 +63,9 @@ class Info extends Component {
 
 
     render(){
-   	    const { label, status, meetingOwner, time, roomId} = this.props
-   	    const buttonStatus={status}
-
-   	    let timeLabel = this.buildTimeLabel(status, time)
-
-   	    let roomAction = this.buildRoomAction(status, time, roomId)
-
+   	    const { label, statusName, meetingOwner, minutesToFinish, roomId} = this.props
+   	    const timeLabel = this.buildTimeLabel(statusName, minutesToFinish)
+   	    const roomAction = this.buildRoomAction(statusName, minutesToFinish, roomId)
    	    const infoMeetingOwner = meetingOwner.data.display_name ? (
      		  <div className="meeting-owner">por <strong>@{meetingOwner.data.display_name}</strong></div>
       	) : (
@@ -111,8 +104,8 @@ class Info extends Component {
 
 function mapStateToProps(state){
   return{
-    time:state.room.data.state.time,
-    currentSlot:state.room.data.currentSlot,
+    minutesToFinish:state.room.stateRoom.status.minutesToFinish,
+    currentSlot:state.room.stateRoom.currentSlot,
     meetingOwner:state.meetingOwner
   }
 }

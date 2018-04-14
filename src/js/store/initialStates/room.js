@@ -4,7 +4,17 @@ const propertiesToFronEnd={
       error: null
 }
 const initialState={
-      stateRoom:null
+      stateRoom:{
+        name:null,
+        status:{
+          name:null,
+          minutesToFinish:null
+        },
+       ocupationState:null,
+       currentSlot: {},
+       nextFreeSlot: null,
+       nextMeeting: null
+      }
 }
 const initialStateToFrontEnd={...initialState,...propertiesToFronEnd}
 

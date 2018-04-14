@@ -1,21 +1,15 @@
 import axios from "axios";
-import actionHelper from "./actionHelper";
 
-function fetchRoom(roomId) {
+function getRoomState(roomId) {
   return function(dispatch) {
-    dispatch({type: "FETCH_ROOM"});
+    dispatch({type: "GET_ROOM_STATE"});
     const params=roomId.replace("sala-", "?number=")
     //TODO set in server in prod!!
-      //  axios.get(`http://${window.location.hostname}/api/rooms/${roomId}`)
-    axios.get(`https://91qk3xxuce.execute-api.us-west-1.amazonaws.com/dev/sala${params}&allSchedule=true`)
+    axios.get(`http://${window.location.hostname}/api/rooms/${roomId}`)
+    //axios.get(`https://91qk3xxuce.execute-api.us-west-1.amazonaws.com/dev/sala${params}&allSchedule=true`)
       .then((response) => {
-        const helper = new actionHelper(response.data)
-        response.data.state=helper.currentState()
-        response.data.currentSlot=helper.currentSlot()
-        response.data.nextFreeSlot=helper.nextFreeSlot()
-        response.data.nextMeeting=helper.nextMeeting()
-        response.data.state.ocupationState=helper.ocupationState(response.data.currentSlot)
-        dispatch({type: "FETCH_ROOM_FULFILLED", payload: response.data})
+        dispatch({type: "GET_ROOM_STATE_FULFILLED", payload: response.data.state})
+
         const user=response.data.currentSlot!=null?response.data.currentSlot.organizer:null
         if(user){
           dispatch({type: "FETCH_USER"});
@@ -56,7 +50,7 @@ function fetchRoom(roomId) {
         }
       })
       .catch((err) => {
-        dispatch({type: "FETCH_ROOM_REJECTED", payload: err})
+        dispatch({type: "GET_ROOM_STATE_REJECTED", payload: err})
       })
   }
 }
@@ -204,6 +198,6 @@ function tickTime(roomId,room) {
 module.exports={
   tickTime,
   bookRoom,
-  fetchRoom,
+  getRoomState,
   cancelMeeting
 }

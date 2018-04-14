@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Info from "../Info/Info"
-import cn from 'classnames'
-import './App.css'
-import './Main.css'
-
 import Lottie from 'react-lottie';
+
+import Info from "../Info/Info"
+import './Main.css'
 import * as animationData from './animate.json'
-import * as labelData from './label.json'
+import Config from './config'
 
 export default class Main extends Component {
   constructor(props,context){
@@ -15,34 +13,31 @@ export default class Main extends Component {
   }
 
   render() {
-    const { name, status, roomId } = this.props
-    let label = labelData[status]
-    let infoProps={label,status, roomId}
-    const infoComponent = status ? (
+    const { name, roomId } = this.props
+    const statusName=this.props.status.name
+    let label = Config.label[statusName]
+    let infoProps={label,statusName, roomId}
+    const infoComponent = statusName ? (
      <Info {...infoProps}/>
       ) : (
      <div></div>
     );
-
-    const defaultOptions = {
+    const animationOptions = {
       loop: true,
       autoplay: true,
-      animationData: animationData[status]
+      animationData: animationData[statusName]
     };
 
     return (
-      <div className={cn('app', status)}>
-        <img className="background" src={`img/${status}-background.svg`}/>
         <div className="main">
           <h1 className="room-name">{name}</h1>
           <div className="illustration">
-            <Lottie options={defaultOptions}/>
+            <Lottie options={animationOptions}/>
           </div>
           <div className="info-container">
             {infoComponent}
           </div>
         </div>
-      </div>
     )
   }
 }
