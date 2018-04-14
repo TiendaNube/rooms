@@ -30,6 +30,10 @@ After you've done that, you need to **Create a rooms.json file** on the `config/
     "room-big": {"name": "Romm big", "id": "domain_1234@resource.calendar.google.com"}
 }
 ```
+### Configure slack API
+
+
+
 ## Pre-requisites
 
 ### Install nodemon package globaly
