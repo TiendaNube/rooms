@@ -7,7 +7,7 @@ import Layout from "./components/Layout"
 import store from "./store"
 import './index.css'
 import './App.css'
-const app = document.querySelector('#app')
+const app = document.querySelector('#calendar-app')
 
 
 ReactDOM.render((<Provider store={store}>

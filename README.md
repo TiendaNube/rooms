@@ -13,7 +13,7 @@ Go to the [Google Developer Console](https://console.developers.google.com/) and
 * From the Library menu, you need to **Enable the Google Calendar API** (use the search if it's not in the popular list)
 * From the Credentials menu, **Create a Service Account**, and select JSON as the key type. Save this file as you'll need it in a while.
 * Take note of the **Service Account ID** as well (it looks like accountname@(...).iam.gserviceaccount.com)
-* Rename the JSON key file to **rooms-client.json** and place it in the root of the project.
+* Rename the JSON key file to **rooms-client.json** and place it on the `config/` project folder.
 
 ### Configure the supported Meeting Rooms
 
@@ -22,35 +22,35 @@ Go to [Google Calendar](https://calendar.google.com) and click edit on each meet
 * On the Calendar Details tab, **Take note of the Calendar ID** (it looks like domain_123@resource.calendar.google.com).
 * Under the Share this Calendar, **Share it with the Service Account ID** (add accountname@(...).iam.gserviceaccount.com to the calendar and give it full access)
 
-After you've done that, you need to **Create a rooms.json file** in the root of the project detailing all the enabled rooms, their names and Calendar IDs, using a slug as the key. It should look like this:
+After you've done that, you need to **Create a rooms.json file** on the `config/` project folder detailing all the enabled rooms, theirs names and Calendar IDs, using a slug as the key. It should look like this:
 
 ```json
 {
-    "sala-1": {"name": "Sala 01", "id": "domain_123@resource.calendar.google.com"},
-    "sala-creativa": {"name": "Sala creativa", "id": "domain_1234@resource.calendar.google.com"}
+    "room-1": {"name": "Room 01", "id": "domain_123@resource.calendar.google.com"},
+    "room-big": {"name": "Romm big", "id": "domain_1234@resource.calendar.google.com"}
 }
 ```
+## Pre-requisites
 
+### Install nodemon package globaly
 
-## Install the app
-
-- `npm install` from the root of the project
-- `npm run start` starts the server with (in one terminal)
-
-### Install nodemon
-
-Nodemon executes a file and keeps it updated. If you modified the file, it will automatically be updated by nodemon. To use it, run:
+Nodemon executes a file and keeps it updated. If you modified the file, it will automatically be updated by nodemon. To install it, run:
 
 - `npm install -g nodemon` to install
 
-Insise our package.json we have some like this:
+Inside our package.json we have some like this:
 
 ```json
 "scripts": {
-  "dev": "webpack -w",
-  "server": "nodemon server.js",
+  "build": "webpack -w",
+  "local-server": "sudo ./servers/local/server.js"
 }
 ```
+
+## Install dependencies
+
+- `npm install -s` from the root of the project, this will be install your proyects dependencies in the hidden folder `.node_modules`
+
 
 ## Test on local environment
 
@@ -58,8 +58,8 @@ Insise our package.json we have some like this:
 
 Open 2 terminals, and run (on each one):
 
-- `sudo npm run dev` to start webpack
-- `sudo npm run server` to start our app
+- `sudo npm run dev` to build with webpack
+- `sudo npm run local-server` to start our app
 
 Open a browser on **http://localhost/sala-1** (for example). You can access to any room by replacing "sala-1" with the proper room key, like *sala-3* or *sala-creativa*). You should be able to see the current status of the room and book it.
 
@@ -81,7 +81,7 @@ We use [Redux Dev Tools](https://github.com/zalmoxisus/redux-devtools-extension#
 
 ### React
 
-For React we use [React Dev Tools][https://github.com/facebook/react-devtools]
+For React we use [React Dev Tools](https://github.com/facebook/react-devtools)
 
 
 ## Troubleshooting
@@ -89,7 +89,6 @@ For React we use [React Dev Tools][https://github.com/facebook/react-devtools]
 ### Error: Cannot find module
 
 Make sure that you run `npm install -s`
-
 
 ## License
 

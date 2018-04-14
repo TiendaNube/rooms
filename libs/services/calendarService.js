@@ -1,8 +1,8 @@
-const rooms = require('./rooms.json')
-const key = require('./rooms-client.json')
-
 const google = require('googleapis')
 const moment = require('moment-timezone')
+
+const rooms = require('../../config/rooms.json')
+const key = require('../../config/google-api-client-keys.json')
 
 const jwtClient = new google.auth.JWT(
   key.client_email,

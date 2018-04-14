@@ -1,33 +1,40 @@
 require('dotenv').config()
 
 const moment = require('moment')
-const calendar = require('./calendar')
 const express = require('express')
 const history = require('connect-history-api-fallback')
 const cors = require('cors');
 const path = require('path')
-// use it before all route definitions
+
+const calendar = require('../../libs/services/calendarService')
+const slackConfig = require('../../config/slack.json')
+const slackToken = slackConfig.token;
 const app = express()
-const port = process.env.PORT
+const port = process.env.PORT || 80
 
 const { WebClient } = require('@slack/client');
-const token = process.env.SLACK_TOKEN;
-const web = new WebClient(token);
+
+const web = new WebClient(slackToken);
 
 //TODO Esta linea se mata cuando damos de baja webpack server
 app.use(cors());
 
 app.get('/sala-*', function (req, res, next) {
-  res.sendFile(path.join(__dirname + '/src/index.html'));
+  res.sendFile(path.join(__dirname + '../../../public/index.html'));
 })
 
 app.get('/api/user/:email', function (req, res, next) {
   let email = req.params.email
-  web.users.lookupByEmail({token, email}).then((resSlack) => {
+  web.users.lookupByEmail({slackToken, email}).then((reponse) => {
     res.json({
-      slackUser: resSlack.user,
+      slackUser: reponse.user,
     })
-  }).catch(console.error)
+  }).catch(err=>{
+    console.log(err)
+    res.status(404).json({
+      err: err,
+    })
+  })
 })
 
 app.post('/api/rooms/:room/:time', function (req, res, next) {
@@ -79,7 +86,7 @@ function canBookRoomFromNow(slot, minutesToBook){
 }
 
 app.use(history())
-app.use(express.static('src'))
+app.use(express.static('public'))
 
 app.listen(port, function(err) {
   if (err) {

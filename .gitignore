@@ -2,9 +2,7 @@
 /dist
 /node_modules
 npm-debug.log*
-rooms.json
-rooms-client.json
-src/client.min.js
 *min.js
 .serverless
 /build
+/config
