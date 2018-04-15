@@ -10,12 +10,12 @@ import * as roomActions from "../../actions/room"
 class FreeRoom extends Component {
   constructor(props)
   {
-    super(props)
+    super()
     this.cancel = this.cancel.bind(this)
   }
 
   cancel(){
-    this.props.roomActions.cancelMeeting(15)
+    this.props.roomActions.cancelMeeting(this.props.roomId,this.props.currentSlotId)
   }
 
     render(){
@@ -32,7 +32,8 @@ class FreeRoom extends Component {
 //to map state in object props
 function mapStateToProps(state){
   return{
-    cancelling:state.room.stateRoom.currentSlot.cancelling
+    roomId:state.room.roomId,
+    currentSlotId:state.room.stateRoom.currentSlot.id
   }
 }
 //to map actions in object props

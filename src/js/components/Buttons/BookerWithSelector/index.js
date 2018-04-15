@@ -4,7 +4,7 @@ import moment from 'moment'
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
 
-import * as roomActions from "../../actions/room"
+import * as roomActions from "../../../actions/room"
 import './bookerWithSelector.css'
 
 class BookerWithSelector extends Component {
@@ -34,7 +34,8 @@ class BookerWithSelector extends Component {
 //to map state in object props
 function mapStateToProps(state){
   return{
-    booking:state.room.booking
+    roomId:state.room.roomId,
+    currentSlot:state.room.stateRoom.currentSlot
   }
 }
 //to map actions in object props

@@ -1,4 +1,3 @@
-const times = [15,30,45]
 const label = {
   "toFree":"Se libera en:",
   "toBusy":"Se ocupa en:",
@@ -6,4 +5,4 @@ const label = {
   "busy":"Ocupada hasta:"
 }
 
-export default {times,label}
+export default {label}

@@ -2,7 +2,7 @@ import {initialStateToFrontEnd} from "../store/initialStates/room"
 export default function reducer(state=initialStateToFrontEnd, action) {
     switch (action.type) {
       case "GET_ROOM_STATE": {
-        return {...state, fetching: true}
+        return {...state, fetching: true, roomId:action.payload}
       }
       case "GET_ROOM_STATE_REJECTED": {
         return {...state, fetching: false, error: action.payload}
@@ -43,28 +43,25 @@ export default function reducer(state=initialStateToFrontEnd, action) {
       case "BOOK_ACTION_REJECTED": {
         return {...state, booking:false, error:action.payload}
       }
-      case "CANCEL_MEETING": {
+      case "CANCEL_CURRENT_MEETING": {
         return {
               ...state,
-              data : {
-                  ...state.data,
+              stateRoom : {
+                  ...state.stateRoom,
                   currentSlot : {
-                      ...state.currentSlot,
+                      ...state.stateRoom.currentSlot,
                       cancelling:true
                   }
               }
         }
       }
-      case "CANCEL_MEETING_UNDO": {
+      case "CANCEL_CURRENT_MEETING_FAIL": {
+        return {...state, error: action.payload}
+      }
+      case "CANCEL_CURRENT_MEETING_SUCCESS": {
         return {
-              ...state,
-              data : {
-                  ...state.data,
-                  currentSlot : {
-                      ...state.currentSlot,
-                      cancelling:false
-                  }
-              }
+          ...state,
+          stateRoom: action.payload,
         }
       }
 

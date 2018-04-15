@@ -1,7 +1,8 @@
 const propertiesToFronEnd={
       fetching: false,
       fetched: false,
-      error: null
+      error: null,
+      roomId:null
 }
 const initialState={
       stateRoom:{
@@ -12,6 +13,7 @@ const initialState={
         },
        ocupationState:null,
        currentSlot: {
+         id:null,
          start: null,
          end:null,
          summary:null,
@@ -31,6 +33,7 @@ const initialState={
          end:null
        },
        nextMeeting: {
+         id:null,
          start: null,
          end:null,
          summary:null,

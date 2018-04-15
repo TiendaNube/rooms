@@ -2,16 +2,15 @@ import React from "react"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
 import cn from 'classnames'
-import moment from "moment"
 
 import * as roomActions from "../../actions/room"
-import Main from "../Main"
+import MainContainer from "../MainContainer"
 
-import './layout.css'
+import './layoutCalendar.css'
 
 class LayoutContainer extends React.Component {
   constructor(props){
-    super(props)
+    super()
   }
   componentWillMount() {
     this.props.roomActions.getRoomState(this.props.match.params.room)
@@ -25,22 +24,25 @@ class LayoutContainer extends React.Component {
 
   render() {
     //TODO this.updateInterval = setInterval(() => this.updateTime(), 1 * 60000)
-    const statusName=this.props.room.stateRoom.status.name
-    const mainProps = {
-        name: this.props.room.stateRoom?this.props.room.stateRoom.name:null,
-        status: this.props.room.stateRoom?this.props.room.stateRoom.status:null,
-        roomId:this.props.match.params.room
-    }
-    return <div className={cn('layout', statusName)}>
-      <img className="background" src={`img/${statusName}-background.svg`}/>
-      <Main {...mainProps}/>
+    const statusName=this.props.statusName
+    const roomFetched=this.props.roomFetched
+    const MainContainerComponent = roomFetched ? (
+      <MainContainer/>
+      ) : (
+     <div></div>
+    )
+    return <div className={cn('layoutCalendar', statusName)}>
+      <img className="background" src={`img/${roomFetched?statusName:"fetching"}-background.svg`}/>
+      {MainContainerComponent}
     </div>
   }
 }
 
 function mapStateToProps(state){
   return{
-    room:state.room
+    statusName:state.room.stateRoom.status.name,
+    roomFetched:state.room.fetched,
+    roomFetching:state.room.fetching
   }
 }
 

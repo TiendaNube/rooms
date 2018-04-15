@@ -16,6 +16,11 @@ export default function reducer(state=initialState, action) {
           data: action.payload,
         }
       }
+      case "DELETE_CURRENT_OWNER": {
+        return {
+          ...initialState
+        }
+      }
     }
 
     return state

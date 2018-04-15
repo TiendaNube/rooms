@@ -26,6 +26,7 @@ function cancelMeeting(roomId,meetingId) {
     .then((response) => {
         const state=response.data.state
         dispatch({type: "CANCEL_CURRENT_MEETING_SUCCESS", payload: state})
+        dispatch({type: "DELETE_CURRENT_OWNER"})
       })
       .catch((err) => {
         dispatch({type: "CANCEL_CURRENT_MEETING_FAIL", payload: err})

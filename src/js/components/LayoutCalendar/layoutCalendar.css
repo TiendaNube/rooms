@@ -1,11 +1,9 @@
-@import 'variables.css';
-
 *, *::before, *::after {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
 }
 
-html, body, #app {
+html, body, #calendar-app {
   height: 100%;
 }
 
@@ -16,28 +14,11 @@ body {
   padding: 0;
 }
 
-.App {
+.layoutCalendar {
   display: flex;
   flex-direction: column;
   width: 100vw;
   height: 100vh;
   color: white;
   transition: background-color .5s;
-
-  &.free {
-    background: var(--free);
-  }
-
-  &.busy {
-    background: var(--busy);
-  }
-
-  &.toFree {
-    background: var(--toFree);
-  }
-
-  &.toBusy {
-    background: var(--toBusy);
-  }
-
 }
