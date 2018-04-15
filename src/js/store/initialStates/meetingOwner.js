@@ -7,8 +7,8 @@ const initialState={
         size_72:null
       }
     },
-    fetching:false,
-    fetched:false,
+    loading:false,
+    loaded:false,
     error:null
 }
 

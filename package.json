@@ -17,7 +17,6 @@
     "babel-preset-react": "^6.3.13",
     "babel-preset-stage-0": "^6.3.13",
     "classnames": "^2.2.5",
-    "connect-history-api-fallback": "^1.5.0",
     "cors": "^2.8.4",
     "css-loader": "^0.28.11",
     "dotenv": "^5.0.1",
@@ -26,7 +25,6 @@
     "json-loader": "^0.5.7",
     "moment": "^2.22.0",
     "moment-timezone": "^0.5.14",
-    "nodemon": "^1.17.3",
     "offline": "0.0.1",
     "precss": "^3.1.2",
     "react": "^0.14.6",
@@ -38,20 +36,23 @@
     "react-redux": "^4.4.5",
     "react-router-dom": "^4.2.2",
     "redux": "^3.5.2",
-    "redux-logger": "^2.6.1",
     "redux-promise-middleware": "^3.2.0",
     "redux-thunk": "^2.1.0",
     "serverless": "^1.26.1",
     "style-loader": "^0.20.3",
-    "webpack": "^1.12.9",
-    "webpack-dev-server": "^1.14.1"
+    "webpack": "^1.12.9"
   },
   "devDependencies": {
     "redux-devtools-extension": "^2.13.2",
-    "serverless-offline": "^3.20.2"
+    "serverless-offline": "^3.20.2",
+    "webpack-dev-server": "^1.14.1",
+    "redux-logger": "^2.6.1",
+    "nodemon": "^1.17.3",
+    "connect-history-api-fallback": "^1.5.0"
   },
   "scripts": {
     "build": "webpack -w",
+    "production":"webpack -p --define process.env.NODE_ENV='\"production\"' --progress --colors",
     "local-server": "sudo nodemon ./servers/local/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

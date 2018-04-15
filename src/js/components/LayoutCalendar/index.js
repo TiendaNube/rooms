@@ -13,26 +13,20 @@ class LayoutContainer extends React.Component {
     super()
   }
   componentWillMount() {
-    this.props.roomActions.getRoomState(this.props.match.params.room)
+    this.props.roomActions.loadRoomState(this.props.match.params.room)
   }
-/*TODO   updateTime(){
-    if(this.props.room.data.state.status&&this.props.room.fetching==false){
-      this.props.roomActions.tickTime(this.props.match.params.room,this.props.room)
-      clearInterval(this.updateInterval)
-    }
-  }*/
 
   render() {
-    //TODO this.updateInterval = setInterval(() => this.updateTime(), 1 * 60000)
+    //TODO change status, load new room state
     const statusName=this.props.statusName
-    const roomFetched=this.props.roomFetched
-    const MainContainerComponent = roomFetched ? (
+    const roomLoaded=this.props.roomLoaded
+    const MainContainerComponent = roomLoaded ? (
       <MainContainer/>
       ) : (
      <div></div>
     )
     return <div className={cn('layoutCalendar', statusName)}>
-      <img className="background" src={`img/${roomFetched?statusName:"fetching"}-background.svg`}/>
+      <img className="background" src={`img/${roomLoaded?statusName:"getting"}-background.svg`}/>
       {MainContainerComponent}
     </div>
   }
@@ -41,8 +35,7 @@ class LayoutContainer extends React.Component {
 function mapStateToProps(state){
   return{
     statusName:state.room.stateRoom.status.name,
-    roomFetched:state.room.fetched,
-    roomFetching:state.room.fetching
+    roomLoaded:state.room.loaded
   }
 }
 

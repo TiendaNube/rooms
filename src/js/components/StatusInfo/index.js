@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import ReactAnimatedEllipsis from 'react-animated-ellipsis';
-
+import UserInfo from "../UserInfo"
 import './statusInfo.css'
 
 export default class RoomName extends Component {
@@ -9,12 +8,11 @@ export default class RoomName extends Component {
     }
     render(){
    	  const { label,timeLabel,meetingOwner,statusName,nextMeetingOwner} = this.props
-      const showInfoMeetingOwner = statusName!="free" ? nextMeetingOwner.fetched||meetingOwner.fetched ? (
-      <div className="meeting-owner">por <strong>@{meetingOwner.data.display_name?meetingOwner.data.display_name:nextMeetingOwner.data.display_name}</strong></div>
+      const user = statusName=="toBusy"?nextMeetingOwner:meetingOwner
+      const showInfoMeetingOwner = statusName!="free" ?(
+        <UserInfo user={user}/>
       ) : (
-      <div className="meeting-owner">Investigando<ReactAnimatedEllipsis/></div>
-      ) : (
-      <div></div>
+        <div></div>
       );
     	return (
         <div className="info">

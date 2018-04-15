@@ -1,19 +1,40 @@
 import axios from "axios";
-import * as userActions from "../user/index"
+import * as userActions from "../user"
 
-function getRoomState(roomId,dispatch) {
+function loadRoomState(roomId,dispatch) {
   return function(dispatch) {
-    dispatch({type: "GET_ROOM_STATE",payload:roomId});
+    dispatch({type: "LOAD_ROOM_STATE",payload:roomId});
     const params=roomId.replace("sala-", "?number=")
     //TODO set in server in prod!!
     //axios.get(`https://91qk3xxuce.execute-api.us-west-1.amazonaws.com/dev/sala${params}&allSchedule=true`)
     axios.get(`http://${window.location.hostname}/api/rooms/${roomId}`)
       .then((response) => {
         const state=response.data.state
-        dispatch({type: "GET_ROOM_STATE_FULFILLED", payload: state})
+        dispatch({type: "LOAD_ROOM_STATE_FULFILLED", payload: state})
+        if(state.currentSlot.organizer.email){
+          dispatch({type: `LOAD_USER`});
+          axios.get(`http://${window.location.hostname}/api/user/${state.currentSlot.organizer.email}`)
+            .then((response) => {
+              dispatch({type: `LOAD_USER_FULFILLED`, payload:response.data.slackUser})
+          })
+          .catch((err) => {
+              dispatch({type: `LOAD_USER_REJECTED`, payload: err})
+          })
+        }
+        if(state.nextMeeting.organizer.email){
+          dispatch({type: `LOAD_NEXT_METTING_OWNER`});
+          axios.get(`http://${window.location.hostname}/api/user/${state.nextMeeting.organizer.email}`)
+            .then((response) => {
+              dispatch({type: `LOAD_NEXT_METTING_OWNER_FULFILLED`, payload:response.data.slackUser})
+          })
+          .catch((err) => {
+              dispatch({type: `LOAD_NEXT_METTING_OWNER_REJECTED`, payload: err})
+          })
+        }
+
       })
       .catch((err) => {
-        dispatch({type: "GET_ROOM_STATE_REJECTED", payload: err})
+        dispatch({type: "LOAD_ROOM_STATE_REJECTED", payload: err})
       })
   }
 }
@@ -26,7 +47,6 @@ function cancelMeeting(roomId,meetingId) {
     .then((response) => {
         const state=response.data.state
         dispatch({type: "CANCEL_CURRENT_MEETING_SUCCESS", payload: state})
-        dispatch({type: "DELETE_CURRENT_OWNER"})
       })
       .catch((err) => {
         dispatch({type: "CANCEL_CURRENT_MEETING_FAIL", payload: err})
@@ -57,7 +77,7 @@ function bookRoom(roomId,time) {
         dispatch({type: "BOOK_ACTION_FULFILLED", payload: response.data})
         const user=response.data.currentSlot!=null?response.data.currentSlot.organizer:null
         if(user){
-          dispatch({type: "FETCH_USER"});
+          dispatch({type: "GET_USER"});
           axios.get(`http://${window.location.hostname}/api/user/${user.email}`)
             .then((response) => {
               const payload={
@@ -68,15 +88,15 @@ function bookRoom(roomId,time) {
                   size_72:response.data.slackUser.profile.image_72
                 }
               }
-              dispatch({type: "FETCH_USER_FULFILLED", payload})
+              dispatch({type: "GET_USER_FULFILLED", payload})
             })
             .catch((err) => {
-              dispatch({type: "FETCH_USER_REJECTED", payload: err})
+              dispatch({type: "GET_USER_REJECTED", payload: err})
             })
         }
         const nextMeetingOwner=response.data.nextMeeting!=null?response.data.nextMeeting.organizer:null
         if(nextMeetingOwner){
-          dispatch({type: "FETCH_NEXT_METTING_OWNER"});
+          dispatch({type: "GET_NEXT_METTING_OWNER"});
           axios.get(`http://${window.location.hostname}/api/user/${nextMeetingOwner.email}`)
             .then((response) => {
               const payload={
@@ -87,10 +107,10 @@ function bookRoom(roomId,time) {
                   size_72:response.data.slackUser.profile.image_72
                 }
               }
-              dispatch({type: "FETCH_NEXT_METTING_OWNER_FULFILLED", payload})
+              dispatch({type: "GET_NEXT_METTING_OWNER_FULFILLED", payload})
             })
             .catch((err) => {
-              dispatch({type: "FETCH_NEXT_METTING_OWNER_REJECTED", payload: err})
+              dispatch({type: "GET_NEXT_METTING_OWNER_REJECTED", payload: err})
             })
         }
       })
@@ -122,7 +142,7 @@ function tickTime(roomId,room) {
           dispatch({type: "CHANGE_CURRENT_EVENT_FULFILLED", payload: response.data})
           const user=response.data.currentSlot!=null?response.data.currentSlot.organizer:null
           if(user){
-            dispatch({type: "FETCH_USER"});
+            dispatch({type: "GET_USER"});
             //TODO pegarle al end en produ de los user de slack
             axios.get(`http://${window.location.hostname}/api/user/${user.email}`)
               .then((response) => {
@@ -134,16 +154,16 @@ function tickTime(roomId,room) {
                     size_72:response.data.slackUser.profile.image_72
                   }
                 }
-                dispatch({type: "FETCH_USER_FULFILLED", payload})
+                dispatch({type: "GET_USER_FULFILLED", payload})
               })
               .catch((err) => {
-                dispatch({type: "FETCH_USER_REJECTED", payload: err})
+                dispatch({type: "GET_USER_REJECTED", payload: err})
               })
           }
           const nextMeetingOwner=response.data.nextMeeting!=null?response.data.nextMeeting.organizer:null
           if(nextMeetingOwner){
             //TODO pegarle al end en produ de los user de slack
-            dispatch({type: "FETCH_NEXT_METTING_OWNER"});
+            dispatch({type: "GET_NEXT_METTING_OWNER"});
             axios.get(`http://${window.location.hostname}/api/user/${nextMeetingOwner.email}`)
               .then((response) => {
                 const payload={
@@ -154,10 +174,10 @@ function tickTime(roomId,room) {
                     size_72:response.data.slackUser.profile.image_72
                   }
                 }
-                dispatch({type: "FETCH_NEXT_METTING_OWNER_FULFILLED", payload})
+                dispatch({type: "GET_NEXT_METTING_OWNER_FULFILLED", payload})
               })
               .catch((err) => {
-                dispatch({type: "FETCH_NEXT_METTING_OWNER_REJECTED", payload: err})
+                dispatch({type: "GET_NEXT_METTING_OWNER_REJECTED", payload: err})
               })
           }
         })
@@ -178,6 +198,6 @@ function tickTime(roomId,room) {
 module.exports={
   tickTime,
   bookRoom,
-  getRoomState,
+  loadRoomState,
   cancelMeeting
 }

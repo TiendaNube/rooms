@@ -33,7 +33,8 @@ class reduxRoomStateHelper {
         ocupationState:this.ocupationState,
         currentSlot:this.currentSlot,
         nextFreeSlot:this.nextFreeSlot,
-        nextMeeting:this.nextMeeting
+        nextMeeting:this.nextMeeting,
+        schedule:this.schedule
     }
     return currentState
   }
@@ -42,16 +43,19 @@ class reduxRoomStateHelper {
     const nextMeeting=this.nextMeeting
     const now = moment()
     const finishCurrentMeeting = moment(currentMeeting.end)
-    const timeToFinishCurrentMeeting=finishCurrentMeeting.diff(now,"seconds")
+    const secondsToFinishCurrentMeeting=finishCurrentMeeting.diff(now,"seconds")
+    const minutesToFinishCurrentMeeting=finishCurrentMeeting.diff(now,"minutes")
+    const timesConfigMinutes=timesConfig.minutesToFree
+    const timesConfigSeconds=timesConfig.minutesToFree*60
       if(nextMeeting.available){
-        return timeToFinishCurrentMeeting<timesConfig.minutesToFree*60?{name:"toFree",secondsToFinish:timeToFinishCurrentMeeting}:{name:"busy",secondsToFinish:timeToFinishCurrentMeeting}
+        return minutesToFinishCurrentMeeting<timesConfigMinutes?{name:"toFree",secondsToFinish:secondsToFinishCurrentMeeting-timesConfigSeconds}:{name:"busy",secondsToFinish:secondsToFinishCurrentMeeting}
       }else{
         const startNextMeeting = moment(nextMeeting.start)
-        const timeBeteenwMeeting = startNextMeeting.diff(finishCurrentMeeting,"seconds")
-        if(timeToFinishCurrentMeeting>timesConfig.minutesToFree*60){
-          return {name:"busy",secondsToFinish:timeToFinishCurrentMeeting}
+        const secondsBeteenwMeeting = startNextMeeting.diff(finishCurrentMeeting,"seconds")
+        if(minutesToFinishCurrentMeeting>timesConfigMinutes){
+          return {name:"busy",secondsToFinish:secondsToFinishCurrentMeeting-timesConfigSeconds}
         }else{
-          return timeBeteenwMeeting>timesConfig.minutesToFree*60?{name:"toFree",secondsToFinish:timeToFinishCurrentMeeting}:{name:"busy",secondsToFinish:timeToFinishCurrentMeeting}
+          return secondsBeteenwMeeting>timesConfigSeconds?{name:"toFree",secondsToFinish:secondsToFinishCurrentMeeting-timesConfigSeconds}:{name:"busy",secondsToFinish:secondsToFinishCurrentMeeting-timesConfigSeconds}
         }
       }
   }
@@ -61,11 +65,12 @@ class reduxRoomStateHelper {
     const nextMeeting=this.nextMeeting
     const now = moment()
     const finishCurrentSlot = moment(currentSlot.end)
-    const timeToFinishCurrentSlot=finishCurrentSlot.diff(now,"seconds")
+    const secondsToFinishCurrentSlot=finishCurrentSlot.diff(now,"seconds")
+    const timesConfigSeconds=timesConfig.minutesToBusy*60
       if(nextMeeting.available){
-        return {name:"free",secondsToFinish:timeToFinishCurrentSlot}
+        return {name:"free",secondsToFinish:secondsToFinishCurrentSlot}
       }else{
-        return timeToFinishCurrentSlot<timesConfig.minutesToBusy*60?{name:"toBusy",secondsToFinish:timeToFinishCurrentSlot}:{name:"free",secondsToFinish:timeToFinishCurrentSlot}
+        return timeToFinishCurrentSlot<timesConfigSeconds?{name:"toBusy",secondsToFinish:secondsToFinishCurrentSlot-timesConfigSeconds}:{name:"free",secondsToFinish:secondsToFinishCurrentSlot}
       }
   }
   ocupationState(){

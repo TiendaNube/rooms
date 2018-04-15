@@ -15,19 +15,9 @@ moment.updateLocale('en', {
         future: "%s",
         mm: "%d"
       }
-});
+})
 
-class Info extends Component {
-    componentWillMount(){
-      const {organizerEmail,nextMeetingOwnerEmail}=this.props
-      if(organizerEmail){
-        this.props.userActions.getUser(organizerEmail,"USER")
-      }
-
-      if(nextMeetingOwnerEmail){
-        this.props.userActions.getUser(nextMeetingOwnerEmail,"NEXT_METTING_OWNER")
-      }
-    }
+class StatusContainer extends Component {
     buildTimeLabel(status, minutesToFinish){
 	    switch (status) {
 	      case "toBusy":
@@ -83,4 +73,4 @@ function mapDispatchToProps(dispatch){
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Info)
+export default connect(mapStateToProps,mapDispatchToProps)(StatusContainer)

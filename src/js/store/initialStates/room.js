@@ -1,6 +1,6 @@
 const propertiesToFronEnd={
-      fetching: false,
-      fetched: false,
+      loading: false,
+      loaded: false,
       error: null,
       roomId:null
 }

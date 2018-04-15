@@ -2,17 +2,17 @@ import initialState from "../store/initialStates/meetingOwner"
 
 export default function reducer(state=initialState, action) {
     switch (action.type) {
-      case "FETCH_USER": {
-        return {...state, fetching: true}
+      case "LOAD_USER": {
+        return {...state, loading: true}
       }
-      case "FETCH_USER_REJECTED": {
-        return {...state, fetching: false, error: action.payload}
+      case "LOAD_USER_REJECTED": {
+        return {...state, loading: false, error: action.payload}
       }
-      case "FETCH_USER_FULFILLED": {
+      case "LOAD_USER_FULFILLED": {
         return {
           ...state,
-          fetching: false,
-          fetched: true,
+          loading: false,
+          loaded: true,
           data: action.payload,
         }
       }
