@@ -65,8 +65,43 @@ app.get('/api/rooms/:roomSlug', function (req, res, next) {
     })
   })
 })
+app.get('/api/rooms/:roomSlug/:meetingId/cancel', function (req, res, next) {
+  const roomSlug = req.params.roomSlug
+  const meetingId = req.params.meetingId
+  const now = moment()
+  if (!calendar.roomExists(roomSlug)) {
+    res.status(404).json({
+      error: "Room not found"
+    })
+    next()
+    return
+  }
+  //TODO when we have permisions
+  /*calendar.cancelEvent(roomSlug,meetingId,(err, response) => {
+    if(err){
+      res.status(500).json({
+          error: err
+      })
+      next()
+      return
+    }
+    res.status(200).json()
+  })*/
 
-
+  calendar.getSchedule(roomSlug, now, (err, schedule) => {
+    if(err){
+      res.status(500).json({
+          error: err
+      })
+      next()
+      return
+    }
+    const stateHelper = new reduxRoomStateHelper(calendar.getRoomName(roomSlug),schedule,true)
+    res.status(200).json({
+      state: stateHelper.getCurrentState()
+    })
+  })
+})
 
 app.post('/api/rooms/:room/:time', function (req, res, next) {
   let roomSlug = req.params.room
