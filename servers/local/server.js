@@ -28,9 +28,11 @@ app.get('/sala-*', function (req, res, next) {
 app.get('/api/user/:email', function (req, res, next) {
   let email = req.params.email
   web.users.lookupByEmail({slackToken, email}).then((reponse) => {
-    res.json({
-      slackUser: reponse.user,
-    })
+    setTimeout(()=>{
+      res.json({
+        slackUser: reponse.user,
+      })
+    }, 4000)
   }).catch(err=>{
     console.log(err)
     res.status(404).json({

@@ -54,7 +54,7 @@ class Info extends Component {
       const label = StatusContainerConfig.label[statusName]
       const minutesToFinish=Math.trunc(secondsToFinish/60)
    	  const timeLabel = this.buildTimeLabel(statusName, minutesToFinish)
-      const statusInfoProps={label,timeLabel,meetingOwner}
+      const statusInfoProps={label,timeLabel,meetingOwner,statusName}
     	return (
         <div>
           <StatusInfo {...statusInfoProps}/>
