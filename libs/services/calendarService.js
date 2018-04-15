@@ -62,6 +62,7 @@ const normalizeEvent = function(apiEvent, now) {
     organizer: apiEvent.organizer,
     private: (apiEvent.visibility === 'private'),
     available: false,
+    id:apiEvent.id,
     recurrence:apiEvent.recurrence,
     status:apiEvent.status,
     visibility:apiEvent.visibility,
@@ -165,6 +166,21 @@ const unifySchedule = function(events) {
   return schedule
 }
 
+const cancelEvent = function(roomSlug,meetingId, cb) {
+  let room = rooms[roomSlug]
+  if( ! room ) { cb('Room does not exist', null); return; }
+
+  calendar.events.delete({
+    calendarId: room.id,
+    eventId:meetingId
+    }, function (err, response) {
+    if( err ) {
+      console.log(err)
+      return cb('Couldn\'t delete the event', null)
+    }
+    cb(null, null)
+  })
+}
 
 const bookEvent = function(roomSlug,booking, cb) {
   let room = rooms[roomSlug]
@@ -200,5 +216,6 @@ module.exports = {
   getNextFreeSlot,
   getSchedule,
   unifySchedule,
-  bookEvent
+  bookEvent,
+  cancelEvent
 }
