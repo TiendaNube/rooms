@@ -3,7 +3,7 @@ import * as userActions from "../user/index"
 
 function getRoomState(roomId,dispatch) {
   return function(dispatch) {
-    dispatch({type: "GET_ROOM_STATE"});
+    dispatch({type: "GET_ROOM_STATE",payload:roomId});
     const params=roomId.replace("sala-", "?number=")
     //TODO set in server in prod!!
     //axios.get(`https://91qk3xxuce.execute-api.us-west-1.amazonaws.com/dev/sala${params}&allSchedule=true`)
@@ -17,6 +17,26 @@ function getRoomState(roomId,dispatch) {
       })
   }
 }
+
+
+function cancelMeeting(roomId,meetingId) {
+  return function(dispatch) {
+    dispatch({type: "CANCEL_CURRENT_MEETING"});
+    axios.get(`http://${window.location.hostname}/api/rooms/${roomId}/${meetingId}/cancel`)
+    .then((response) => {
+        const state=response.data.state
+        dispatch({type: "CANCEL_CURRENT_MEETING_SUCCESS", payload: state})
+      })
+      .catch((err) => {
+        dispatch({type: "CANCEL_CURRENT_MEETING_FAIL", payload: err})
+    })
+  }
+}
+
+
+
+
+
 
 function bookRoom(roomId,time) {
   return function(dispatch) {
@@ -80,11 +100,7 @@ function bookRoom(roomId,time) {
 }
 
 
-function cancelMeeting(roomId) {
-  return function(dispatch) {
-    dispatch({type: "CANCEL_MEETING",payload:roomId});
-  }
-}
+
 
 function tickTime(roomId,room) {
   return function(dispatch) {
