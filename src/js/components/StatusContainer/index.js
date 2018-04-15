@@ -50,11 +50,11 @@ class Info extends Component {
     	}
   	}
   	render(){
-   	  const { statusName, meetingOwner, secondsToFinish} = this.props
+   	  const { statusName, meetingOwner, secondsToFinish, nextMeetingOwner} = this.props
       const label = StatusContainerConfig.label[statusName]
       const minutesToFinish=Math.trunc(secondsToFinish/60)
    	  const timeLabel = this.buildTimeLabel(statusName, minutesToFinish)
-      const statusInfoProps={label,timeLabel,meetingOwner,statusName}
+      const statusInfoProps={label,timeLabel,meetingOwner,nextMeetingOwner,statusName}
     	return (
         <div>
           <StatusInfo {...statusInfoProps}/>
@@ -72,6 +72,7 @@ function mapStateToProps(state){
     secondsToFinish:state.room.stateRoom.status.secondsToFinish,
     currentSlot:state.room.stateRoom.currentSlot,
     meetingOwner:state.meetingOwner,
+    nextMeetingOwner:state.nextMeetingOwner,
     statusName:state.room.stateRoom.status.name
   }
 }

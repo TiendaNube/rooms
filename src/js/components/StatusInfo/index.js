@@ -8,9 +8,9 @@ export default class RoomName extends Component {
       super()
     }
     render(){
-   	  const { label,timeLabel,meetingOwner, statusName} = this.props
-      const showInfoMeetingOwner = statusName!="free" ? meetingOwner.fetched ? (
-      <div className="meeting-owner">por <strong>@{meetingOwner.data.display_name}</strong></div>
+   	  const { label,timeLabel,meetingOwner,statusName,nextMeetingOwner} = this.props
+      const showInfoMeetingOwner = statusName!="free" ? nextMeetingOwner.fetched||meetingOwner.fetched ? (
+      <div className="meeting-owner">por <strong>@{meetingOwner.data.display_name?meetingOwner.data.display_name:nextMeetingOwner.data.display_name}</strong></div>
       ) : (
       <div className="meeting-owner">Investigando<ReactAnimatedEllipsis/></div>
       ) : (
