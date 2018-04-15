@@ -48,7 +48,7 @@ In the `config/` folder you need to write a json file(`app.json`) like that:
 
 ## Pre-requisites
 
-### Install nodemon package globaly
+### Install nodemon package globally
 
 Nodemon executes a file and keeps it updated. If you modified the file, it will automatically be updated by nodemon. To install it, run:
 
