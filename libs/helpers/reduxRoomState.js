@@ -1,14 +1,29 @@
 const moment = require("moment")
 const {initialState} = require("../../src/js/store/initialStates/room")
 const {timesConfig} = require("../../config/app.json")
+
 class reduxRoomStateHelper {
-  constructor(name,schedule){
+  constructor(name,schedule,forceCurrentEventFree=false){
     this.schedule=schedule
     this.name=name
-    this.currentSlot=this.currentSlot()
+    this.currentSlot=forceCurrentEventFree?this.forceCurrenSlotFree():this.currentSlot()
     this.nextMeeting=this.nextMeeting()
     this.ocupationState=this.ocupationState()
     this.nextFreeSlot=this.nextFreeSlot()
+  }
+  forceCurrenSlotFree(){
+    const currentSlot=this.currentSlot()
+    currentSlot.available=true
+    currentSlot.summary="Free"
+    currentSlot.organizer={email:null}
+    currentSlot.private=false
+    if(currentSlot.status){
+      delete currentSlot["status"]
+    }
+    if(currentSlot.id){
+      delete currentSlot["id"]
+    }
+    return currentSlot
   }
   getCurrentState(){
     const status=(this.ocupationState=="busy")?this.getBusyState():this.getFreeState()
@@ -68,10 +83,8 @@ class reduxRoomStateHelper {
       currentSlot.error=null,
       currentSlot.booking=false,
       currentSlot.booked=false,
-      currentSlot.error=null
       currentSlot.organizer=currentSlot.organizer?currentSlot.organizer:{email:null}//to prevent state errors
     }
-
     return currentSlot?currentSlot:initialState.stateRoom.currentSlot
   }
   nextMeeting(){
